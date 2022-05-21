@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 
+# 이미지폴더
+/public/img
 # testing
 /coverage
 

@@ -1,23 +1,30 @@
 import logo from './logo.svg';
 import './App.css';
+import NavWind from './general/NavWind';
+import Footer from './general/Footer';
+import {Route, Routes } from 'react-router-dom';
+import Marriage from './display/Marriage';
+import Parent from './display/Parent';
+import Guest from './display/Guest';
+import Main from './display/Main';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='flex flex-col h-screen justify-between'>
+
+      <NavWind />
+
+      <Routes>
+        <Route path='/' element={<Main />}/>
+        
+        <Route path='/bride' element={<Marriage />} />
+        <Route path='/parent' element={<Parent />} />
+        <Route path='/guest' element={<Guest />} />
+      </Routes>
+
+      <Footer />
+
     </div>
   );
 }
