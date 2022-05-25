@@ -8,7 +8,7 @@
 # 이미지폴더
 /public/img
 # testing
-/coverage
+/coverageg
 
 # production
 /build

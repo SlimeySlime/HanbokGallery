@@ -18,8 +18,9 @@ function App() {
       <Routes>
         <Route path='/' element={<Main />}/>
         
-        <Route path='/bride' element={<Marriage />} />
-        <Route path='/parent' element={<Parent />} />
+        <Route path='/bride' props={'bride'} element={<Marriage />} />
+        {/* 임시 */}
+        <Route path='/:id'  element={<Parent keyword={'Parent props'} />} />
         <Route path='/guest' element={<Guest />} />
       </Routes>
 
