@@ -18,6 +18,7 @@
   "scripts": {
     "start": "SET PORT=3030 && react-scripts start",
     "build": "react-scripts build",
+    "build2hange": "react-scripts build && xcopy build ..\\galleryServer\\public /s /y",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
