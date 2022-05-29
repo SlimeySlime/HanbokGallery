@@ -10,6 +10,7 @@ import Main from './display/Main';
 import Display from './display/Display';
 import useEmblaCarousel from 'embla-carousel-react'
 import FontSheet from './general/FontSheet';
+// import Nav2 from './general/Nav2';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
     <div className='flex flex-col min-h-screen '>
 
       <NavWind />
+      {/* <Nav2 /> */}
       <Routes className='flex-1'>
         <Route path='/' element={<Main />}/>
         

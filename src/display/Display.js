@@ -24,21 +24,21 @@ const Display = ({itemInfo}) => {
     const imageList = (css, onHover, onClick, w) => {
         
         return(
-            <div>
+            <div className='flex flex-col justify-center items-center'>
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/1.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 border rounded-lg' width={800} />
+                    className='p-4 m-4 border rounded-lg w-2/3'  />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/2.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4' width={800} />
+                    className='p-4 m-4 border rounded-lg w-2/3' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/3.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4' width={800} />
+                    className='p-4 m-4 border rounded-lg w-2/3' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/4.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4' width={800} />
+                    className='p-4 m-4 border rounded-lg w-2/3' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/5.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4' width={800} />
+                    className='p-4 m-4 border rounded-lg w-2/3' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/9.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4' width={800} />
+                    className='p-4 m-4 border rounded-lg w-2/3' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/12.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4' width={800} onError={console.log('no image')} />
+                    className='p-4 m-4 border rounded-lg w-2/3' width={800} onError={console.log('no image')} />
             </div>
         )
     }
@@ -47,27 +47,26 @@ const Display = ({itemInfo}) => {
         <div className='container mx-auto flex flex-1 '>
             <div className='flex flex-1 flex-col justify-center items-center'>
                 {/* 타이틀 */}
-                {/* <h2 className='text-3xl ml-2 pt-4 font-classic'>{imageData.bs_gsname1?.split(' ')[0]} 그리고 {imageData.bs_gsname2?.split(' ')[0]} </h2> */}
-                <h2 className='text-3xl ml-2 pt-5 font-samlip'>
+                <h2 className='text-3xl ml-2 m-4 font-samlip'>
                     {imageData.bs_gsname1?.split(' ')[0]} - {imageData.bs_gsname2?.split(' ')[0]} 
                 </h2>
-                {/* <h2 className='text-3xl ml-2 pt-4 font-katuri'>{imageData.bs_gsname1?.split(' ')[0]}, {imageData.bs_gsname2?.split(' ')[0]} </h2> */}
                 
                 {/* 크게보기 이미지 */}
                 <div className='flex flex-col justify-center items-center'>
                     <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${previewIndex}.jpg`} alt={imageData.bs_code} 
-                    width={700}
-                    className='p-16 pb-0' />
-                    <div className='flex justify-center mt-4'>
+                    // width={400}
+                    className='p-2 pb-0 w-full max-w-lg' />
+                    <div className='mt-4 flex mobile:grid mobile:grid-cols-4 justify-center '>
                     {imageLength.map((num) => 
                         <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${num}.jpg`} alt={imageData.bs_code} id={num}
-                            width={100}
+                            // width={50} 
+                            className='p-2 hover:bg-slate-200 rounded-lg w-20' 
                             onMouseEnter={(e) => {setPreviewIndex(e.target.id)}}
-                            className='p-2 hover:bg-slate-200 rounded-lg' />    
+                            onClick={(e) => {setPreviewIndex(e.target.id)}} />    
                     )}
                     </div>
                 </div>
-                <div className='mt-10'>
+                <div className='mt-10 '>
                     {imageList()}
 
                 </div>
