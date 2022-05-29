@@ -8,6 +8,8 @@ import Parent from './display/Parent';
 import Guest from './display/Guest';
 import Main from './display/Main';
 import Display from './display/Display';
+import useEmblaCarousel from 'embla-carousel-react'
+import FontSheet from './general/FontSheet';
 
 function App() {
 
@@ -15,7 +17,6 @@ function App() {
     <div className='flex flex-col min-h-screen '>
 
       <NavWind />
-      <div className='flex-1'></div>
       <Routes className='flex-1'>
         <Route path='/' element={<Main />}/>
         
@@ -25,6 +26,7 @@ function App() {
         <Route path='/parent'  element={<Parent />} />
         <Route path='/guest' element={<Guest />} />
         <Route path='/display/:id' element={<Display />} />
+        <Route path='/fonts' element={<FontSheet />} />
       </Routes>
 
       <Footer />
