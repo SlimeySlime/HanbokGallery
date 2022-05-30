@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import NavWind from './general/NavWind';
 import Footer from './general/Footer';
@@ -8,7 +7,6 @@ import Parent from './display/Parent';
 import Guest from './display/Guest';
 import Main from './display/Main';
 import Display from './display/Display';
-import useEmblaCarousel from 'embla-carousel-react'
 import FontSheet from './general/FontSheet';
 // import Nav2 from './general/Nav2';
 

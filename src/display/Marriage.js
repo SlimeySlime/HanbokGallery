@@ -4,11 +4,10 @@ import { Link, useParams } from "react-router-dom"
 import {IMAGE_PATH, SERVER_PATH} from '../general/General';
 
 const Marriage = (props) => {
-
-    const [testImage, setTestImage] = useState();
+    
+    // const {id} = useParams();
     const [blogData, setBlogData] = useState([]);
     const [storeData, setStoreData] = useState([]);
-    // const {id} = useParams();
 
     // const blogDataPath = process.env.NODE_ENV === 'production' ? '/store' : 'DEV_SERVER_PATH'
     const blogDataPath = SERVER_PATH
@@ -57,6 +56,7 @@ const Marriage = (props) => {
                         <img className="w-full rounded" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" />
                         <p className="mt-1 text-xs tracking-tight">신부한복</p>
                         <p className="font-sans">[{item.bs_code}]{item.bs_gsname1?.split(' ')[0]}</p>
+                        <p className="font-sans">{item.bs_gsname2?.split(' ')[0]}</p>
                         <p className="inline-block font-sans font-semibold">80,000 원</p>
                         <p className="ml-1 inline font-sans font-thin text-slate-600 line-through">100,000 원</p>
                     </div>

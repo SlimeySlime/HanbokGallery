@@ -11,6 +11,7 @@ module.exports = {
         'samlip' : ['SDSamliphopangche_Outline', 'sans-serif'],
         'katuri' : ['Katuri', 'sans-serif'],
         'classic' : ['classic'],
+        'alice' : ['EliceDigitalBaeum_Bold']
       },
       screens: {
         // 'mobile' : '640px',

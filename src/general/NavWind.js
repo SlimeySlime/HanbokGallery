@@ -1,16 +1,37 @@
-import logo from '../bdanlogo.svg';
-import logo2 from '../logo_2_tp.png'
-import React from "react";
+// import logo from '../bdanlogo.svg';
+import logo from '../logo_1.svg';
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useCookies } from 'react-cookie';
 
 const NavWind = () => {
+
+    const [eventDate, setEventDate] = useState(null);
+    const [cookie, setCookie, removeCookie] = useCookies(['eventdate']);
+    // cookie.eventdate 에 
+    
+    // 쿠키가 있으면 
+    useEffect(() => {
+        setEventDate(new Date(cookie.eventdate))
+        // console.log('eventdate cookie', cookie.eventdate)
+    }, [])
+
+    // eventdate cookie가 생성되면 rentalList 새로고침 
+    useEffect(() => {
+        console.log('cookie : ', cookie);
+    }, [cookie])
+
+    function changeEventDate(e) {
+        // console.log(e)
+        setEventDate(new Date(e.target.value))
+        setCookie('eventdate', e.target.value, { path:'/' })
+    }
 
     return(
     <nav className="flex items-center justify-center flex-wrap bg-teal-800 p-6">
         <div className="flex items-center text-white mr-6">
-            <svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
-            {/* <img src="img/logo_E_2.jpg" className="w-12"  alt="" /> */}
-            <img src={logo} width='55' alt="logo" />
+            {/* <svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg> */}
+            <img className='fill-white w-8 mr-2' src={logo} fill='#f4f4f4' alt=""/>
             <span className="font-dimibang text-3xl tracking-tight">
                 <Link className="hover:text-green-500" to={'/'}>비단본가</Link>
             </span>
@@ -28,7 +49,7 @@ const NavWind = () => {
                 </p>
                 <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200  mr-4">
                     <NavLink to={'/guest'}
-                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>하객한복</NavLink>
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white text-xl font-alice") }>하객한복</NavLink>
                 </p>
                 <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200  mr-4">
                     <NavLink to={'/best'}
@@ -38,11 +59,23 @@ const NavWind = () => {
                     <NavLink to={'/fonts'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>폰트시트</NavLink>
                 </p>
-                <div class="hidden relative mobile:block">
-                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                        <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                <div className='inline-flex float-right items-center justify-center'>
+                    {/* 행사날짜 툴팁 */}
+                    <label className='mr-2 text-xl text-slate-100 font-katuri' htmlFor="">행사날짜
+                        <span className='hidden bg-black rounded z-10'>행사날짜를 알려주세요</span>
+                    </label>
+                    <input className='pl-4 py-1 mr-2 rounded-md font-katuri' type="date" title='행사날짜를 지정해주세요' id='eventDate' name="" 
+                        onChange={(e) => {changeEventDate(e)}} 
+                        value={cookie.eventdate}/>
+                    {/* 검색 */}
+                    <div className='inline-flex border-blue-400 hover:shadow-md' >
+                        <button>
+                            <svg class="rounded-l-md w-8 h-8 p-1 bg-white text-gray-500 fill-slate-300" fill="currentColor2" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                        </button>
+                        {/* <i>아이콘</i> */}
+                        <input className='rounded-r-md focus:outline-none' id='search' type="text" placeholder='검색'/>
                     </div>
-                    <input type="text" id="search-navbar" class="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search..."></input>
+                
                 </div>
 
             </div>

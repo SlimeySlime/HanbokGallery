@@ -44,7 +44,7 @@ const Display = ({itemInfo}) => {
     }
 
     return(
-        <div className='container mx-auto flex flex-1 '>
+        <div className='container mx-auto flex flex-1 mobile:flex-col '>
             <div className='flex flex-1 flex-col justify-center items-center'>
                 {/* 타이틀 */}
                 <h2 className='text-3xl ml-2 m-4 font-samlip'>
@@ -72,11 +72,13 @@ const Display = ({itemInfo}) => {
                 </div>
             </div>
             {/* 좌측 */}
-            <div className='m-8 hidden'>
-                <div>
-                    <input type="date" name="event-date"
-                        className='border '/>
-                    <RentalCalender></RentalCalender>
+            <div className='w-1/4 mobile:w-full m-12'>
+                <div className='mt-12'>
+                    <p className='flex flex-1 pb-4 text-2xl font-samlip2'>{imageData.bs_gskind1} - {imageData.bs_gsname1?.split(' ')[0]}</p>
+                    <p className='pb-4 text-2xl font-alice'>{imageData.bs_gskind2} - {imageData.bs_gsname2?.split(' ')[0]}</p>
+                    <p className='pb-4 text-2xl'>{imageData.bs_gsname3 && `${imageData.bs_gskind3} - ${imageData.bs_gsname3}`}</p>
+                    <p className='pb-4 text-2xl'>{imageData.bs_gsname4 && `${imageData.bs_gskind4} - ${imageData.bs_gsname4}`}</p>
+                    <p className='pb-4 text-2xl'>{imageData.bs_bigo}</p>
                 </div>
                 <div>
                     <p>옆에 리스트들</p>

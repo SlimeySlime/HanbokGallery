@@ -9,6 +9,7 @@ const FontSheet = () => {
             <p className="font-daheng p-2 text-2xl">daheng : 흐음</p>
             <p className="font-samlip p-2 text-2xl">samlip : 아웃라인 강조</p>
             <p className="font-classic p-2 text-2xl">classic : 클래식</p>
+            <p className="font-alice p-2 text-2xl">앨리스 : 클래식2</p>
 
         </div>
     )
