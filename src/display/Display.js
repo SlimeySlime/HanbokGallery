@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { IMAGE_PATH, SERVER_PATH } from "../general/General"
+import { IMAGE_PATH, SERVER_PATH, ERROR_HIDE } from "../general/General"
 import RentalCalender from './RentalCalender'
 
 const Display = ({itemInfo}) => {
@@ -21,6 +21,12 @@ const Display = ({itemInfo}) => {
         })
     }, [])
 
+    // function imageError(e){
+    //     console.log(e)
+    //     e.target.style.display = 'none'
+    // }
+    
+
     const imageList = (css, onHover, onClick, w) => {
         
         return(
@@ -35,10 +41,14 @@ const Display = ({itemInfo}) => {
                     className='p-4 m-4 border rounded-lg w-2/3' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/5.jpg`} alt={imageData.bs_gsname1} 
                     className='p-4 m-4 border rounded-lg w-2/3' width={800} />
-                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/9.jpg`} alt={imageData.bs_gsname1} 
+                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/6.jpg`} alt={imageData.bs_gsname1} 
                     className='p-4 m-4 border rounded-lg w-2/3' width={800} />
-                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/12.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 border rounded-lg w-2/3' width={800} onError={console.log('no image')} />
+                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/7.jpg`} alt={imageData.bs_gsname1} 
+                    className='p-4 m-4 border rounded-lg w-2/3' width={800} />
+                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/8.jpg`} alt={imageData.bs_gsname1} 
+                    className='p-4 m-4 border rounded-lg w-2/3' width={800} onError={(e) => {ERROR_HIDE(e)}}/>
+                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/9.jpg`} alt={imageData.bs_gsname1} 
+                    className='p-4 m-4 border rounded-lg w-2/3' width={800} onError={(e) => {ERROR_HIDE(e)}}/>
             </div>
         )
     }
@@ -62,7 +72,8 @@ const Display = ({itemInfo}) => {
                             // width={50} 
                             className='p-2 hover:bg-slate-200 rounded-lg w-20' 
                             onMouseEnter={(e) => {setPreviewIndex(e.target.id)}}
-                            onClick={(e) => {setPreviewIndex(e.target.id)}} />    
+                            onClick={(e) => {setPreviewIndex(e.target.id)}}
+                            onError={(e) => {ERROR_HIDE(e)}} />    
                     )}
                     </div>
                 </div>

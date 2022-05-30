@@ -1,12 +1,11 @@
 import React from "react";
 
-const Guest = () => {
+const AllHanbok = () => {
 
     return(
         <div>
-            guest
+
         </div>
     )
-}
 
-export default Guest
+}

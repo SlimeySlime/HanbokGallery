@@ -4,7 +4,7 @@ import Footer from './general/Footer';
 import {Route, Routes } from 'react-router-dom';
 import Marriage from './display/Marriage';
 import Parent from './display/Parent';
-import Guest from './display/Guest';
+import TypeDisplay from './display/TypeDisplay';
 import Main from './display/Main';
 import Display from './display/Display';
 import FontSheet from './general/FontSheet';
@@ -19,12 +19,12 @@ function App() {
       {/* <Nav2 /> */}
       <Routes className='flex-1'>
         <Route path='/' element={<Main />}/>
+        <Route path='/main/:type' element={<TypeDisplay />} />
         
         <Route path='/bride' props={'bride'} element={<Marriage />} />
         {/* 임시 */}
         {/* <Route path='/:id'  element={<Parent keyword={'Parent props'} />} /> */}
         <Route path='/parent'  element={<Parent />} />
-        <Route path='/guest' element={<Guest />} />
         <Route path='/display/:id' element={<Display />} />
         <Route path='/fonts' element={<FontSheet />} />
       </Routes>
