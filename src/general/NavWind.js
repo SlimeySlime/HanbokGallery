@@ -9,7 +9,8 @@ const NavWind = () => {
     const [eventDate, setEventDate] = useState(null);
     // eventdate 쿠키
     const [cookie, setCookie, removeCookie] = useCookies(['eventdate']);
-    
+    const ver = process.env.NODE_ENV
+
     // 쿠키가 있으면 
     useEffect(() => {
         setEventDate(new Date(cookie.eventdate))
@@ -34,6 +35,7 @@ const NavWind = () => {
             <img className='fill-white w-8 mr-2' src={logo} fill='#f4f4f4' alt=""/>
             <span className="font-dimibang text-3xl tracking-tight">
                 <Link className="hover:text-green-500" to={'/'}>비단본가</Link>
+                {/* <p className='text-sm font-sans'>process.env : {process.env.REACT_APP_SEARCH_PATH}</p> */}
             </span>
         </div>
         {/* 메뉴들 */}
@@ -58,7 +60,7 @@ const NavWind = () => {
                 </p>
                 <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200  mr-4">
                     <NavLink to={'/main/guest'}
-                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white text-xl font-alice") }>하객한복</NavLink>
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>하객한복</NavLink>
                 </p>
                 <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200  mr-4">
                     <NavLink to={'/main/best'}

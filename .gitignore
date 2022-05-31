@@ -9,6 +9,7 @@
 /public/img
 # testing
 /coverageg
+/src/trash
 
 # production
 /build

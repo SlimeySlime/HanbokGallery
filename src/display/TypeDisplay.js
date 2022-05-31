@@ -12,7 +12,7 @@ const TypeDisplay = (props) => {
     // 행사일자에 대여나가는 한복리스트 
     const [hanbokList, setHanbokList] = useState([]);
     const [blogData, setBlogData] = useState([]);
-    const [storeData, setStoreData] = useState([]);
+    const [storeData, setStoreData] = useState([])
 
     // const blogDataPath = process.env.NODE_ENV === 'production' ? '/store' : 'DEV_SERVER_PATH'
     const blogDataPath = SERVER_PATH
@@ -25,6 +25,7 @@ const TypeDisplay = (props) => {
             getHanbok()
         }
         // console.log(`'current type : ${type} => ${typeString}`)
+        console.log('SERVER_PATH : ', SERVER_PATH)
     }, [type])
 
     useEffect(() => {
@@ -37,7 +38,9 @@ const TypeDisplay = (props) => {
 
     // search by keyword
     function getHanbok() {
-        axios.get('http://localhost:3003/store', {
+        console.log(SERVER_PATH)
+        axios.get("http://localhost:3003/store", {
+        // axios.get(SERVER_PATH, {
             params: {
                 bs_part : typeString,
                 bs_code : 'A',
@@ -82,7 +85,7 @@ const TypeDisplay = (props) => {
                         <img className="w-full rounded" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" />
                         <p className="mt-1 text-xs tracking-tight">{typeString}한복</p>
                         <p className="font-sans">[{item.bs_code}]{item.bs_gsname1?.split(' ')[0]}</p>
-                        <p className="font-sans">{item.bs_gsname2?.split(' ')[0]}</p>
+                        <p className="font-sans">{item.bs_gsname2?.split(' ')[0]} {item.bs_gsname3?.split(' ')[0]}</p>
                         <p className="inline-block font-sans font-semibold">80,000 원</p>
                         <p className="ml-1 inline font-sans font-thin text-slate-600 line-through">100,000 원</p>
                     </div>
