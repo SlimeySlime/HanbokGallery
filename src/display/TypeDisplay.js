@@ -62,16 +62,16 @@ const TypeDisplay = (props) => {
     return(
         <div className="container mx-auto">
             <h3 className="text-2xl font-katuri m-4">{typeString} 한복</h3> 
-            <div className='has-tooltip bg-blue-300'>
+            {/* <div className='has-tooltip bg-blue-300'>
                 <p className='tooltip2 bg-white border rounded p-1 mt-3 z-50 text-black'>tooltip testing</p>
                 <p className='tooltip bg-white border rounded p-1 mt-3 z-50 text-black'>tooltip testing1.5</p>
                 <p className='absolute mt-8 tooltip '>tooltip testing2</p>
                 툴팁테스트
-            </div>
-            <div className='has-tooltip bg-blue-300'>
+            </div> */}
+            {/* <div className='has-tooltip bg-blue-300'>
                 <p className='tooltip border rounded p-1 mt-3 z-50 text-black'>tooltip testing1.5</p>
                 툴팁테스트
-            </div>
+            </div> */}
             <div className="container grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-10 ">
                 {blogData.map((item) => 
                 <div className="cursor-pointer"

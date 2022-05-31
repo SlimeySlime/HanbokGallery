@@ -70,11 +70,11 @@ const NavWind = () => {
                 </p>
                 <div className='inline-flex float-right items-center justify-center mobile:block mobile:float-left'>
                     {/* 행사날짜 툴팁 */}
-                    <div className='has-tooltip bg-blue-300'>툴팁테스트
+                    {/* <div className='has-tooltip bg-blue-300'>툴팁테스트
                         <span className='tooltip border rounded p-1 mt-3 z-50 bg-white text-black'>tooltip testing</span>
-                    </div>
+                    </div> */}
                     <div className='mr-2 text-xl text-slate-100 font-katuri has-tooltip2'>행사날짜
-                        <span className='absolute tooltip2 mt-4 bg-black rounded'>행사날짜를 알려주세요</span>
+                        {/* <span className='absolute tooltip2 mt-4 bg-black rounded'>행사날짜를 알려주세요</span> */}
                     </div>
                     <input className='pl-4 py-0.5 mr-2 rounded-md font-katuri mobile:inline-block' type="date" title='행사날짜를 지정해주세요' id='eventDate' name="" 
                         onChange={(e) => {changeEventDate(e)}} 
