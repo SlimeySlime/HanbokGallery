@@ -12,24 +12,23 @@ const TypeDisplay = ({props}) => {
     // 행사일자에 대여나가는 한복리스트 
     const [hanbokList, setHanbokList] = useState([]);
     const [blogData, setBlogData] = useState([]);
+    const [filterdBlogData, setFilteredBlogData] = useState([]);
+    // 대신에
+    const [unavailList, setUnavailList] = useState({});
     const eventRental = useSelector(state => state.event.eventRental)
     const storeData = useSelector(state => state.event.store)
     const hanboks = useSelector(state => state.event.hanbok)
 
     // 초기 불러오기
-    // type 재정의 필요할듯
+    // 
     useEffect(() => {
-        // 일단 type으로 필터후 unavail
-        // 그리고 회색처리 
-        // 1 
         filterHanbok(type) 
-
     }, [type, eventRental])
     
     useEffect(() => {
         console.log('current blog data length : ', blogData?.length)
         // 2 
-        unavaileList()
+        // unavaileList()
         // 3
         // setInactiveStore()
     }, [blogData])
@@ -56,7 +55,7 @@ const TypeDisplay = ({props}) => {
     }
     // hanbok과 eventRental map으로 작성
     // event[gs_name] = 1/2 -> store.map(gs_name in event)
-    const unavaileList = () => {
+    const getUnavaileList = () => {
         const hanbokMap = new Map()
         // 검색에 용이하게 Map으로
         hanboks.map((item) => {
@@ -81,17 +80,26 @@ const TypeDisplay = ({props}) => {
     }
 
     function setInactiveStore(unavail){
-        storeData.map((item) => {
+        const unavailList = new Map()
+        const filtered = blogData
+        filtered.map((item) => {
             if (item.bs_gsname1 in unavail){
+                // 일단은 bs_gsname1 만
                 const countStock = unavail[item.bs_gsname1].count / unavail[item.bs_gsname1].stock 
+                const unavail = countStock >= 1 ? true : false
                 item = {
                     ...item,
-                    unavilable : countStock >= 1 ? true : false
+                    unavailable : unavail
                 }
-                console.log(`${item.bs_gsname1} is set to ${countStock >= 1 ? true : false}`)
+                if (countStock >= 1) {
+                    unavailList[item.bs_gsname1] = unavail
+                }
+                console.log(`${item.bs_code} ${item.bs_gsname1} is set to ${item.unavailable}`)
             }
         })
-        console.log('inactive stores ', storeData)
+        console.log(filtered)
+        setFilteredBlogData(filtered)
+        // console.log('inactive stores ', filtered)
     }
     // search by keyword
     function getHanbok() {
@@ -107,7 +115,6 @@ const TypeDisplay = ({props}) => {
             setBlogData(result.data[0]);
         })
     }
-
     // All
     function getAllHanbok() {
         axios.get(SERVER_PATH)
@@ -116,6 +123,29 @@ const TypeDisplay = ({props}) => {
             setBlogData(result.data[0]);
             // setStoreData(result.data);
         })
+    }
+
+    const ImageDiv = (item) => {
+        const unavailable = item.unavailable
+        // console.log('imageDiv item ', item)
+        let imgdiv = ''
+        if (unavailable) {
+            console.log(`${item.bs_gsname1} is unavail`)
+            imgdiv =   
+            <div className="relative w-full h-52 mobile:h-24 overflow-hidden rounded justify-center items-center">
+                <img className="absolute object-cover blur-sm inset-0 w-full rounded " src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" />
+                <div className="absolute w-full h-full flex bg-slate-400 bg-opacity-50 justify-center items-center">
+                    <p className="text-white text-center text-md mobile:text-xs font-sans font-semibold">해당상품은 <br /> 대여불가능합니다.</p>    
+                </div>
+            </div>
+        }else {
+            imgdiv =   
+            <div className="relative w-full h-52 mobile:h-24 bg-slate-200 overflow-hidden rounded justify-center items-center">
+                <img className="absolute object-cover inset-0 w-full rounded " src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" />
+            </div>
+        }
+
+        return imgdiv
     }
 
     // 이미지경로 - IMAGE_PATH + Store/[A001]/1.jpg
@@ -132,20 +162,20 @@ const TypeDisplay = ({props}) => {
                 <p className='tooltip border rounded p-1 mt-3 z-50 text-black'>tooltip testing1.5</p>
                 툴팁테스트
             </div> */}
-            <div className="container grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-10 ">
-                {blogData?.map((item) => 
+            <div className="container grid mobile:grid-cols-3 grid-cols-6 mobile:gap-1 gap-6 ">
+                {filterdBlogData?.map((item) =>
                 <div className="cursor-pointer" id='image link container'>
-                    {/* onError={(e) => {console.log(e)}}  */}
-
+                {/* blur여부 + div hidden 여부 */}
                 <Link to={`/display/${item.bs_code}`}>
                     <div className="mb-4 p-2 hover:shadow-lg"> 
-                        <div className="hidden relative h-80 w-80 max-w-full justify-center items-center">
-                            <img className="absolute blur-sm inset-0 w-full rounded" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" />
+                        <div className="relative w-full h-52 mobile:h-24 overflow-hidden rounded justify-center items-center">
+                            {ImageDiv(item)}
+                            {/* <img className="absolute object-cover blur-sm inset-0 w-full rounded " src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" />
                             <div className="absolute w-full h-full flex bg-slate-400 bg-opacity-50 justify-center items-center">
-                                <p className="absolut text-white text-xl font-sans font-semibold">해당상품은 대여불가능합니다.</p>    
-                            </div>
+                                <p className="text-white text-center text-md mobile:text-xs font-sans font-semibold">해당상품은 <br /> 대여불가능합니다.</p>    
+                            </div> */}
                         </div>
-                        <img className="w-full rounded" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" />
+                        {/* <img className="w-full rounded" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" /> */}
                         <p className="mt-1 text-xs tracking-tight">{typeString}한복</p>
                         <p className="font-sans">[{item.bs_code}]{item.bs_gsname1?.split(' ')[0]}</p>
                         <p className="font-sans">{item.bs_gsname2?.split(' ')[0]} {item.bs_gsname3?.split(' ')[0]}</p>
