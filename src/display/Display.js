@@ -10,13 +10,13 @@ const Display = ({itemInfo}) => {
     // 약간 무식한 방법
     const imageLength = [1,2,3,4,5,6,7,8,9]
 
-    const [imageData, setImageeData] = useState({})
+    const [imageData, setImageData] = useState({})
     const [previewIndex, setPreviewIndex] = useState(1)
 
     useEffect(() => {
         const searchPath = `${SERVER_PATH}/${id}`
         axios.get(searchPath).then((result) => {
-            setImageeData(result.data[0])
+            setImageData(result.data[0])
             console.log(result.data[0])
         })
     }, [])

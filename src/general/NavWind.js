@@ -3,19 +3,32 @@ import logo from '../logo_1.svg';
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useCookies } from 'react-cookie';
+import axios from 'axios';
+import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './General';
+import { useDispatch, useSelector } from 'react-redux';
+import { increase, decrease } from '../reducing/countSlice';
+import { setRental } from '../reducing/rentalDispatch';
 
 const NavWind = () => {
+
+    const count = useSelector(state => state.counter.value)
+    const hanboks = useSelector(state => state.event.hanbok)
+    // const eventRental = useSelector(state => state.event.eventRental)
+    const dispatch = useDispatch()
 
     const [eventDate, setEventDate] = useState(null);
     // eventdate 쿠키
     const [cookie, setCookie, removeCookie] = useCookies(['eventdate']);
-    const ver = process.env.NODE_ENV
+    const [unableList, setUnableList] = useState([])
 
     // 쿠키가 있으면 
     useEffect(() => {
         setEventDate(new Date(cookie.eventdate))
-        // console.log('eventdate cookie', cookie.eventdate)
     }, [])
+
+    useEffect(() => {
+        console.log('hanboks - reduxed by useSelector (in Navbar)')
+    }, [hanboks])
 
     // eventdate cookie가 생성되면 rentalList 새로고침 
     useEffect(() => {
@@ -23,9 +36,46 @@ const NavWind = () => {
     }, [cookie])
 
     function changeEventDate(e) {
-        // console.log(e)
-        setEventDate(new Date(e.target.value))
-        setCookie('eventdate', e.target.value, { path:'/' })
+        const date = e.target.value
+        setEventDate(new Date(date))
+        setCookie('eventdate', date, { path:'/' })
+        getRentalList(date)
+    }
+    // rentalList 조회 후 filter
+    function getRentalList(date){
+        const start = DATE_ADD(date, -14)
+        const startStr = DATE_TO_SQLSTRING(start)
+        const end = DATE_ADD(date, 14)
+        const endStr = DATE_TO_SQLSTRING(end)
+        console.log(startStr, endStr)
+        axios.get(SERVER_PATH + '/rentalItems', {
+            params: {
+                startDate: startStr,
+                endDate: endStr
+            }
+        }).then((result) => {
+            console.log(result.data[0])
+            filterRental(result.data[0], DATE_TO_SQLSTRING(DATE_ADD(date, -5)), DATE_TO_SQLSTRING(DATE_ADD(date, 8)))
+        })
+    }
+    // ★ filtering
+    // 정확도는 나중에 체크하고 일단 redux
+    function filterRental(rentals, start, end) {
+        const hanbokMap = HANBOK_MAP(hanboks)
+        let cantRental = []
+        rentals.map((item) => {
+            if (item.rt_rdate >= start && item.rt_bdate <= end &&  item.rt_Gubun != null) {
+                cantRental.push(item)
+            }
+        })
+        console.log('filterd cant\' rental', cantRental)
+        // cantRentalMap = [gs_name]
+        // const allGoods = [] => hanboks
+        // hanbokMap.map((item) => {
+
+        // })
+        
+        dispatch(setRental(cantRental))
     }
 
     return(
@@ -70,6 +120,17 @@ const NavWind = () => {
                     <NavLink to={'/fonts'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>폰트시트</NavLink>
                 </p>
+                <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200  mr-4">
+                    <NavLink to={'/test'}
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>테스팅</NavLink>
+                </p>
+                <div className='hidden mobile:block'>
+                    <button className='px-2 mr-1 border rounded text-white'
+                        onClick={() => dispatch(increase())}>▲</button>  
+                    <button className='px-2 mr-1 border rounded text-white'
+                        onClick={() => dispatch(decrease())}>▼</button>  
+                    <p className='inline-block text-white'>count : {count}</p>
+                </div>
                 <div className='inline-flex float-right items-center justify-center mobile:block mobile:float-left'>
                     {/* 행사날짜 툴팁 */}
                     {/* <div className='has-tooltip bg-blue-300'>툴팁테스트

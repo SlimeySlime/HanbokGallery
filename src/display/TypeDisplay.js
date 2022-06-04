@@ -2,45 +2,101 @@ import React, { useEffect, useState } from "react"
 import axios from 'axios'
 import { Link, useParams } from "react-router-dom"
 import {IMAGE_PATH, SERVER_PATH, ERROR_HIDE, TYPE_TO_KOREAN} from '../general/General';
+import { useSelector } from "react-redux";
 
 // 타입별 파라미터에 따라 조회 
 // useParams => type
-// title, 
-const TypeDisplay = (props) => {
+const TypeDisplay = ({props}) => {
     const {type} = useParams();
     const typeString = TYPE_TO_KOREAN(type)
     // 행사일자에 대여나가는 한복리스트 
     const [hanbokList, setHanbokList] = useState([]);
     const [blogData, setBlogData] = useState([]);
-    const [storeData, setStoreData] = useState([])
+    const eventRental = useSelector(state => state.event.eventRental)
+    const storeData = useSelector(state => state.event.store)
+    const hanboks = useSelector(state => state.event.hanbok)
 
-    // const blogDataPath = process.env.NODE_ENV === 'production' ? '/store' : 'DEV_SERVER_PATH'
-    const blogDataPath = SERVER_PATH
-    const IMAGE_PATH = 'https://storage.googleapis.com/hanbok.bdanbonga.com/'
-
+    // 초기 불러오기
+    // type 재정의 필요할듯
     useEffect(() => {
-        if (type === 'all') {
-            getAllHanbok()
-        }else{
-            getHanbok()
-        }
-        // console.log(`'current type : ${type} => ${typeString}`)
-        console.log('SERVER_PATH : ', SERVER_PATH)
-    }, [type])
+        // 일단 type으로 필터후 unavail
+        // 그리고 회색처리 
+        // 1 
+        filterHanbok(type) 
 
+    }, [type, eventRental])
+    
+    useEffect(() => {
+        console.log('current blog data length : ', blogData?.length)
+        // 2 
+        unavaileList()
+        // 3
+        // setInactiveStore()
+    }, [blogData])
+    
+    // debug
     useEffect(() => {
         console.log(typeString)
     }, [typeString])
 
-    useEffect(() => {
-        console.log('current blog data length : ', blogData.length)
-    }, [blogData])
+    // axios 대신 filtering해서 state에 저장 
+    function filterHanbok(keyword) {
+        if (keyword === 'all') {
+            setBlogData(storeData)
+        }else{
+            let filtered = []
+            storeData?.map((item) => {
+                if (item.bs_part?.includes(typeString)) {
+                    filtered.push(item)
+                }
+            })
+            setBlogData(filtered)
+        }
+        
+    }
+    // hanbok과 eventRental map으로 작성
+    // event[gs_name] = 1/2 -> store.map(gs_name in event)
+    const unavaileList = () => {
+        const hanbokMap = new Map()
+        // 검색에 용이하게 Map으로
+        hanboks.map((item) => {
+            hanbokMap[item.gs_name] = item
+        })
+        // 대여불가 Map
+        let unavailMap = new Map()
+        eventRental.map((item) => {
+            if (item.gs_name in unavailMap) {
+                unavailMap[item.gs_name].count += 1
+            }else{
+                unavailMap[item.gs_name] = {
+                    ...item,
+                    count : 1,
+                    stock : hanbokMap[item.gs_name]?.gs_old_jgquant,  
+                }
+            }
+        })
+        
+        console.log('unavailMap', unavailMap)
+        setInactiveStore(unavailMap)
+    }
 
+    function setInactiveStore(unavail){
+        storeData.map((item) => {
+            if (item.bs_gsname1 in unavail){
+                const countStock = unavail[item.bs_gsname1].count / unavail[item.bs_gsname1].stock 
+                item = {
+                    ...item,
+                    unavilable : countStock >= 1 ? true : false
+                }
+                console.log(`${item.bs_gsname1} is set to ${countStock >= 1 ? true : false}`)
+            }
+        })
+        console.log('inactive stores ', storeData)
+    }
     // search by keyword
     function getHanbok() {
         console.log(SERVER_PATH)
-        axios.get("http://localhost:3003/store", {
-        // axios.get(SERVER_PATH, {
+        axios.get(SERVER_PATH, {
             params: {
                 bs_part : typeString,
                 bs_code : 'A',
@@ -51,9 +107,10 @@ const TypeDisplay = (props) => {
             setBlogData(result.data[0]);
         })
     }
+
     // All
     function getAllHanbok() {
-        axios.get(blogDataPath)
+        axios.get(SERVER_PATH)
         .then((result) => {
             console.log(result.data)
             setBlogData(result.data[0]);
@@ -76,12 +133,18 @@ const TypeDisplay = (props) => {
                 툴팁테스트
             </div> */}
             <div className="container grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-10 ">
-                {blogData.map((item) => 
-                <div className="cursor-pointer"
-                    onError={(e) => {console.log(e)}} id='image link container'>
+                {blogData?.map((item) => 
+                <div className="cursor-pointer" id='image link container'>
+                    {/* onError={(e) => {console.log(e)}}  */}
 
                 <Link to={`/display/${item.bs_code}`}>
                     <div className="mb-4 p-2 hover:shadow-lg"> 
+                        <div className="hidden relative h-80 w-80 max-w-full justify-center items-center">
+                            <img className="absolute blur-sm inset-0 w-full rounded" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" />
+                            <div className="absolute w-full h-full flex bg-slate-400 bg-opacity-50 justify-center items-center">
+                                <p className="absolut text-white text-xl font-sans font-semibold">해당상품은 대여불가능합니다.</p>    
+                            </div>
+                        </div>
                         <img className="w-full rounded" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" />
                         <p className="mt-1 text-xs tracking-tight">{typeString}한복</p>
                         <p className="font-sans">[{item.bs_code}]{item.bs_gsname1?.split(' ')[0]}</p>

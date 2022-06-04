@@ -6,11 +6,19 @@ const DEV_SERVER_PATH = 'http://localhost:3003/store'
 const ERROR_HIDE = (e) => {
     e.target.style.display = 'none'
 }
-
+/**
+ * bride - 신부
+ * groom - 신랑
+ * parent - 혼주
+ * guest - 하객
+ * all - 전체
+ */
 const TYPE_TO_KOREAN = (type) => {
     switch (type) {
         case 'bride':
             return '신부'
+        case 'groom':
+            return '신랑'
         case 'parent':
             return '혼주'        
         case 'guest':
@@ -23,5 +31,31 @@ const TYPE_TO_KOREAN = (type) => {
             return '에러'
     }
 }
+/**
+* DATE 오브젝트에 날짜 계산
+* @param {date} date date 오브젝트
+* @param {days} days +- 날짜
+*/
+const DATE_ADD = (date, days) => {
+    const newDate = new Date(date)
+    newDate.setDate(newDate.getDate() + days)
+    return newDate
+}
+/**
+* DATE를 SQL STRING으로 변환 (Wed Jun 15 2022 -> 20220615)
+* @param {date} date 오브젝트
+*/
+const DATE_TO_SQLSTRING = (date) => {
+    const sqlStr = date.toISOString().split('T')[0].replace(/-/gi, '')
+    return sqlStr
+}
 
-export {IMAGE_PATH, SERVER_PATH, DEV_SERVER_PATH, ERROR_HIDE, TYPE_TO_KOREAN}
+function HANBOK_MAP(hanbokList){
+    let hanbokMap = new Map()
+    hanbokList.map((item) => {
+      hanbokMap[item.gs_name] = item
+    })
+    return hanbokMap
+}
+
+export {IMAGE_PATH, SERVER_PATH, DEV_SERVER_PATH, ERROR_HIDE, TYPE_TO_KOREAN, DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP}
