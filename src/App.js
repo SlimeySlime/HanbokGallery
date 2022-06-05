@@ -43,7 +43,7 @@ function App() {
         dispatch(setStore(result.data[0]))
         // return result.data[0]
     })
-}
+  }
   // 나중에 조회하기좋게 map으로 
   function hanbokMapping(hanbok){
     let hanbokMap = new Map()

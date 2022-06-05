@@ -7,41 +7,29 @@ import { useSelector } from "react-redux";
 // 타입별 파라미터에 따라 조회 
 // useParams => type
 const TypeDisplay = ({props}) => {
+    const eventRental = useSelector(state => state.event.eventRental)
+    const storeData = useSelector(state => state.event.store)
+    const hanboks = useSelector(state => state.event.hanbok)
     const {type} = useParams();
     const typeString = TYPE_TO_KOREAN(type)
     // 행사일자에 대여나가는 한복리스트 
     const [hanbokList, setHanbokList] = useState([]);
     const [blogData, setBlogData] = useState([]);
     const [filterdBlogData, setFilteredBlogData] = useState([]);
-    // 대신에
-    const [unavailList, setUnavailList] = useState({});
-    const eventRental = useSelector(state => state.event.eventRental)
-    const storeData = useSelector(state => state.event.store)
-    const hanboks = useSelector(state => state.event.hanbok)
 
+    // ★★ 1. unavailRentalMap -> 2. hanbokFilter -> 3. hanbokFiltered.unavail = ture / false 
     // 초기 불러오기
-    // 
     useEffect(() => {
-        filterHanbok(type) 
+        // 1
+        eventRentalMap()
     }, [type, eventRental])
-    
-    useEffect(() => {
-        console.log('current blog data length : ', blogData?.length)
-        // 2 
-        // unavaileList()
-        // 3
-        // setInactiveStore()
-    }, [blogData])
-    
-    // debug
-    useEffect(() => {
-        console.log(typeString)
-    }, [typeString])
 
-    // axios 대신 filtering해서 state에 저장 
+    // axios 대신 filtering
     function filterHanbok(keyword) {
+        console.log('filter hanbok ', keyword)
         if (keyword === 'all') {
-            setBlogData(storeData)
+            // setBlogData(storeData)
+            return storeData
         }else{
             let filtered = []
             storeData?.map((item) => {
@@ -49,19 +37,17 @@ const TypeDisplay = ({props}) => {
                     filtered.push(item)
                 }
             })
-            setBlogData(filtered)
+            // setBlogData(filtered)
+            return filtered
         }
-        
     }
-    // hanbok과 eventRental map으로 작성
-    // event[gs_name] = 1/2 -> store.map(gs_name in event)
-    const getUnavaileList = () => {
-        const hanbokMap = new Map()
+    // eventRentla => unavailMap[gs_name] = item + count, stock
+    const eventRentalMap = () => {
         // 검색에 용이하게 Map으로
+        const hanbokMap = new Map()
         hanboks.map((item) => {
             hanbokMap[item.gs_name] = item
         })
-        // 대여불가 Map
         let unavailMap = new Map()
         eventRental.map((item) => {
             if (item.gs_name in unavailMap) {
@@ -74,31 +60,36 @@ const TypeDisplay = ({props}) => {
                 }
             }
         })
-        
-        console.log('unavailMap', unavailMap)
-        setInactiveStore(unavailMap)
+        // 3.
+        setUnavailList(unavailMap)
+        return unavailMap
     }
-
-    function setInactiveStore(unavail){
-        const unavailList = new Map()
-        const filtered = blogData
-        filtered.map((item) => {
-            if (item.bs_gsname1 in unavail){
+    // 기존 storeData(blogData)를 Map으로 만들고 unavailable을 추가 
+    function setUnavailList(unavailMap){
+        // const unavailList = new Map()
+        const filteredHanbok = filterHanbok(type)   // 2.
+        const newFilterd = []
+        filteredHanbok.map((item) => {
+            if (item.bs_gsname1 in unavailMap){
                 // 일단은 bs_gsname1 만
-                const countStock = unavail[item.bs_gsname1].count / unavail[item.bs_gsname1].stock 
+                const countStock = unavailMap[item.bs_gsname1].count / unavailMap[item.bs_gsname1].stock 
                 const unavail = countStock >= 1 ? true : false
                 item = {
                     ...item,
                     unavailable : unavail
                 }
-                if (countStock >= 1) {
-                    unavailList[item.bs_gsname1] = unavail
-                }
+                newFilterd.push({
+                    ...item, 
+                    unavailable : unavail
+                })
                 console.log(`${item.bs_code} ${item.bs_gsname1} is set to ${item.unavailable}`)
+            }else{
+                newFilterd.push(item)
             }
         })
-        console.log(filtered)
-        setFilteredBlogData(filtered)
+        console.log(newFilterd)
+        setFilteredBlogData(newFilterd)
+        setBlogData(newFilterd)
         // console.log('inactive stores ', filtered)
     }
     // search by keyword
@@ -124,34 +115,37 @@ const TypeDisplay = ({props}) => {
             // setStoreData(result.data);
         })
     }
+    function checkCurrent() {
+        console.log('current blogData : ',  blogData)
+    }
 
     const ImageDiv = (item) => {
         const unavailable = item.unavailable
-        // console.log('imageDiv item ', item)
-        let imgdiv = ''
         if (unavailable) {
             console.log(`${item.bs_gsname1} is unavail`)
-            imgdiv =   
-            <div className="relative w-full h-52 mobile:h-24 overflow-hidden rounded justify-center items-center">
+            return(
+            <div className="relative w-full h-52 mobile:h-52 overflow-hidden rounded justify-center items-center">
                 <img className="absolute object-cover blur-sm inset-0 w-full rounded " src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" />
                 <div className="absolute w-full h-full flex bg-slate-400 bg-opacity-50 justify-center items-center">
                     <p className="text-white text-center text-md mobile:text-xs font-sans font-semibold">해당상품은 <br /> 대여불가능합니다.</p>    
                 </div>
             </div>
+            )
         }else {
-            imgdiv =   
-            <div className="relative w-full h-52 mobile:h-24 bg-slate-200 overflow-hidden rounded justify-center items-center">
+            return(
+            <div className="relative w-full h-52 mobile:h-52 bg-slate-200 overflow-hidden rounded justify-center items-center">
                 <img className="absolute object-cover inset-0 w-full rounded " src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" />
             </div>
+            )
         }
-
-        return imgdiv
     }
 
     // 이미지경로 - IMAGE_PATH + Store/[A001]/1.jpg
     return(
         <div className="container mx-auto">
             <h3 className="text-2xl font-katuri m-4">{typeString} 한복</h3> 
+            <button className="hidden border border-slate-50 px-2 rounded bg-blue-300 hover:bg-blue-700"
+                onClick={() => {checkCurrent()}}>현재 리스트 디버깅</button>
             {/* <div className='has-tooltip bg-blue-300'>
                 <p className='tooltip2 bg-white border rounded p-1 mt-3 z-50 text-black'>tooltip testing</p>
                 <p className='tooltip bg-white border rounded p-1 mt-3 z-50 text-black'>tooltip testing1.5</p>
@@ -177,10 +171,10 @@ const TypeDisplay = ({props}) => {
                         </div>
                         {/* <img className="w-full rounded" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" /> */}
                         <p className="mt-1 text-xs tracking-tight">{typeString}한복</p>
-                        <p className="font-sans">[{item.bs_code}]{item.bs_gsname1?.split(' ')[0]}</p>
-                        <p className="font-sans">{item.bs_gsname2?.split(' ')[0]} {item.bs_gsname3?.split(' ')[0]}</p>
-                        <p className="inline-block font-sans font-semibold">80,000 원</p>
-                        <p className="ml-1 inline font-sans font-thin text-slate-600 line-through">100,000 원</p>
+                        <p className="font-sans mobile:text-sm ">[{item.bs_code}]{item.bs_gsname1?.split(' ')[0]}</p>
+                        <p className="font-sans mobile:text-sm">{item.bs_gsname2?.split(' ')[0]} {item.bs_gsname3?.split(' ')[0]}</p>
+                        <p className="inline-block mr-2 font-sans font-semibold mobile:text-sm">80,000원</p>
+                        <p className="inline font-sans font-thin text-slate-600 line-through mobile:text-sm">100,000원</p>
                     </div>
                 </Link>  
                 </div>

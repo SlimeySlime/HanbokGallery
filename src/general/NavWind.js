@@ -116,21 +116,14 @@ const NavWind = () => {
                     <NavLink to={'/main/best'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>인기상품</NavLink>
                 </p>
-                <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200  mr-4">
+                <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200 mr-4 mobile:hidden">
                     <NavLink to={'/fonts'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>폰트시트</NavLink>
                 </p>
-                <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200  mr-4">
+                <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200 mr-4 mobile:hidden">
                     <NavLink to={'/test'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>테스팅</NavLink>
                 </p>
-                <div className='hidden mobile:block'>
-                    <button className='px-2 mr-1 border rounded text-white'
-                        onClick={() => dispatch(increase())}>▲</button>  
-                    <button className='px-2 mr-1 border rounded text-white'
-                        onClick={() => dispatch(decrease())}>▼</button>  
-                    <p className='inline-block text-white'>count : {count}</p>
-                </div>
                 <div className='inline-flex float-right items-center justify-center mobile:block mobile:float-left'>
                     {/* 행사날짜 툴팁 */}
                     {/* <div className='has-tooltip bg-blue-300'>툴팁테스트
