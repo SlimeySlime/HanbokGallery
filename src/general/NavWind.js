@@ -9,17 +9,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { increase, decrease } from '../reducing/countSlice';
 import { setRental } from '../reducing/rentalDispatch';
 
-const NavWind = () => {
+import { FiBookOpen } from "react-icons/fi";
+import { HiMenuAlt2 } from "react-icons/hi";
 
-    const count = useSelector(state => state.counter.value)
+const NavWind = () => {
+    const dispatch = useDispatch()
     const hanboks = useSelector(state => state.event.hanbok)
     // const eventRental = useSelector(state => state.event.eventRental)
-    const dispatch = useDispatch()
 
+    // eventdate + 쿠키
     const [eventDate, setEventDate] = useState(null);
-    // eventdate 쿠키
     const [cookie, setCookie, removeCookie] = useCookies(['eventdate']);
-    const [unableList, setUnableList] = useState([])
+    // const [unableList, setUnableList] = useState([])
+    const [navVisible, setNavVisible] = useState(false);
 
     // 쿠키가 있으면 
     useEffect(() => {
@@ -78,9 +80,16 @@ const NavWind = () => {
         dispatch(setRental(cantRental))
     }
 
+    function onOffNav(){
+        setNavVisible(!navVisible)
+        console.log('nav ', !navVisible)
+    }
+
     return(
-    <nav className="flex items-center justify-center flex-wrap bg-teal-800 p-6">
-        <div className="flex items-center text-white mr-6">
+    <nav className="flex flex-wrap items-center justify-between bg-teal-800 p-4 
+                    mobile:p-2 mobile:sticky top-0 z-50 mobile:w-full">
+        {/* 로고 */}
+        <div className="flex items-center justify-between text-white mr-6">
             {/* <svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg> */}
             <img className='fill-white w-8 mr-2' src={logo} fill='#f4f4f4' alt=""/>
             <span className="font-dimibang text-3xl tracking-tight">
@@ -88,42 +97,67 @@ const NavWind = () => {
                 {/* <p className='text-sm font-sans'>process.env : {process.env.REACT_APP_SEARCH_PATH}</p> */}
             </span>
         </div>
-        {/* 메뉴들 */}
-        <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-            <div class="text-lg lg:flex-grow">
-                {/* 구형 */}
-                {/* <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200 mr-4">
-                    <NavLink to={'/bride'}
-                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white")}>신부한복</NavLink>
-                </p> */}
-                 <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200 mr-4">
+        {/* 모바일 Nav */}
+        <HiMenuAlt2 className='hidden mobile:block w-10 h-10 p-1' color='white' onClick={() => {onOffNav()}}/>
+        {/* <button className='hidden mobile:flex float-left' onClick={() => {onOffNav()}}>메뉴버튼</button> */}
+        {/* <div className={(navVisible ? 'hidden' : 'fixed ' ) + ` bottom-0 top-12 left-0 w-3/5 bg-teal-700 opacity-90 sm:hidden`}> */}
+        <div className={(navVisible ? '-left-full' : 'left-0 ' ) + ` fixed bottom-0 top-14 w-3/5 bg-teal-700 opacity-90 transition-left sm:hidden`}>
+            <ul className='p-2'>
+                <p className="p-2 block text-teal-200 text-lg">
                     <NavLink to={'/main/all'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white")}>전체보기</NavLink>
                 </p>
-                <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200 mr-4">
+                <p className="p-2 block text-teal-200 text-lg">
                     <NavLink to={'/main/bride'}
-                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white")}>신부한복</NavLink>
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 text-2xl hover:text-white")}>신부한복</NavLink>
                 </p>
-                <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200  mr-4">
+                <p className="p-2 block text-teal-200 text-lg">
                     <NavLink to={'/main/parent'}
-                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>혼주한복</NavLink>
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 font-classic text-2xl hover:text-white") }>혼주한복</NavLink>
                 </p>
-                <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200  mr-4">
+                <p className="p-2 block text-teal-200 text-lg">
                     <NavLink to={'/main/guest'}
-                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>하객한복</NavLink>
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 font-samlip text-2xl hover:text-white") }>하객한복</NavLink>
                 </p>
-                <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200  mr-4">
+                <p className="p-2 block text-teal-200 text-lg">
                     <NavLink to={'/main/best'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>인기상품</NavLink>
                 </p>
-                <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200 mr-4 mobile:hidden">
+            </ul>
+        </div>
+        {/* 메뉴들 */}
+        <div className="w-full block flex-grow md:flex md:items-center md:w-auto mobile:hidden">
+        {/* <div className="block flex-grow w-full mobile:hidden"> */}
+            <div class="text-lg lg:flex-grow">
+                <p className="p-2 block sm:inline-block text-teal-200 text-lg mr-4">
+                    <NavLink to={'/main/all'}
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white")}>전체보기</NavLink>
+                </p>
+                <p className="p-2 block sm:inline-block text-teal-200 text-lg mr-4">
+                    <NavLink to={'/main/bride'}
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white")}>신부한복</NavLink>
+                </p>
+                <p className="p-1 block sm:inline-block lg:mt-0 text-teal-200 mr-4">
+                    <NavLink to={'/main/parent'}
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>혼주한복</NavLink>
+                </p>
+                <p className="p-1 block sm:inline-block lg:mt-0 text-teal-200 mr-4">
+                    <NavLink to={'/main/guest'}
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>하객한복</NavLink>
+                </p>
+                <p className="p-1 block sm:inline-block lg:mt-0 text-teal-200 mr-4">
+                    <NavLink to={'/main/best'}
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>인기상품</NavLink>
+                </p>
+                <p className="p-1 block sm:inline-block lg:mt-0 text-teal-200 mr-4">
                     <NavLink to={'/fonts'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>폰트시트</NavLink>
                 </p>
-                <p className="p-1 block lg:inline-block lg:mt-0 text-teal-200 mr-4 mobile:hidden">
+                <p className="p-1 block sm:inline-block lg:mt-0 text-teal-200 mr-4">
                     <NavLink to={'/test'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>테스팅</NavLink>
                 </p>
+                {/* 행사날짜 및 검색 */}
                 <div className='inline-flex float-right items-center justify-center mobile:block mobile:float-left'>
                     {/* 행사날짜 툴팁 */}
                     {/* <div className='has-tooltip bg-blue-300'>툴팁테스트
@@ -137,7 +171,6 @@ const NavWind = () => {
                         value={cookie.eventdate}/>
                     {/* 검색 */}
                     <div className='inline-flex border-blue-400 hover:shadow-md mobile:mt-4' >
-                        {/* 아이콘 */}
                         <button>
                             <svg class="rounded-l-md w-8 h-8 bg-white text-gray-500 fill-slate-400" fill="currentColor2" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                         </button>

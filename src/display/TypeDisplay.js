@@ -121,10 +121,11 @@ const TypeDisplay = ({props}) => {
 
     const ImageDiv = (item) => {
         const unavailable = item.unavailable
-        if (unavailable) {
+        
+        if (unavailable) {      // 대여불가능 상품 
             console.log(`${item.bs_gsname1} is unavail`)
             return(
-            <div className="relative w-full h-52 mobile:h-52 overflow-hidden rounded justify-center items-center">
+            <div className="relative w-full h-52 mobile:h-52 overflow-hidden rounded justify-center items-center cursor-not-allowed">
                 <img className="absolute object-cover blur-sm inset-0 w-full rounded " src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" />
                 <div className="absolute w-full h-full flex bg-slate-400 bg-opacity-50 justify-center items-center">
                     <p className="text-white text-center text-md mobile:text-xs font-sans font-semibold">해당상품은 <br /> 대여불가능합니다.</p>    

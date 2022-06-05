@@ -16,8 +16,10 @@ module.exports = {
       screens: {
         // 'mobile' : '640px',
         'mobile' : {'max': '640px'},
+      },
+      transitionProperty: {
+        'left' : 'left',
       }
-    
     },
   },
   plugins: [],
