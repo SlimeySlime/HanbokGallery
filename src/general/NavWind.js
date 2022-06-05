@@ -125,11 +125,11 @@ const NavWind = () => {
                 </p>
             </ul>
         </div>
-        {/* 메뉴들 */}
+        {/* 데스크톱 와이드 메뉴 */}
         <div className="w-full block flex-grow md:flex md:items-center md:w-auto mobile:hidden">
         {/* <div className="block flex-grow w-full mobile:hidden"> */}
             <div class="text-lg lg:flex-grow">
-                <p className="p-2 block sm:inline-block text-teal-200 text-lg mr-4">
+                <p className="p-2 block sm:inline-block text-teal-200 text-lg mr-2">
                     <NavLink to={'/main/all'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white")}>전체보기</NavLink>
                 </p>
@@ -137,23 +137,23 @@ const NavWind = () => {
                     <NavLink to={'/main/bride'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white")}>신부한복</NavLink>
                 </p>
-                <p className="p-1 block sm:inline-block lg:mt-0 text-teal-200 mr-4">
+                <p className="p-1 block sm:inline-block text-teal-200 mr-4">
                     <NavLink to={'/main/parent'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>혼주한복</NavLink>
                 </p>
-                <p className="p-1 block sm:inline-block lg:mt-0 text-teal-200 mr-4">
+                <p className="p-1 block sm:inline-block text-teal-200 mr-4">
                     <NavLink to={'/main/guest'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>하객한복</NavLink>
                 </p>
-                <p className="p-1 block sm:inline-block lg:mt-0 text-teal-200 mr-4">
+                <p className="p-1 block sm:inline-block text-teal-200 mr-4">
                     <NavLink to={'/main/best'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>인기상품</NavLink>
                 </p>
-                <p className="p-1 block sm:inline-block lg:mt-0 text-teal-200 mr-4">
+                <p className="p-1 block sm:inline-block text-teal-200 mr-4">
                     <NavLink to={'/fonts'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>폰트시트</NavLink>
                 </p>
-                <p className="p-1 block sm:inline-block lg:mt-0 text-teal-200 mr-4">
+                <p className="p-1 block sm:inline-block text-teal-200 mr-4">
                     <NavLink to={'/test'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>테스팅</NavLink>
                 </p>
@@ -183,7 +183,7 @@ const NavWind = () => {
         {/* <div">
             <a href="#" class="inline-block text-sm px-4 py-2 leading-none 
             border rounded text-white border-white hover:border-transparent 
-            hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">로그인 / 회원가입</a>
+            hover:text-teal-500 hover:bg-white mt-4">로그인 / 회원가입</a>
         </div> */}
         </div>
     </nav>
