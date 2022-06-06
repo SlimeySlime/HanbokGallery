@@ -17,6 +17,11 @@ const TypeDisplay = ({props}) => {
     const [blogData, setBlogData] = useState([]);
     const [filterdBlogData, setFilteredBlogData] = useState([]);
 
+    // 새로고침
+    // useEffect(() => {
+    //     eventRentalMap()
+    // }, [])
+
     // ★★ 1. unavailRentalMap -> 2. hanbokFilter -> 3. hanbokFiltered.unavail = ture / false 
     // 초기 불러오기
     useEffect(() => {
@@ -24,23 +29,6 @@ const TypeDisplay = ({props}) => {
         eventRentalMap()
     }, [type, eventRental])
 
-    // axios 대신 filtering
-    function filterHanbok(keyword) {
-        console.log('filter hanbok ', keyword)
-        if (keyword === 'all') {
-            // setBlogData(storeData)
-            return storeData
-        }else{
-            let filtered = []
-            storeData?.map((item) => {
-                if (item.bs_part?.includes(typeString)) {
-                    filtered.push(item)
-                }
-            })
-            // setBlogData(filtered)
-            return filtered
-        }
-    }
     // eventRentla => unavailMap[gs_name] = item + count, stock
     const eventRentalMap = () => {
         // 검색에 용이하게 Map으로
@@ -68,29 +56,40 @@ const TypeDisplay = ({props}) => {
     function setUnavailList(unavailMap){
         // const unavailList = new Map()
         const filteredHanbok = filterHanbok(type)   // 2.
-        const newFilterd = []
-        filteredHanbok.map((item) => {
+        const newFilterd = filteredHanbok.map((item) => {
             if (item.bs_gsname1 in unavailMap){
                 // 일단은 bs_gsname1 만
                 const countStock = unavailMap[item.bs_gsname1].count / unavailMap[item.bs_gsname1].stock 
                 const unavail = countStock >= 1 ? true : false
-                item = {
+                return {
                     ...item,
                     unavailable : unavail
                 }
-                newFilterd.push({
-                    ...item, 
-                    unavailable : unavail
-                })
-                console.log(`${item.bs_code} ${item.bs_gsname1} is set to ${item.unavailable}`)
             }else{
-                newFilterd.push(item)
+                return item 
             }
         })
         console.log(newFilterd)
         setFilteredBlogData(newFilterd)
         setBlogData(newFilterd)
         // console.log('inactive stores ', filtered)
+    }
+    // axios 대신 filtering
+    function filterHanbok(keyword) {
+        console.log('filter hanbok ', keyword)
+        if (keyword === 'all') {
+            // setBlogData(storeData)
+            return storeData
+        }else{
+            let filtered = []
+            storeData?.map((item) => {
+                if (item.bs_part?.includes(typeString)) {
+                    filtered.push(item)
+                }
+            })
+            // setBlogData(filtered)
+            return filtered
+        }
     }
     // search by keyword
     function getHanbok() {
@@ -121,7 +120,6 @@ const TypeDisplay = ({props}) => {
 
     const ImageDiv = (item) => {
         const unavailable = item.unavailable
-        
         if (unavailable) {      // 대여불가능 상품 
             console.log(`${item.bs_gsname1} is unavail`)
             return(
@@ -145,7 +143,7 @@ const TypeDisplay = ({props}) => {
     return(
         <div className="container mx-auto">
             <h3 className="text-2xl font-katuri m-4">{typeString} 한복</h3> 
-            <button className="hidden border border-slate-50 px-2 rounded bg-blue-300 hover:bg-blue-700"
+            <button className="border border-slate-50 px-2 rounded bg-blue-300 hover:bg-blue-700"
                 onClick={() => {checkCurrent()}}>현재 리스트 디버깅</button>
             {/* <div className='has-tooltip bg-blue-300'>
                 <p className='tooltip2 bg-white border rounded p-1 mt-3 z-50 text-black'>tooltip testing</p>
@@ -153,12 +151,9 @@ const TypeDisplay = ({props}) => {
                 <p className='absolute mt-8 tooltip '>tooltip testing2</p>
                 툴팁테스트
             </div> */}
-            {/* <div className='has-tooltip bg-blue-300'>
-                <p className='tooltip border rounded p-1 mt-3 z-50 text-black'>tooltip testing1.5</p>
-                툴팁테스트
-            </div> */}
             <div className="container grid mobile:grid-cols-3 grid-cols-6 mobile:gap-1 gap-6 ">
-                {filterdBlogData?.map((item) =>
+                {/* {filterdBlogData?.map((item) => */}
+                {blogData?.map((item) =>
                 <div className="cursor-pointer" id='image link container'>
                 {/* blur여부 + div hidden 여부 */}
                 <Link to={`/display/${item.bs_code}`}>
@@ -170,7 +165,6 @@ const TypeDisplay = ({props}) => {
                                 <p className="text-white text-center text-md mobile:text-xs font-sans font-semibold">해당상품은 <br /> 대여불가능합니다.</p>    
                             </div> */}
                         </div>
-                        {/* <img className="w-full rounded" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" /> */}
                         <p className="mt-1 text-xs tracking-tight">{typeString}한복</p>
                         <p className="font-sans mobile:text-sm ">[{item.bs_code}]{item.bs_gsname1?.split(' ')[0]}</p>
                         <p className="font-sans mobile:text-sm">{item.bs_gsname2?.split(' ')[0]} {item.bs_gsname3?.split(' ')[0]}</p>
