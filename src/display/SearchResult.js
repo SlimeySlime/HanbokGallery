@@ -1,50 +1,30 @@
-import React, { useEffect, useState } from "react"
-import axios from 'axios'
-import { Link, useParams } from "react-router-dom"
-import {IMAGE_PATH, SERVER_PATH, ERROR_HIDE, TYPE_TO_KOREAN} from '../general/General';
+import React, { createRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { IMAGE_PATH } from "../general/General";
 
-// 타입별 파라미터에 따라 조회 
-// useParams => type
-const TypeDisplay = ({imageList}) => {
+const SearchResult = () => {
     const eventRental = useSelector(state => state.event.eventRental)
     const storeData = useSelector(state => state.event.store)
     const hanboks = useSelector(state => state.event.hanbok)
-    const {type} = useParams();
-    const typeString = TYPE_TO_KOREAN(type)
     // 행사일자에 대여나가는 한복리스트 
     const [hanbokList, setHanbokList] = useState([]);
     const [blogData, setBlogData] = useState([]);
     const [filterdBlogData, setFilteredBlogData] = useState([]);
-
-    const [imageHeight, setImageHeight] = useState('');
-
-    // ★★ 1. unavailRentalMap -> 2. hanbokFilter -> 3. hanbokFiltered.unavail = ture / false 
-
-    // useEffect(() => {
-    //     console.log('refresh prop.imageList', imageList)
-    //     console.log('refresh selector.storeData', storeData)
-    // }, [])
     
-    useEffect(() => {
-        console.log('useEffected [type] ')
-        eventRentalMap()
-    }, [type])
+    const {keywords} = useParams()
 
     useEffect(() => {
-        console.log('eventRental : ', eventRental)
+        console.log('current param ', keywords)
+    }, [])
+    // ★★ 1. unavailRentalMap -> 2. hanbokFilter -> 3. hanbokFiltered.unavail = ture / false 
+    // 초기 불러오기
+    useEffect(() => {
+        // 1
+        eventRentalMap()
+        // console.log('search keyword ', keywords.split(' '))
     }, [eventRental])
 
-    // 초기 불러오기 -> redux 이후에 불러오기 
-    useEffect(() => {
-        eventRentalMap()
-        console.log('useEffect [storedata, hanboks] ')
-        console.log('storeData', storeData)
-        console.log('hanboks', hanboks)
-        console.log('eventRental', eventRental)
-    }, [storeData, hanboks, eventRental])
-
-    // ★★★
     // eventRental => unavailMap[gs_name] = item + count, stock
     const eventRentalMap = () => {
         // 검색에 용이하게 Map으로
@@ -52,7 +32,6 @@ const TypeDisplay = ({imageList}) => {
         hanboks.map((item) => {
             hanbokMap[item.gs_name] = item
         })
-        // eventRental Map
         let unavailMap = new Map()
         eventRental.map((item) => {
             if (item.gs_name in unavailMap) {
@@ -67,12 +46,12 @@ const TypeDisplay = ({imageList}) => {
         })
         // 3.
         setUnavailList(unavailMap)
-        return unavailMap
+        // return unavailMap
     }
     // 기존 storeData(blogData)를 Map으로 만들고 unavailable을 추가 
     function setUnavailList(unavailMap){
         // const unavailList = new Map()
-        const filteredHanbok = filterHanbok(type)   // 2.
+        const filteredHanbok = filterHanbok(keywords)   // 2.
         const newFilterd = filteredHanbok.map((item) => {
             if (item.bs_gsname1 in unavailMap){
                 // 일단은 bs_gsname1 만
@@ -86,66 +65,27 @@ const TypeDisplay = ({imageList}) => {
                 return item 
             }
         })
-        console.log(newFilterd)
         // setFilteredBlogData(newFilterd)
         setBlogData(newFilterd)
         // console.log('inactive stores ', filtered)
     }
     // axios 대신 filtering
     function filterHanbok(keyword) {
-        // storeData -> imageList 실험
-        console.log('filter hanbok ', keyword)
-        if (keyword === 'all') {
-            // setBlogData(storeData)
-            return imageList
-        }else{
-            let filtered = []
-            imageList?.map((item) => {
-                if (item.bs_part?.includes(typeString)) {
-                    filtered.push(item)
-                }
-            })
-            // setBlogData(filtered)
-            return filtered
-        }
-    }
-    // search by keyword
-    function getHanbok() {
-        console.log(SERVER_PATH)
-        axios.get(SERVER_PATH, {
-            params: {
-                bs_part : typeString,
-                bs_code : 'A',
+        let filtered = []
+        storeData?.map((item) => {
+            if (item.bs_gsname1?.includes(keyword)){
+                console.log(`${item.bs_gsname1} in ${keyword}`)
+                filtered.push(item)
             }
         })
-        .then((result) => {
-            console.log(result.data[0])
-            setBlogData(result.data[0]);
-        })
+        return filtered
     }
-    // All
-    function getAllHanbok() {
-        axios.get(SERVER_PATH)
-        .then((result) => {
-            console.log(result.data)
-            setBlogData(result.data[0]);
-            // setStoreData(result.data);
-        })
-    }
-    function checkCurrent() {
-        console.log('current blogData : ',  blogData)
-    }
-
-    const onImageLoad = (e) => {
-        console.log(e)
-    }
-
     const ImageDiv = (item) => {
         const unavailable = item.unavailable
         if (unavailable) {      // 대여불가능 상품 
             console.log(`${item.bs_gsname1} is unavail`)
             return(
-            <div className="relative h-56 w-full mobile:h-32 overflow-hidden rounded justify-center items-center cursor-not-allowed">
+            <div className="relative w-full h-52 mobile:h-52 overflow-hidden rounded justify-center items-center cursor-not-allowed">
                 <img className="absolute object-cover blur-sm inset-0 w-full rounded " src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" />
                 <div className="absolute w-full h-full flex bg-slate-400 bg-opacity-50 justify-center items-center">
                     <p className="text-white text-center text-md mobile:text-xs font-sans font-semibold">해당상품은 <br /> 대여불가능합니다.</p>    
@@ -155,29 +95,8 @@ const TypeDisplay = ({imageList}) => {
         }else {
             return(
             // <div className="relative w-500 h-52 mobile:h-32 bg-slate-50 overflow-hidden rounded justify-center items-center">
-            <div className="relative h-56 w-full mobile:h-32 overflow-hidden rounded justify-center items-center bg-slate-50">
+            <div className="relative h-auto mobile:h-32 overflow-hidden rounded justify-center items-center bg-slate-50">
                 <img className="absolute bottom-0 w-full rounded " src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} width={500} alt="" />
-            </div>
-            )
-        }
-    }
-
-    const ImageDiv2 = (item) => {
-        const unavailable = item.unavailable
-        if (unavailable) {      // 대여불가능 상품 
-            console.log(`${item.bs_gsname1} is unavail`)
-            return(
-            <div className="cursor-not-allowed">
-                <img className="z-10" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} alt={`[${item.bs_code}]`}  />
-                <div className="w-full h-full flex bg-slate-700 bg-opacity-50 justify-center items-center">
-                    <p className="text-white text-center text-md mobile:text-xs font-preten font-semibold">해당상품은 <br /> 대여불가능합니다.</p>    
-                </div>
-            </div>
-            )
-        }else {
-            return(
-            <div>
-                <img className="z-10" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} alt={`[${item.bs_code}]`}  />
             </div>
             )
         }
@@ -185,8 +104,8 @@ const TypeDisplay = ({imageList}) => {
 
     // 이미지경로 - IMAGE_PATH + Store/[A001]/1.jpg
     return(
-        <div className="container mx-auto">
-            <h3 className="text-2xl font-katuri m-4">{typeString} 한복</h3> 
+        <div className="container flex-1 mx-auto">
+            <h3 className="text-2xl font-katuri m-4">검색 결과 : { keywords } </h3> 
             {/* <button className="hidden border border-slate-50 px-2 rounded bg-blue-300 hover:bg-blue-700"
                 onClick={() => {checkCurrent()}}>현재 리스트 디버깅</button> */}
 
@@ -203,9 +122,9 @@ const TypeDisplay = ({imageList}) => {
                 {/* blur여부 + div hidden 여부 */}
                 <Link to={`/display/${item.bs_code}`}>
                     <div className="mb-4 p-2 hover:shadow-lg"> 
-                        {ImageDiv2(item)}
-                        {/* <img src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} alt={`[${item.bs_code}]`}  /> */}
-                        <p className="mt-1 text-xs tracking-tight">{typeString}한복</p>
+                        {/* {ImageDiv(item)} */}
+                        <img src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} alt={`[${item.bs_code}]`}  />
+                        {/* <div className="relative w-full h-52 mobile:h-24 overflow-hidden rounded justify-center items-center"> </div> */}
                         <p className="font-sans mobile:text-sm ">[{item.bs_code}]{item.bs_gsname1?.split(' ')[0]}</p>
                         <p className="font-sans mobile:text-sm">{item.bs_gsname2?.split(' ')[0]} {item.bs_gsname3?.split(' ')[0]}</p>
                         <p className="inline-block mr-2 font-sans font-semibold mobile:text-sm">80,000원</p>
@@ -219,4 +138,5 @@ const TypeDisplay = ({imageList}) => {
     )
 }
 
-export default TypeDisplay;
+
+export default SearchResult

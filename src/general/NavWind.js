@@ -1,27 +1,25 @@
 // import logo from '../bdanlogo.svg';
 import logo from '../logo_1.svg';
+import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useCookies } from 'react-cookie';
-import axios from 'axios';
 import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './General';
 import { useDispatch, useSelector } from 'react-redux';
-import { increase, decrease } from '../reducing/countSlice';
 import { setRental } from '../reducing/rentalDispatch';
-
-import { FiBookOpen } from "react-icons/fi";
 import { HiMenuAlt2 } from "react-icons/hi";
 
 const NavWind = () => {
     const dispatch = useDispatch()
     const hanboks = useSelector(state => state.event.hanbok)
-    // const eventRental = useSelector(state => state.event.eventRental)
 
     // eventdate + 쿠키
     const [eventDate, setEventDate] = useState(null);
     const [cookie, setCookie, removeCookie] = useCookies(['eventdate']);
     // const [unableList, setUnableList] = useState([])
     const [navVisible, setNavVisible] = useState(false);
+
+    const [searchKeyword, setSearchKeyword] = useState('');
 
     // 쿠키가 있으면 
     useEffect(() => {
@@ -71,18 +69,11 @@ const NavWind = () => {
             }
         })
         console.log('filterd cant\' rental', cantRental)
-        // cantRentalMap = [gs_name]
-        // const allGoods = [] => hanboks
-        // hanbokMap.map((item) => {
-
-        // })
-        
         dispatch(setRental(cantRental))
     }
 
     function onOffNav(){
         setNavVisible(!navVisible)
-        console.log('nav ', !navVisible)
     }
 
     return(
@@ -97,11 +88,9 @@ const NavWind = () => {
                 {/* <p className='text-sm font-sans'>process.env : {process.env.REACT_APP_SEARCH_PATH}</p> */}
             </span>
         </div>
-        {/* 모바일 Nav */}
+        {/* 모바일 메뉴 */}
         <HiMenuAlt2 className='hidden mobile:block w-10 h-10 p-1' color='white' onClick={() => {onOffNav()}}/>
-        {/* <button className='hidden mobile:flex float-left' onClick={() => {onOffNav()}}>메뉴버튼</button> */}
-        {/* <div className={(navVisible ? 'hidden' : 'fixed ' ) + ` bottom-0 top-12 left-0 w-3/5 bg-teal-700 opacity-90 sm:hidden`}> */}
-        <div className={(navVisible ? '-left-full' : 'left-0 ' ) + ` fixed bottom-0 top-14 w-3/5 bg-teal-700 opacity-90 transition-left sm:hidden`}>
+        <div className={(navVisible ? 'left-0 ' : '-left-full' ) + ` fixed bottom-0 top-14 w-3/5 bg-teal-700 opacity-90 transition-left duration-500 sm:hidden`}>
             <ul className='p-2'>
                 <p className="p-2 block text-teal-200 text-lg">
                     <NavLink to={'/main/all'}
@@ -119,16 +108,16 @@ const NavWind = () => {
                     <NavLink to={'/main/guest'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 font-samlip text-2xl hover:text-white") }>하객한복</NavLink>
                 </p>
-                <p className="p-2 block text-teal-200 text-lg">
+                <p className="hidden p-2 block2 text-teal-200 text-lg">
                     <NavLink to={'/main/best'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>인기상품</NavLink>
                 </p>
             </ul>
         </div>
         {/* 데스크톱 와이드 메뉴 */}
-        <div className="w-full block flex-grow md:flex md:items-center md:w-auto mobile:hidden">
+        <div className="w-auto block flex-grow items-center justify-center mobile:hidden">
         {/* <div className="block flex-grow w-full mobile:hidden"> */}
-            <div class="text-lg lg:flex-grow">
+            <div class="inline-flex h-full text-lg lg:flex-grow">
                 <p className="p-2 block sm:inline-block text-teal-200 text-lg mr-2">
                     <NavLink to={'/main/all'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white")}>전체보기</NavLink>
@@ -137,48 +126,48 @@ const NavWind = () => {
                     <NavLink to={'/main/bride'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white")}>신부한복</NavLink>
                 </p>
-                <p className="p-1 block sm:inline-block text-teal-200 mr-4">
+                <p className="p-2 block sm:inline-block text-teal-200 mr-4">
                     <NavLink to={'/main/parent'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>혼주한복</NavLink>
                 </p>
-                <p className="p-1 block sm:inline-block text-teal-200 mr-4">
+                <p className="p-2 block sm:inline-block text-teal-200 mr-4">
                     <NavLink to={'/main/guest'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>하객한복</NavLink>
                 </p>
-                <p className="p-1 block sm:inline-block text-teal-200 mr-4">
+                <p className="p-2 block sm:inline-block text-teal-200 mr-4">
                     <NavLink to={'/main/best'}
-                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>인기상품</NavLink>
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") + ' text-lg font-preten'}>인기상품</NavLink>
                 </p>
                 <p className="p-1 block sm:inline-block text-teal-200 mr-4">
                     <NavLink to={'/fonts'}
-                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>폰트시트</NavLink>
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") + ' text-sm font-preten' }>폰트시트</NavLink>
                 </p>
                 <p className="p-1 block sm:inline-block text-teal-200 mr-4">
                     <NavLink to={'/test'}
-                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") }>테스팅</NavLink>
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white") + ' text-sm'  }>테스팅</NavLink>
                 </p>
-                {/* 행사날짜 및 검색 */}
-                <div className='inline-flex float-right items-center justify-center mobile:block mobile:float-left'>
-                    {/* 행사날짜 툴팁 */}
-                    {/* <div className='has-tooltip bg-blue-300'>툴팁테스트
-                        <span className='tooltip border rounded p-1 mt-3 z-50 bg-white text-black'>tooltip testing</span>
-                    </div> */}
-                    <div className='mr-2 text-xl text-slate-100 font-katuri has-tooltip2'>행사날짜
-                        {/* <span className='absolute tooltip2 mt-4 bg-black rounded'>행사날짜를 알려주세요</span> */}
-                    </div>
-                    <input className='pl-4 py-0.5 mr-2 rounded-md font-katuri mobile:inline-block' type="date" title='행사날짜를 지정해주세요' id='eventDate' name="" 
-                        onChange={(e) => {changeEventDate(e)}} 
-                        value={cookie.eventdate}/>
-                    {/* 검색 */}
-                    <div className='inline-flex border-blue-400 hover:shadow-md mobile:mt-4' >
-                        <button>
-                            <svg class="rounded-l-md w-8 h-8 bg-white text-gray-500 fill-slate-400" fill="currentColor2" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-                        </button>
-                        <input className=' rounded-r-md focus:outline-none' id='search' type="text" placeholder='검색'/>
-                    </div>
-                
+            </div>
+            {/* 행사날짜 및 검색 */}
+            <div className='inline-flex h-full p-2 float-right items-center mobile:block mobile:float-left'>
+                {/* 행사날짜 툴팁 */}
+                {/* <div className='has-tooltip bg-blue-300'>툴팁테스트
+                    <span className='tooltip border rounded p-1 mt-3 z-50 bg-white text-black'>tooltip testing</span>
+                </div> */}
+                <div className='mr-2 text-xl text-slate-100 font-katuri has-tooltip2'>행사날짜
+                    {/* <span className='absolute tooltip2 mt-4 bg-black rounded'>행사날짜를 알려주세요</span> */}
                 </div>
-
+                <input className='pl-4 py-0.5 mr-2 rounded-md font-katuri mobile:inline-block' type="date" title='행사날짜를 지정해주세요' id='eventDate' name="" 
+                    onChange={(e) => {changeEventDate(e)}} 
+                    value={cookie.eventdate}/>
+                {/* 검색 */}
+                <div className='inline-flex border-blue-400 hover:shadow-md mobile:mt-4' >
+                    <button>
+                        <Link to={`searchResult/${searchKeyword}`}>
+                            <svg class="rounded-l-md w-8 h-8 bg-white text-gray-500 fill-slate-400" fill="currentColor2" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                        </Link>
+                    </button>
+                    <input className=' rounded-r-md focus:outline-none' onKeyDown={() => {}} id='search' type="text" onChange={(e) => {setSearchKeyword(e.target.value)}} placeholder='검색'/>
+                </div>
             </div>
         {/* <div">
             <a href="#" class="inline-block text-sm px-4 py-2 leading-none 

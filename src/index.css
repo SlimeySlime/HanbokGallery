@@ -1,13 +1,6 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-
-/* .tooltip {
-  @apply invisible absolute bg-blue-400;
-}
-.has-tooltip:hover .tooltip{
-  @apply visible z-50;
-} */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -22,14 +15,12 @@
 
 body {
   margin: 0;
-  font-family: 'Daheng', 'sans', sans-serif 'Katuri', 
-    /* 'dimibang_new', 'Segoe UI', 'Daheng', 'Roboto', 'Oxygen',  */
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 
+  font-family: 'Pretendard', 'sans', sans-serif 'Katuri', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* background-color: #e6e6e6; */
 }
-
 
 /* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -75,4 +66,22 @@ body {
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_220508@1.0/EliceDigitalBaeum_Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
+}
+
+/* @font-face {
+  font-family: 'Pretendard';
+  src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+} */
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 200;
+  font-style: normal;
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-ExtraLight.eot');
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-ExtraLight.eot?#iefix') format('embedded-opentype'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-ExtraLight.woff2') format('woff2'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-ExtraLight.woff') format('woff'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-ExtraLight.ttf') format("truetype");
+  font-display: swap;
 }

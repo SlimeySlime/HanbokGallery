@@ -13,6 +13,7 @@ import { SERVER_PATH } from './general/General';
 import { useDispatch } from 'react-redux';
 import {setHanbok, setStore} from './reducing/rentalDispatch';
 import TestingPage from './general/TestingPage';
+import SearchResult from './display/SearchResult';
 // import Nav2 from './general/Nav2';
 
 function App() {
@@ -21,41 +22,37 @@ function App() {
   const [allHanbokData, setAllHanbokData] = useState([])
 
   useEffect(() => {
+    
+    getAllHanbok()
+    getStoreData()
+  }, [])
+
+  function getStoreData() {
+    axios.get(SERVER_PATH)
+    .then((result) => {
+        setStoreData(result.data[0]);
+        console.log('all Store data', result.data[0])
+        dispatch(setStore(result.data[0]))
+        return result.data[0]
+    })
+  }
+
+  function getAllHanbok() {
     axios.get(SERVER_PATH + '/hanbok')
     .then((result) => {
       const hanbokData = result.data[0]
       console.log('all hanbok data', hanbokData)
       setAllHanbokData(result.data[0])
       dispatch(setHanbok(result.data[0]))
+
+      return result.data[0]
       // can't redux map
       // dispatch(setHanbok(hanbokMapping(hanbokData)))
-      // console.log('mapped hanbok', hanbokMapping(hanbokData))
-    })
-
-    // dispatch(setStore(getAllHanbok()))
-    getAllHanbok()
-  }, [])
-  function getAllHanbok() {
-    axios.get(SERVER_PATH)
-    .then((result) => {
-        setStoreData(result.data[0]);
-        console.log('all Store data', result.data[0])
-        dispatch(setStore(result.data[0]))
-        // return result.data[0]
     })
   }
-  // 나중에 조회하기좋게 map으로 
-  function hanbokMapping(hanbok){
-    let hanbokMap = new Map()
-    hanbok.map((item) => {
-      hanbokMap[item.gs_name] = item
-    })
-    return hanbokMap
-  }
-
 
   return (
-    <div className='flex flex-col min-h-screen '>
+    <div className='flex flex-col justify-betwe2en min-h-screen'>
 
       <NavWind />
       {/* <Nav2 /> */}
@@ -64,10 +61,11 @@ function App() {
         {/* <Route path='/bride' props={'bride'} element={<Marriage />} /> */}
         {/* <Route path='/parent'  element={<Parent />} /> */}
 
-        <Route path='/main/:type' element={<TypeDisplay />} />
+        <Route path='/main/:type' element={<TypeDisplay imageList={allStoreData} />} />
         <Route path='/display/:id' element={<Display />} />
         <Route path='/fonts' element={<FontSheet />} />
         <Route path='/test' element={<TestingPage />} />
+        <Route path='/searchResult/:keywords' element={<SearchResult />} />
       </Routes>
 
       <Footer />
