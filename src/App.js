@@ -9,11 +9,12 @@ import Display from './display/Display';
 import FontSheet from './general/FontSheet';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { SERVER_PATH } from './general/General';
+import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './general/General';
 import { useDispatch } from 'react-redux';
-import {setHanbok, setStore} from './reducing/rentalDispatch';
+import {setHanbok, setRental, setStore} from './reducing/rentalDispatch';
 import TestingPage from './general/TestingPage';
 import SearchResult from './display/SearchResult';
+import { useCookies } from 'react-cookie';
 // import Nav2 from './general/Nav2';
 
 function App() {
@@ -21,10 +22,14 @@ function App() {
   const [allStoreData, setStoreData] = useState([]);
   const [allHanbokData, setAllHanbokData] = useState([])
 
+  const [eventDate, setEventDate] = useState(null);
+  const [cookie, setCookie, removeCookie] = useCookies(['eventdate']);
+
   useEffect(() => {
-    
     getAllHanbok()
     getStoreData()
+    // setEventDate(new Date(cookie.eventdate))
+    getRentalList(new Date(cookie.eventdate))
   }, [])
 
   function getStoreData() {
@@ -44,17 +49,52 @@ function App() {
       console.log('all hanbok data', hanbokData)
       setAllHanbokData(result.data[0])
       dispatch(setHanbok(result.data[0]))
-
+      // can't redux map -> dispatch(setHanbok(hanbokMapping(hanbokData))) (x)
       return result.data[0]
-      // can't redux map
-      // dispatch(setHanbok(hanbokMapping(hanbokData)))
     })
+  }
+
+  function changeEventDate(e) {
+    const date = e.target.value
+    setCookie('eventdate', date, { path:'/' })
+    getRentalList(date)
+  }
+  // rentalList 조회 후 filter
+  function getRentalList(date){
+      const start = DATE_ADD(date, -14)
+      const startStr = DATE_TO_SQLSTRING(start)
+      const end = DATE_ADD(date, 14)
+      const endStr = DATE_TO_SQLSTRING(end)
+      console.log(startStr, endStr)
+      axios.get(SERVER_PATH + '/rentalItems', {
+          params: {
+              startDate: startStr,
+              endDate: endStr
+          }
+      }).then((result) => {
+          console.log(result.data[0])
+          // -5일 ~ 8일로 필터
+          filterRental(result.data[0], DATE_TO_SQLSTRING(DATE_ADD(date, -5)), DATE_TO_SQLSTRING(DATE_ADD(date, 8)))
+      })
+  }
+  // ★ filtering
+  // 필터링 정확도는 나중에 체크하고 일단 redux
+  function filterRental(rentals, start, end) {
+      // const hanbokMap = HANBOK_MAP(hanboks)
+      let cantRental = []
+      rentals.map((item) => {
+          if (item.rt_rdate >= start && item.rt_bdate <= end && item.rt_Gubun != null) {
+              cantRental.push(item)
+          }
+      })
+      console.log('filterd cant\' rental', cantRental)
+      dispatch(setRental(cantRental))
   }
 
   return (
     <div className='flex flex-col justify-betwe2en min-h-screen'>
 
-      <NavWind />
+      <NavWind setEventDate={changeEventDate} eventDate={eventDate}/>
       {/* <Nav2 /> */}
       <Routes className='flex-1'>
         <Route path='/' element={<Main />}/>

@@ -10,39 +10,31 @@ const TypeDisplay = ({imageList}) => {
     const eventRental = useSelector(state => state.event.eventRental)
     const storeData = useSelector(state => state.event.store)
     const hanboks = useSelector(state => state.event.hanbok)
+
     const {type} = useParams();
     const typeString = TYPE_TO_KOREAN(type)
+
     // 행사일자에 대여나가는 한복리스트 
-    const [hanbokList, setHanbokList] = useState([]);
     const [blogData, setBlogData] = useState([]);
     const [filterdBlogData, setFilteredBlogData] = useState([]);
+    // filter로 변경됨에 따라 blogData를 filteredList로 작명?
 
-    const [imageHeight, setImageHeight] = useState('');
-
-    // ★★ 1. unavailRentalMap -> 2. hanbokFilter -> 3. hanbokFiltered.unavail = ture / false 
-
-    // useEffect(() => {
-    //     console.log('refresh prop.imageList', imageList)
-    //     console.log('refresh selector.storeData', storeData)
-    // }, [])
-    
+    // 1. unavailRentalMap   2. hanbokFilter  3. hanbokFiltered.unavail = ture / false 
     useEffect(() => {
         console.log('useEffected [type] ')
         eventRentalMap()
     }, [type])
 
-    useEffect(() => {
-        console.log('eventRental : ', eventRental)
-    }, [eventRental])
-
-    // 초기 불러오기 -> redux 이후에 불러오기 
+    // 초기 불러오기 -> redux 이후에 불러오기
+    // 가장 느린 eventRental redux 기준
     useEffect(() => {
         eventRentalMap()
-        console.log('useEffect [storedata, hanboks] ')
-        console.log('storeData', storeData)
-        console.log('hanboks', hanboks)
-        console.log('eventRental', eventRental)
-    }, [storeData, hanboks, eventRental])
+        // console.log('useEffect [storedata, hanboks] ')
+        // console.log('storeData', storeData)
+        // console.log('hanboks', hanboks)
+        // console.log('eventRental', eventRental)
+    // }, [storeData, hanboks, eventRental])
+    }, [eventRental])
 
     // ★★★
     // eventRental => unavailMap[gs_name] = item + count, stock
@@ -87,7 +79,6 @@ const TypeDisplay = ({imageList}) => {
             }
         })
         console.log(newFilterd)
-        // setFilteredBlogData(newFilterd)
         setBlogData(newFilterd)
         // console.log('inactive stores ', filtered)
     }
@@ -134,10 +125,6 @@ const TypeDisplay = ({imageList}) => {
     }
     function checkCurrent() {
         console.log('current blogData : ',  blogData)
-    }
-
-    const onImageLoad = (e) => {
-        console.log(e)
     }
 
     const ImageDiv = (item) => {

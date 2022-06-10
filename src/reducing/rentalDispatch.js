@@ -14,15 +14,14 @@ export const eventdateChange = createSlice({
         // },
         setRental: (state, action) => {
             state.eventRental = action.payload
-            // console.log('action', action)
-            console.log('eventRental reduxed', action.payload)
+            // console.log('eventRental reduxed', action.payload)
         },
         setHanbok: (state, action) => {
             state.hanbok = action.payload
         },
         setStore: (state, action) => {
             state.store = action.payload
-            console.log('store data reduxed', action.payload);
+            // console.log('store data reduxed', action.payload);
         }
     }
 

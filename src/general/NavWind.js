@@ -9,68 +9,68 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setRental } from '../reducing/rentalDispatch';
 import { HiMenuAlt2 } from "react-icons/hi";
 
-const NavWind = () => {
+const NavWind = ({eventDate, setEventDate}) => {
     const dispatch = useDispatch()
-    const hanboks = useSelector(state => state.event.hanbok)
+    // const hanboks = useSelector(state => state.event.hanbok)
 
     // eventdate + 쿠키
-    const [eventDate, setEventDate] = useState(null);
+    // const [eventDate, setEventDate] = useState(null);
     const [cookie, setCookie, removeCookie] = useCookies(['eventdate']);
-    // const [unableList, setUnableList] = useState([])
+    
     const [navVisible, setNavVisible] = useState(false);
-
     const [searchKeyword, setSearchKeyword] = useState('');
 
     // 쿠키가 있으면 
-    useEffect(() => {
-        setEventDate(new Date(cookie.eventdate))
-    }, [])
+    // useEffect(() => {
+    //     setEventDate(new Date(cookie.eventdate))
+    // }, [])
 
-    useEffect(() => {
-        console.log('hanboks - reduxed by useSelector (in Navbar)')
-    }, [hanboks])
+    // useEffect(() => {
+    //     console.log('hanboks - reduxed by useSelector (in Navbar)')
+    // }, [hanboks])
 
-    // eventdate cookie가 생성되면 rentalList 새로고침 
-    useEffect(() => {
-        console.log('cookie : ', cookie);
-    }, [cookie])
+    // // eventdate cookie가 생성되면 rentalList 새로고침 
+    // useEffect(() => {
+    //     console.log('cookie : ', cookie);
+    // }, [cookie])
 
-    function changeEventDate(e) {
-        const date = e.target.value
-        setEventDate(new Date(date))
-        setCookie('eventdate', date, { path:'/' })
-        getRentalList(date)
-    }
-    // rentalList 조회 후 filter
-    function getRentalList(date){
-        const start = DATE_ADD(date, -14)
-        const startStr = DATE_TO_SQLSTRING(start)
-        const end = DATE_ADD(date, 14)
-        const endStr = DATE_TO_SQLSTRING(end)
-        console.log(startStr, endStr)
-        axios.get(SERVER_PATH + '/rentalItems', {
-            params: {
-                startDate: startStr,
-                endDate: endStr
-            }
-        }).then((result) => {
-            console.log(result.data[0])
-            filterRental(result.data[0], DATE_TO_SQLSTRING(DATE_ADD(date, -5)), DATE_TO_SQLSTRING(DATE_ADD(date, 8)))
-        })
-    }
-    // ★ filtering
-    // 정확도는 나중에 체크하고 일단 redux
-    function filterRental(rentals, start, end) {
-        const hanbokMap = HANBOK_MAP(hanboks)
-        let cantRental = []
-        rentals.map((item) => {
-            if (item.rt_rdate >= start && item.rt_bdate <= end &&  item.rt_Gubun != null) {
-                cantRental.push(item)
-            }
-        })
-        console.log('filterd cant\' rental', cantRental)
-        dispatch(setRental(cantRental))
-    }
+    // function changeEventDate(e) {
+    //     const date = e.target.value
+    //     setEventDate(new Date(date))
+    //     setCookie('eventdate', date, { path:'/' })
+    //     getRentalList(date)
+    // }
+    // // rentalList 조회 후 filter
+    // function getRentalList(date){
+    //     const start = DATE_ADD(date, -14)
+    //     const startStr = DATE_TO_SQLSTRING(start)
+    //     const end = DATE_ADD(date, 14)
+    //     const endStr = DATE_TO_SQLSTRING(end)
+    //     console.log(startStr, endStr)
+    //     axios.get(SERVER_PATH + '/rentalItems', {
+    //         params: {
+    //             startDate: startStr,
+    //             endDate: endStr
+    //         }
+    //     }).then((result) => {
+    //         console.log(result.data[0])
+    //         // -5일 ~ 8일로 필터
+    //         filterRental(result.data[0], DATE_TO_SQLSTRING(DATE_ADD(date, -5)), DATE_TO_SQLSTRING(DATE_ADD(date, 8)))
+    //     })
+    // }
+    // // ★ filtering
+    // // 필터링 정확도는 나중에 체크하고 일단 redux
+    // function filterRental(rentals, start, end) {
+    //     const hanbokMap = HANBOK_MAP(hanboks)
+    //     let cantRental = []
+    //     rentals.map((item) => {
+    //         if (item.rt_rdate >= start && item.rt_bdate <= end && item.rt_Gubun != null) {
+    //             cantRental.push(item)
+    //         }
+    //     })
+    //     console.log('filterd cant\' rental', cantRental)
+    //     dispatch(setRental(cantRental))
+    // }
 
     function onOffNav(){
         setNavVisible(!navVisible)
@@ -118,13 +118,17 @@ const NavWind = () => {
         <div className="w-auto block flex-grow items-center justify-center mobile:hidden">
         {/* <div className="block flex-grow w-full mobile:hidden"> */}
             <div class="inline-flex h-full text-lg lg:flex-grow">
-                <p className="p-2 block sm:inline-block text-teal-200 text-lg mr-2">
+                <p className="p-2 block sm:inline-block text-teal-200 mr-4">
                     <NavLink to={'/main/all'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white")}>전체보기</NavLink>
                 </p>
-                <p className="p-2 block sm:inline-block text-teal-200 text-lg mr-4">
+                <p className="p-2 block sm:inline-block text-teal-200 mr-4">
                     <NavLink to={'/main/bride'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white")}>신부한복</NavLink>
+                </p>
+                <p className="p-2 block sm:inline-block text-teal-200  mr-4">
+                    <NavLink to={'/main/groom'}
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200 hover:text-white")}>신랑한복</NavLink>
                 </p>
                 <p className="p-2 block sm:inline-block text-teal-200 mr-4">
                     <NavLink to={'/main/parent'}
@@ -157,7 +161,8 @@ const NavWind = () => {
                     {/* <span className='absolute tooltip2 mt-4 bg-black rounded'>행사날짜를 알려주세요</span> */}
                 </div>
                 <input className='pl-4 py-0.5 mr-2 rounded-md font-katuri mobile:inline-block' type="date" title='행사날짜를 지정해주세요' id='eventDate' name="" 
-                    onChange={(e) => {changeEventDate(e)}} 
+                    onChange={(e) => {setEventDate(e)}} 
+                    // value={eventDate}/>
                     value={cookie.eventdate}/>
                 {/* 검색 */}
                 <div className='inline-flex border-blue-400 hover:shadow-md mobile:mt-4' >
