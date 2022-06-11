@@ -8,8 +8,10 @@ const Main = () => {
 
     return(
         <div className="flex flex-col flex-1">
-            {/* <img className='container-fluid w-auto' src="img/front.jpg" alt="" /> */}
-            <img className='container-fluid w-auto' src="img/blog.png" alt="" />
+            <h1>비단본가</h1>
+            {/* <img className='container-fluid w-auto' src="img/front.jpg" alt=" /> */}
+            <img className="w-52" src="img/back.jpg" alt="blog" />
+            <img className='container-fluid w-auto' src="img/blog.jpg" alt="blog" />
         </div>
     )
 }
