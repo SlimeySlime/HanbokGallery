@@ -15,6 +15,7 @@ import {setHanbok, setRental, setStore} from './reducing/rentalDispatch';
 import TestingPage from './general/TestingPage';
 import SearchResult from './display/SearchResult';
 import { useCookies } from 'react-cookie';
+import CookieWanring from './general/CookieWarning';
 // import Nav2 from './general/Nav2';
 
 function App() {
@@ -24,12 +25,18 @@ function App() {
 
   const [eventDate, setEventDate] = useState(null);
   const [cookie, setCookie, removeCookie] = useCookies(['eventdate']);
+  const [warningVisible, setWarningVisible] = useState(true);
 
   useEffect(() => {
     getAllHanbok()
     getStoreData()
     // setEventDate(new Date(cookie.eventdate))
-    getRentalList(new Date(cookie.eventdate))
+    if (cookie.eventdate !== undefined){
+      console.log(cookie.eventdate)
+      getRentalList(new Date(cookie.eventdate))
+    }else{
+      getRentalList(new Date())
+    }
   }, [])
 
   function getStoreData() {
@@ -57,7 +64,9 @@ function App() {
   function changeEventDate(e) {
     const date = e.target.value
     setCookie('eventdate', date, { path:'/' })
-    getRentalList(date)
+    console.log('changeEventDate', date)
+    if (date !== undefined) getRentalList(date)
+    
   }
   // rentalList 조회 후 filter
   function getRentalList(date){
@@ -91,6 +100,10 @@ function App() {
       dispatch(setRental(cantRental))
   }
 
+  function setWarning(bool){
+    setWarningVisible(bool)
+  }
+
   return (
     <div className='flex flex-col justify-betwe2en min-h-screen'>
 
@@ -107,7 +120,9 @@ function App() {
         <Route path='/test' element={<TestingPage />} />
         <Route path='/searchResult/:keywords' element={<SearchResult />} />
       </Routes>
-
+      
+      {/* eventdate warning */}
+      {warningVisible ? <CookieWanring warningClose={setWarning}/> : '' }
       <Footer />
 
     </div>

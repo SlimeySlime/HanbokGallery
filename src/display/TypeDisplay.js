@@ -154,11 +154,14 @@ const TypeDisplay = ({imageList}) => {
         if (unavailable) {      // 대여불가능 상품 
             console.log(`${item.bs_gsname1} is unavail`)
             return(
-            <div className="cursor-not-allowed">
-                <img className="z-10" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} alt={`[${item.bs_code}]`}  />
-                <div className="w-full h-full flex bg-slate-700 bg-opacity-50 justify-center items-center">
-                    <p className="text-white text-center text-md mobile:text-xs font-preten font-semibold">해당상품은 <br /> 대여불가능합니다.</p>    
+            <div className="relative cursor-not-allowed">
+                <img className="object-cover w-full" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} alt={`[${item.bs_code}]`}  />
+                <div className="absolute bottom-0 left-0 flex flex-1 z-10 w-full items-center justify-center bg-slate-700 bg-opacity-70">
+                    <p className="m-2 text-white text-center text-md mobile:text-xs font-preten font-semibold">해당상품은 <br /> 대여불가능합니다.</p>    
                 </div>
+                {/* <div className="w-full h-full flex bg-slate-700 bg-opacity-50 justify-center items-center">
+                    <p className="text-white text-center text-md mobile:text-xs font-preten font-semibold">해당상품은 <br /> 대여불가능합니다.</p>    
+                </div> */}
             </div>
             )
         }else {

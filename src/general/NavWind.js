@@ -5,12 +5,12 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './General';
-import { useDispatch, useSelector } from 'react-redux';
-import { setRental } from '../reducing/rentalDispatch';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { setRental } from '../reducing/rentalDispatch';
 import { HiMenuAlt2 } from "react-icons/hi";
 
 const NavWind = ({eventDate, setEventDate}) => {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     // const hanboks = useSelector(state => state.event.hanbok)
 
     // eventdate + 쿠키
@@ -19,58 +19,6 @@ const NavWind = ({eventDate, setEventDate}) => {
     
     const [navVisible, setNavVisible] = useState(false);
     const [searchKeyword, setSearchKeyword] = useState('');
-
-    // 쿠키가 있으면 
-    // useEffect(() => {
-    //     setEventDate(new Date(cookie.eventdate))
-    // }, [])
-
-    // useEffect(() => {
-    //     console.log('hanboks - reduxed by useSelector (in Navbar)')
-    // }, [hanboks])
-
-    // // eventdate cookie가 생성되면 rentalList 새로고침 
-    // useEffect(() => {
-    //     console.log('cookie : ', cookie);
-    // }, [cookie])
-
-    // function changeEventDate(e) {
-    //     const date = e.target.value
-    //     setEventDate(new Date(date))
-    //     setCookie('eventdate', date, { path:'/' })
-    //     getRentalList(date)
-    // }
-    // // rentalList 조회 후 filter
-    // function getRentalList(date){
-    //     const start = DATE_ADD(date, -14)
-    //     const startStr = DATE_TO_SQLSTRING(start)
-    //     const end = DATE_ADD(date, 14)
-    //     const endStr = DATE_TO_SQLSTRING(end)
-    //     console.log(startStr, endStr)
-    //     axios.get(SERVER_PATH + '/rentalItems', {
-    //         params: {
-    //             startDate: startStr,
-    //             endDate: endStr
-    //         }
-    //     }).then((result) => {
-    //         console.log(result.data[0])
-    //         // -5일 ~ 8일로 필터
-    //         filterRental(result.data[0], DATE_TO_SQLSTRING(DATE_ADD(date, -5)), DATE_TO_SQLSTRING(DATE_ADD(date, 8)))
-    //     })
-    // }
-    // // ★ filtering
-    // // 필터링 정확도는 나중에 체크하고 일단 redux
-    // function filterRental(rentals, start, end) {
-    //     const hanbokMap = HANBOK_MAP(hanboks)
-    //     let cantRental = []
-    //     rentals.map((item) => {
-    //         if (item.rt_rdate >= start && item.rt_bdate <= end && item.rt_Gubun != null) {
-    //             cantRental.push(item)
-    //         }
-    //     })
-    //     console.log('filterd cant\' rental', cantRental)
-    //     dispatch(setRental(cantRental))
-    // }
 
     function onOffNav(){
         setNavVisible(!navVisible)

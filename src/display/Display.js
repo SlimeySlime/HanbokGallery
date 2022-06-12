@@ -22,12 +22,6 @@ const Display = ({itemInfo}) => {
         })
     }, [])
 
-    // function imageError(e){
-    //     console.log(e)
-    //     e.target.style.display = 'none'
-    // }
-    
-
     const imageList = (css, onHover, onClick, w) => {
         
         return(
@@ -47,9 +41,9 @@ const Display = ({itemInfo}) => {
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/7.jpg`} alt={imageData.bs_gsname1} 
                     className='p-4 m-4 mb-12 border rounded-lg w-2/3' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/8.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 border rounded-lg w-2/3' width={800} onError={(e) => {ERROR_HIDE(e)}}/>
+                    className='p-4 m-4 mb-12 border rounded-lg w-2/3' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/9.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 border rounded-lg w-2/3' width={800} onError={(e) => {ERROR_HIDE(e)}}/>
+                    className='p-4 m-4 mb-12 border rounded-lg w-2/3' width={800} />
             </div>
         )
     }
