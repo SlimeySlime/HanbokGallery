@@ -52,7 +52,7 @@ const Display = ({itemInfo}) => {
         <div className='container mx-auto flex flex-1 mobile:flex-col '>
             <div className='flex flex-1 flex-col justify-center items-center'>
                 {/* 상단 */}
-                <div className='mt-12 flex mobile:flex-col'>
+                <div className='mt-12 p-4 flex mobile:flex-col border'>
                     {/* 크게보기 이미지 */}
                     <div className='flex flex-col justify-center items-center'>
                         <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${previewIndex}.jpg`} alt={imageData.bs_code} 
@@ -70,17 +70,24 @@ const Display = ({itemInfo}) => {
                         </div>
                     </div>
                     {/* 좌측 */}
-                    <div className=' m-8 mb-12 w-auto mobile:w-auto'>
+                    <div className='m-4 mb-12 w-auto mobile:w-auto'>
                         {/* 타이틀 */}
-                        <h2 className='text-3xl ml-2 m-4 mb-12 font-samlip'>
+                        <h2 className='text-3xl ml-2 m-4 mb-8 font-samlip'>
                             [{imageData.bs_code}] {imageData.bs_gsname1?.split(' ')[0]} {imageData.bs_gsname2?.split(' ')[0]} 
                         </h2>
-                        <div className='m-4 mb-12 p-4 border'>
-                            <p className='pt-4 text-2xl font-katuri border-b-2'>{imageData.bs_gskind1} : {imageData.bs_gsname1}</p>
-                            <p className='pt-4 text-2xl font-katuri border-b-2'>{imageData.bs_gskind2} : {imageData.bs_gsname2?.split(' ')}</p>
-                            <p className='pt-4 text-2xl font-preten '>{imageData.bs_gsname3 && `${imageData.bs_gskind3} - ${imageData.bs_gsname3}`}</p>
-                            <p className='pt-4 text-2xl font-preten '>{imageData.bs_gsname4 && `${imageData.bs_gskind4} - ${imageData.bs_gsname4}`}</p>
-                            <p className='pt-4 text-2xl'>{imageData.bs_bigo}</p>
+                        <div className='mb-12 p-4 border'>
+                            <p className='pt-4 text-2xl font-katuri'>{imageData.bs_gskind1} : {imageData.bs_gsname1}</p>
+                            <p className='pt-4 text-2xl font-katuri'>{imageData.bs_gsname2 && `${imageData.bs_gskind2} : ${imageData.bs_gsname2}`}</p>
+                            <p className='pt-4 text-2xl font-katuri'>{imageData.bs_gsname3 && `${imageData.bs_gskind3} - ${imageData.bs_gsname3}`}</p>
+                            <p className='pt-4 text-2xl font-katuri'>{imageData.bs_gsname4 && `${imageData.bs_gskind4} - ${imageData.bs_gsname4}`}</p>
+                            {/* <p className='pt-4 text-2xl'>{imageData.bs_bigo}</p> */}
+                        </div>
+                        <div>
+                            <p className='flex mb-4 font-preten font-semibold text-lg'>👩 저고리와 치마를 종류별로 다르게 선택해서 결정하실수도 있습니다.</p>
+                            <p className='flex mb-4 font-preten font-semibold text-lg'>
+                                🧵 정확하게 맞는 치수가 아니더라도 <br />
+                                고객님의 키, 가슴둘레, 화장길이에 맞춰서 수선해드릴 수 있습니다.
+                            </p>
                         </div>
                         <div>
                             

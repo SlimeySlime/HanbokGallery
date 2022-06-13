@@ -14,7 +14,7 @@ const Footer = () => {
                 <a href="#" class="mr-4 hover:underline md:mr-6">연락처</a>
             </li>
             <li>
-                <a href="http://kko.to/NgJyDhxJu" class="hover:underline">찾아오시는 길</a>
+                <a href="http://kko.to/NgJyDhxJu" class="hover:underline">오시는 길</a>
             </li>
         </ul>
     </footer>

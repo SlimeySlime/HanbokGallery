@@ -9,7 +9,7 @@ const CookieWanring = ({warningClose}) => {
             <div className="p-4 bg-blue-400 items-center justify-center rounded-lg">
                 <AiOutlineWarning className="float-right m-1 w-10 h-10" color=""/>
                 <p className="font-preten text-lg font-semibold text-center">행사날짜를 먼저 <br /> 선택해주세요</p>
-                <p className="font-sans text-xs">행사날짜를 선택하시면 <br /> 대여가능 여부를 확인할 수 있습니다.</p>
+                <p className="my-1 font-sans text-xs">행사날짜를 선택하시면 <br /> 대여가능 여부를 확인할 수 있습니다.</p>
                 <div className="flex justify-end">
                     <button className="mt-2 ml-2 bg-white rounded p-2 text-sm" onClick={() => {warningClose(false)}}>알겠습니다</button>
                     <button className="mt-2 ml-2 bg-white rounded p-2 text-sm" onClick={() => {warningClose(false)}}>닫기</button>

@@ -32,7 +32,8 @@ function App() {
     getStoreData()
     // setEventDate(new Date(cookie.eventdate))
     if (cookie.eventdate !== undefined){
-      console.log(cookie.eventdate)
+      // console.log(cookie.eventdate)
+      setWarningVisible(false)
       getRentalList(new Date(cookie.eventdate))
     }else{
       getRentalList(new Date())
