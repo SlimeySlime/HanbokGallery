@@ -1,40 +1,46 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 // import useEmblaCarousel from 'embla-carousel-react'
 import { GrCamera, GrHome, GrMapLocation, GrPhone } from "react-icons/gr";
 import { HiClock } from "react-icons/hi";
-
-var options = { //지도를 생성할 때 필요한 기본 옵션
-    center: new window.kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-    level: 3 //지도의 레벨(확대, 축소 정도)
-};
-
+import AliceCarousel from 'react-alice-carousel';
+import 'react-alice-carousel/lib/alice-carousel.css';
+// import { Swiper, SwiperSlide } from 'swiper/react'
+// import { Pagination, Navigation } from 'swiper'
+// import 'swiper/css'
+// import "swiper/css/pagination";
+// import "swiper/css/navigation";
+const { kakao } = window
 // to-do carousel
 const Main = () => {
-    const mapContainer = useRef(null)
+    const [kakaoMap, setKakaoMap] = useState(null);
+    const [latlng, setLatLng] = useState([]);
 
     useEffect(() => {
-        // const container = document.getElementById('map')
+        const container = document.getElementById('map')
+        var options = { //지도를 생성할 때 필요한 기본 옵션
+            center: new kakao.maps.LatLng(36.614393, 127.445494), //지도의 중심좌표.  
+            level: 4 //지도의 레벨(확대, 축소 정도)
+        };
+        const map = new kakao.maps.Map(container, options)
+        // setKakaoMap(map)
         
-        new window.kakao.maps.Map(mapContainer.current, options)
-    
+        // 마커
+        const markerPosition = new kakao.maps.LatLng(36.614393, 127.445494)
+        let marker = new kakao.maps.Marker({
+            position: markerPosition
+        })
+        marker.setMap(map)
+
+        // zoom + skyview
+        const zoom = new kakao.maps.ZoomControl()
+        map.addControl(zoom, kakao.maps.ControlPosition.BOTTOMRIGHT)
+        var mapTypeControl = new kakao.maps.MapTypeControl();
+        map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
     }, [])
-    
-
-    const Location = () => {
-
-        return(
-            <div>
-                <div className="w-auto h-58" id='map' ref={mapContainer} />
-            </div>
-        )
-    }
-
-    function getMap(){
-        new window.kakao.maps.Map(mapContainer.current, options)
-    }
 
     return(
         <div className="flex flex-col">
+
             <div className="mt-8 mobile:mt-2 container flex flex-1 justify-center items-center">
                 <img className='container-fluid w-auto' src="img/blog.png" alt="blog" />
             </div>
@@ -43,42 +49,40 @@ const Main = () => {
             <div className="container m-16 mobile:m-2 flex flex-col ">
                 <h3 className="flex flex-1 font-preten text-3xl font-semibold? border-b-2 pb-2">오시는길</h3>
                 {/* 지도 컨테이너 */}
-                <div className="m-4 w-auto h-autobg-slate-200 items-center justify-center">
-                    <img src="http://t1.daumcdn.net/roughmap/imgmap/0d34bd387588919ae2931f72125523523a246ccd4cbaec2b6da62023b1a29a4e" 
-                        className="w-auto" alt="map" />
-                    
-                    <div className="w-full z-50" id='map' ref={mapContainer}></div>
+                <div className="w-auto h-auto m-4 p-1">
+                    <div id='map' className="w-52 f-52 relative"
+                        style={{
+                            width: 'auto', 
+                            height: '500px' }} />
                 </div>
-
-                <div id='map2'></div>
 
                 <div className="border-b-2 flex flex-1 items-center p-4">
                     <GrMapLocation className="w-8 h-8 mobile:w-4 mobile:h-4"/>
                     <p className="m-4 w-24 text-xl font-semibold font-preten">위치</p>
-                    <p className="m-4 text-xl font-preten mobile:text-base mobile:m-2">서원구 성화로 101 비단본가 (죽림동 328)</p>
+                    <p className="m-4 text-xl font-preten mobile:text-base mobile:m-0">청주시 서원구 성화로 101 비단본가 (죽림동 328)</p>
                 </div>
                 <div className="border-b-2 flex flex-1 items-center p-4">
                     <GrPhone className="w-8 h-8 mobile:w-4 mobile:h-4"/>
                     <p className="m-4 w-24 text-xl font-semibold font-preten mobile:text-base mobile:m-2">전화번호</p>
-                    <p className="m-4 text-xl font-preten mobile:text-base mobile:m-2">043 - 234 - 5165 <b> / </b> 010 - 6847 - 5165</p>
+                    <p className="m-4 text-xl font-preten mobile:text-base mobile:m-0">043 - 234 - 5165 &nbsp; / &nbsp; 010 - 6847 - 5165</p>
                 </div>
                 <div className="border-b-2 flex flex-1 items-center p-4">
                     <HiClock className="w-8 h-8 mobile:w-4 mobile:h-4"/>
                     <p className="m-4 w-24 text-xl font-semibold font-preten mobile:text-base mobile:m-2">영업시간</p>
                     <div className="flex flex-1 mobile:flex-col">
-                        <p className="m-2 text-xl font-preten mobile:text-base mobile:m-2">오전 10:30 ~ 오후 7:00</p>
-                        <p className="m-2 text-xl font-preten font-semibold mobile:text-base mobile:m-2">( 매주 화요일은 휴무 )</p>
+                        <p className="m-2 text-xl font-preten mobile:text-base mobile:m-0">오전 10:30 ~ 오후 7:00</p>
+                        <p className="m-2 text-xl font-preten font-semibold mobile:text-base mobile:m-0">( 매주 화요일은 휴무 )</p>
                     </div>
                 </div>
                 <div className="border-b-2 flex flex-1 items-center p-4">
                     <GrHome className="w-8 h-8 mobile:w-4 mobile:h-4"/>
                     <p className="m-4 w-24 text-xl font-semibold font-preten mobile:text-base mobile:m-2">블로그</p>
-                    <a className="m-4 text-xl font-preten mobile:text-base mobile:m-2" href="https://blog.naver.com/bdan_no1">blog.naver.com/bdan_no1</a>
+                    <a className="m-4 text-xl font-preten mobile:text-base mobile:m-0" href="https://blog.naver.com/bdan_no1">blog.naver.com/bdan_no1</a>
                 </div>
                 <div className="border-b-2 flex flex-1 items-center p-4">
                     <GrCamera className="w-8 h-8 mobile:w-4 mobile:h-4"/>
                     <p className="m-4 w-24 text-xl font-semibold font-preten mobile:text-base mobile:m-2">인스타그램</p>
-                    <a className="m-4 text-xl font-preten mobile:text-base mobile:m-2" href="https://www.instagram.com/bdanbonga/">instagram.com/bdanbonga</a>
+                    <a className="m-4 text-xl font-preten mobile:text-base mobile:m-0" href="https://www.instagram.com/bdanbonga/">instagram.com/bdanbonga</a>
                 </div>
             </div>
             
