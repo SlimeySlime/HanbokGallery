@@ -72,14 +72,12 @@ const TypeDisplay = ({imageList}) => {
                 return item 
             }
         })
-        console.log(newFilterd)
+        // console.log(newFilterd)
         setBlogData(newFilterd)
-        // console.log('inactive stores ', filtered)
     }
     // axios 대신 filtering
     function filterHanbok(keyword) {
         // storeData -> imageList 실험
-        console.log('filter hanbok ', keyword)
         if (keyword === 'all') {
             // setBlogData(storeData)
             return imageList

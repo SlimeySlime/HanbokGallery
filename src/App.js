@@ -65,7 +65,7 @@ function App() {
   function changeEventDate(e) {
     const date = e.target.value
     setCookie('eventdate', date, { path:'/' })
-    console.log('changeEventDate', date)
+    // console.log('changeEventDate', date)
     if (date !== undefined) getRentalList(date)
     
   }
@@ -75,7 +75,7 @@ function App() {
       const startStr = DATE_TO_SQLSTRING(start)
       const end = DATE_ADD(date, 14)
       const endStr = DATE_TO_SQLSTRING(end)
-      console.log(startStr, endStr)
+      // console.log(startStr, endStr)
       axios.get(SERVER_PATH + '/rentalItems', {
           params: {
               startDate: startStr,
@@ -97,7 +97,7 @@ function App() {
               cantRental.push(item)
           }
       })
-      console.log('filterd cant\' rental', cantRental)
+      // console.log('filterd cant\' rental', cantRental)
       dispatch(setRental(cantRental))
   }
 
@@ -112,9 +112,6 @@ function App() {
       {/* <Nav2 /> */}
       <Routes className='flex-1'>
         <Route path='/' element={<Main />}/>
-        {/* <Route path='/bride' props={'bride'} element={<Marriage />} /> */}
-        {/* <Route path='/parent'  element={<Parent />} /> */}
-
         <Route path='/main/:type' element={<TypeDisplay imageList={allStoreData} />} />
         <Route path='/display/:id' element={<Display />} />
         <Route path='/fonts' element={<FontSheet />} />
