@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { IMAGE_PATH, SERVER_PATH, ERROR_HIDE } from "../general/General"
 import RentalTemplate from '../general/RentalTemplate'
-import RentalCalender from './RentalCalender'
 
 const Display = ({itemInfo}) => {
     // /:id -> useParams()

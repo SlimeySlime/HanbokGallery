@@ -1,20 +1,24 @@
 import React, { useEffect, useRef, useState } from "react"
-// import useEmblaCarousel from 'embla-carousel-react'
+import { useMediaQuery } from 'react-responsive'
 import { GrCamera, GrHome, GrMapLocation, GrPhone } from "react-icons/gr";
 import { HiClock } from "react-icons/hi";
-import AliceCarousel from 'react-alice-carousel';
-import 'react-alice-carousel/lib/alice-carousel.css';
-// import { Swiper, SwiperSlide } from 'swiper/react'
-// import { Pagination, Navigation } from 'swiper'
-// import 'swiper/css'
-// import "swiper/css/pagination";
-// import "swiper/css/navigation";
+// import AliceCarousel from 'react-alice-carousel';
+// import 'react-alice-carousel/lib/alice-carousel.css';
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Pagination, Navigation } from 'swiper'
+import 'swiper/css'
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
 const { kakao } = window
 // to-do carousel
 const Main = () => {
-    const [kakaoMap, setKakaoMap] = useState(null);
-    const [latlng, setLatLng] = useState([]);
 
+    const isMobile = useMediaQuery({
+        query: '(max-width : 760px)'
+    })
+
+    // kakao map
     useEffect(() => {
         const container = document.getElementById('map')
         var options = { //지도를 생성할 때 필요한 기본 옵션
@@ -22,15 +26,12 @@ const Main = () => {
             level: 4 //지도의 레벨(확대, 축소 정도)
         };
         const map = new kakao.maps.Map(container, options)
-        // setKakaoMap(map)
-        
         // 마커
         const markerPosition = new kakao.maps.LatLng(36.614393, 127.445494)
         let marker = new kakao.maps.Marker({
             position: markerPosition
         })
         marker.setMap(map)
-
         // zoom + skyview
         const zoom = new kakao.maps.ZoomControl()
         map.addControl(zoom, kakao.maps.ControlPosition.BOTTOMRIGHT)
@@ -40,9 +41,59 @@ const Main = () => {
 
     return(
         <div className="flex flex-col">
+            {/* Logo */}
+            <div className="flex flex-1 justify-center">
+                <img className='w-1/4 mobile:w-2/4' src="img/text_logo.jpg" alt="blog" />
+            </div>
 
-            <div className="mt-8 mobile:mt-2 container flex flex-1 justify-center items-center">
-                <img className='container-fluid w-auto' src="img/blog.png" alt="blog" />
+            {/* swiper */}
+            <div className="container justify-center w-auto mx-24 my-8 mobile:m-4">
+                <Swiper
+                    pagination={true}
+                    navigation={true}
+                    modules={[Navigation, Pagination]}
+                    spaceBetween={12}
+                    slidesPerView={isMobile ? 1 : 3}>
+                    <SwiperSlide>
+                        <img src="img/1.jpg" alt="" />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img src="img/2.jpg" alt="" />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img src="img/3.jpg" alt="" />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img src="img/4.jpg" alt="" />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img src="img/5.jpg" alt="" />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img src="img/6.jpg" alt="" />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img src="img/7.jpg" alt="" />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img src="img/8.jpg" alt="" />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img src="img/10.jpg" alt="" />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img src="img/11.jpg" alt="" />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img src="img/12.jpg" alt="" />
+                    </SwiperSlide>
+                    {/* <SwiperSlide>
+                        <img src="img/9.jpg" alt="" />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img src="img/13.jpg" alt="" />
+                    </SwiperSlide> */}
+                </Swiper>
             </div>
 
             {/* 메인정보 컨테이너 */}
@@ -53,7 +104,7 @@ const Main = () => {
                     <div id='map' className="w-52 f-52 relative"
                         style={{
                             width: 'auto', 
-                            height: '500px' }} />
+                            height: isMobile ? '300px' : '500px' }} />
                 </div>
 
                 <div className="border-b-2 flex flex-1 items-center p-4">
