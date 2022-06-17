@@ -21,7 +21,6 @@ const TypeDisplay = ({imageList}) => {
 
     // 1. unavailRentalMap   2. hanbokFilter  3. hanbokFiltered.unavail = ture / false 
     useEffect(() => {
-        console.log('useEffected [type] ')
         eventRentalMap()
     }, [type])
 
@@ -29,11 +28,6 @@ const TypeDisplay = ({imageList}) => {
     // 가장 느린 eventRental redux 기준
     useEffect(() => {
         eventRentalMap()
-        // console.log('useEffect [storedata, hanboks] ')
-        // console.log('storeData', storeData)
-        // console.log('hanboks', hanboks)
-        // console.log('eventRental', eventRental)
-    // }, [storeData, hanboks, eventRental])
     }, [eventRental])
 
     // ★★★
@@ -41,7 +35,7 @@ const TypeDisplay = ({imageList}) => {
     const eventRentalMap = () => {
         // 검색에 용이하게 Map으로
         const hanbokMap = new Map()
-        hanboks.map((item) => {
+        hanboks?.map((item) => {
             hanbokMap[item.gs_name] = item
         })
         // eventRental Map
@@ -177,15 +171,6 @@ const TypeDisplay = ({imageList}) => {
     return(
         <div className="container mx-auto">
             <h3 className="text-2xl font-katuri m-4">{typeString} 한복</h3> 
-            {/* <button className="hidden border border-slate-50 px-2 rounded bg-blue-300 hover:bg-blue-700"
-                onClick={() => {checkCurrent()}}>현재 리스트 디버깅</button> */}
-
-            {/* <div className='has-tooltip bg-blue-300'>
-                <p className='tooltip2 bg-white border rounded p-1 mt-3 z-50 text-black'>tooltip testing</p>
-                <p className='tooltip bg-white border rounded p-1 mt-3 z-50 text-black'>tooltip testing1.5</p>
-                <p className='absolute mt-8 tooltip '>tooltip testing2</p>
-                툴팁테스트
-            </div> */}
             <div className="container grid mobile:grid-cols-3 grid-cols-6 mobile:gap-1 gap-6 ">
                 {/* {filterdBlogData?.map((item) => */}
                 {blogData?.map((item) =>
@@ -195,7 +180,7 @@ const TypeDisplay = ({imageList}) => {
                     <div className="mb-4 p-2 hover:shadow-lg"> 
                         {ImageDiv2(item)}
                         {/* <img src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} alt={`[${item.bs_code}]`}  /> */}
-                        <p className="mt-1 text-xs tracking-tight">{typeString}한복</p>
+                        <p className="mt-1 text-xs font-sans tracking-tight">{typeString}한복</p>
                         <p className="font-sans mobile:text-sm ">[{item.bs_code}]{item.bs_gsname1?.split(' ')[0]}</p>
                         <p className="font-sans mobile:text-sm">{item.bs_gsname2?.split(' ')[0]} {item.bs_gsname3?.split(' ')[0]}</p>
                         <p className="inline-block mr-2 font-sans font-semibold mobile:text-sm">80,000원</p>

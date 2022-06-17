@@ -19,25 +19,25 @@ const Main = () => {
     })
 
     // kakao map
-    useEffect(() => {
-        const container = document.getElementById('map')
-        var options = { //지도를 생성할 때 필요한 기본 옵션
-            center: new kakao.maps.LatLng(36.614393, 127.445494), //지도의 중심좌표.  
-            level: 4 //지도의 레벨(확대, 축소 정도)
-        };
-        const map = new kakao.maps.Map(container, options)
-        // 마커
-        const markerPosition = new kakao.maps.LatLng(36.614393, 127.445494)
-        let marker = new kakao.maps.Marker({
-            position: markerPosition
-        })
-        marker.setMap(map)
-        // zoom + skyview
-        const zoom = new kakao.maps.ZoomControl()
-        map.addControl(zoom, kakao.maps.ControlPosition.BOTTOMRIGHT)
-        var mapTypeControl = new kakao.maps.MapTypeControl();
-        map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-    }, [])
+    // useEffect(() => {
+    //     const container = document.getElementById('map')
+    //     var options = { //지도를 생성할 때 필요한 기본 옵션
+    //         center: new kakao.maps.LatLng(36.614393, 127.445494), //지도의 중심좌표.  
+    //         level: 4 //지도의 레벨(확대, 축소 정도)
+    //     };
+    //     const map = new kakao.maps.Map(container, options)
+    //     // 마커
+    //     const markerPosition = new kakao.maps.LatLng(36.614393, 127.445494)
+    //     let marker = new kakao.maps.Marker({
+    //         position: markerPosition
+    //     })
+    //     marker.setMap(map)
+    //     // zoom + skyview
+    //     const zoom = new kakao.maps.ZoomControl()
+    //     map.addControl(zoom, kakao.maps.ControlPosition.BOTTOMRIGHT)
+    //     var mapTypeControl = new kakao.maps.MapTypeControl();
+    //     map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+    // }, [null])
 
     return(
         <div className="flex flex-col">
@@ -87,12 +87,6 @@ const Main = () => {
                     <SwiperSlide>
                         <img src="img/12.jpg" alt="" />
                     </SwiperSlide>
-                    {/* <SwiperSlide>
-                        <img src="img/9.jpg" alt="" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="img/13.jpg" alt="" />
-                    </SwiperSlide> */}
                 </Swiper>
             </div>
 
