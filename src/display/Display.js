@@ -47,6 +47,12 @@ const Display = ({itemInfo}) => {
         )
     }
 
+    const sizes = (bigo) => {
+        let bigos = bigo.split(',')
+        bigos.unshift(bigos[0] - 11)
+        return bigos.join(', ')
+    }
+
     return(
         <div className='container mx-auto flex flex-1 mobile:flex-col '>
             <div className='flex flex-1 flex-col justify-center items-center'>
@@ -75,14 +81,18 @@ const Display = ({itemInfo}) => {
                             [{imageData.bs_code}] {imageData.bs_gsname1?.split(' ')[0]} {imageData.bs_gsname2?.split(' ')[0]} 
                         </h2>
                         <div className='mb-12 p-4 border'>
-                            <p className='pt-4 text-2xl font-katuri'>{imageData.bs_gskind1} : {imageData.bs_gsname1}</p>
-                            <p className='pt-4 text-2xl font-katuri'>{imageData.bs_gsname2 && `${imageData.bs_gskind2} : ${imageData.bs_gsname2}`}</p>
+                            <p className='pt-4 text-2xl font-katuri'>{imageData.bs_gskind1} - {imageData.bs_gsname1?.split(' ')[0]}</p>
+                            <p className='pt-4 text-2xl font-katuri'>size - {imageData.bs_bigo && sizes(imageData.bs_bigo)}</p>
+                            <p className='pt-4 text-2xl font-katuri'>{imageData.bs_gsname2 && `${imageData.bs_gskind2} - ${imageData.bs_gsname2}`}</p>
                             <p className='pt-4 text-2xl font-katuri'>{imageData.bs_gsname3 && `${imageData.bs_gskind3} - ${imageData.bs_gsname3}`}</p>
                             <p className='pt-4 text-2xl font-katuri'>{imageData.bs_gsname4 && `${imageData.bs_gskind4} - ${imageData.bs_gsname4}`}</p>
                             {/* <p className='pt-4 text-2xl'>{imageData.bs_bigo}</p> */}
                         </div>
                         <div>
-                            <p className='flex mb-4 font-preten font-semibold text-lg'>👩 저고리와 치마를 종류별로 다르게 선택해서 결정하실수도 있습니다.</p>
+                            <p className='flex mb-4 font-preten font-semibold text-lg'>
+                                👩 저고리와 치마를 종류별로 다르게 선택해서 결정하실수도 있습니다. <br />
+                                    예 ) A008 저고리, A029 치마
+                            </p>
                             <p className='flex mb-4 font-preten font-semibold text-lg'>
                                 🧵 정확하게 맞는 치수가 아니더라도 <br />
                                 고객님의 키, 가슴둘레, 화장길이에 맞춰서 수선해드릴 수 있습니다.

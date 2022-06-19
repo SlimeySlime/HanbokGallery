@@ -141,6 +141,13 @@ const TypeDisplay = ({imageList}) => {
         }
     }
 
+    // 하위 사이즈 추가해서 리턴 
+    const itemSizes = (size) => {
+        let sizes = size?.split(/[.,]+/)
+        sizes.unshift(sizes[0] - 11)
+        return sizes.join(', ')
+    }
+
     const ImageDiv2 = (item) => {
         const unavailable = item.unavailable
         if (unavailable) {      // 대여불가능 상품 
@@ -151,15 +158,18 @@ const TypeDisplay = ({imageList}) => {
                 <div className="absolute bottom-0 left-0 flex flex-1 z-10 w-full items-center justify-center bg-slate-700 bg-opacity-70">
                     <p className="m-2 text-white text-center text-md mobile:text-xs font-preten font-semibold">해당상품은 <br /> 대여불가능합니다.</p>    
                 </div>
-                {/* <div className="w-full h-full flex bg-slate-700 bg-opacity-50 justify-center items-center">
-                    <p className="text-white text-center text-md mobile:text-xs font-preten font-semibold">해당상품은 <br /> 대여불가능합니다.</p>    
-                </div> */}
             </div>
             )
-        }else {
+        }else{
             return(
-            <div>
-                <img className="z-10" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} alt={`[${item.bs_code}]`}  />
+            <div className="relative">
+                <img className="object-cover w-full" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} alt={`[${item.bs_code}]`}  />
+                {/* <div className="absolute bottom-0 left-0 flex flex-1 z-10 w-full items-center justify-center bg-slate-700 bg-opacity-70">
+                    <p className="m-2 text-white text-center text-md mobile:text-xs font-preten font-semibold">해당상품은 <br /> 대여불가능합니다.</p>    
+                </div> */}
+                <div className="absolute bottom-0 right-0 flex z-10 items-center justify-center bg-slate-50 bg-opacity-70">
+                    <p className="p-1 font-preten font-semibold mobile:text-xs">{itemSizes(item.bs_bigo)}</p>
+                </div>
             </div>
             )
         }
@@ -181,7 +191,7 @@ const TypeDisplay = ({imageList}) => {
                         <p className="mt-1 text-xs font-sans tracking-tight">{typeString}한복</p>
                         <p className="font-sans mobile:text-sm ">[{item.bs_code}]{item.bs_gsname1?.split(' ')[0]}</p>
                         <p className="font-sans mobile:text-sm">{item.bs_gsname2?.split(' ')[0]} {item.bs_gsname3?.split(' ')[0]}</p>
-                        <p className="inline-block mr-2 font-sans font-semibold mobile:text-sm">80,000원</p>
+                        <p className="inline-block mr-2 font-sans font-semibold mobile:text-sm">70,000원</p>
                         {/* <p className="inline font-sans font-thin text-slate-600 line-through mobile:text-sm">100,000원</p> */}
                     </div>
                 </Link>  

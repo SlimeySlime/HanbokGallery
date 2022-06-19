@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { useMediaQuery } from 'react-responsive'
 import { GrCamera, GrHome, GrMapLocation, GrPhone } from "react-icons/gr";
 import { HiClock } from "react-icons/hi";
+import { MdArrowForwardIos, MdArrowBackIosNew }  from "react-icons/md";
 // import AliceCarousel from 'react-alice-carousel';
 // import 'react-alice-carousel/lib/alice-carousel.css';
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -13,6 +14,9 @@ import "swiper/css/navigation";
 const { kakao } = window
 // to-do carousel
 const Main = () => {
+
+    const prevNavigation = useRef(null)
+    const nextNavigation = useRef(null)
 
     const isMobile = useMediaQuery({
         query: '(max-width : 760px)'
@@ -43,14 +47,23 @@ const Main = () => {
         <div className="flex flex-col">
             {/* Logo */}
             <div className="flex flex-1 justify-center">
-                <img className='w-1/4 mobile:w-2/4' src="img/text_logo.jpg" alt="blog" />
+                {/* <img className='w-1/4 mobile:w-2/4' src="img/text_logo.jpg" alt="blog" /> */}
+                <img className='mt-8 p-4 mobile:p-0 w-1/4 mobile:w-2/4' src="img/text_logo2.png" alt="blog" />
             </div>
 
             {/* swiper */}
             <div className="container justify-center w-auto mx-24 my-8 mobile:m-4">
                 <Swiper
                     pagination={true}
-                    navigation={true}
+                    // navigation={true}
+                    navigation={{
+                        prevEl: prevNavigation.current,
+                        nextEl: nextNavigation.current,
+                    }}
+                    // onBeforeInit={{
+                    //     swiper.params.navigation.prevEl = navigationPrevRef.current;
+                    //     swiper.params.navigation.nextEl = navigationNextRef.current;
+                    // }}
                     modules={[Navigation, Pagination]}
                     spaceBetween={12}
                     slidesPerView={isMobile ? 1 : 3}>
@@ -87,6 +100,12 @@ const Main = () => {
                     <SwiperSlide>
                         <img src="img/12.jpg" alt="" />
                     </SwiperSlide>
+                    <div className="absolute top-1/2 -translate-y-1/2 float-left z-10 rounded-full border bg-white p-3 m-1 hover:bg-slate-200 
+                        mobile:p-1"
+                        ref={prevNavigation}><MdArrowBackIosNew /></div>
+                    <div className="absolute top-1/2 right-0 -translate-y-1/2 float-right z-10 rounded-full border bg-white p-3 m-1 hover:bg-slate-200
+                        mobile:p-1" 
+                        ref={nextNavigation}><MdArrowForwardIos /></div>
                 </Swiper>
             </div>
 

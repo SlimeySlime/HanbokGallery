@@ -1,0 +1,12 @@
+
+###
+GET http://bdanbonga.com/store
+Content-Type: application/json
+
+###
+GET http://bdanbonga.com/store/hanbok
+Content-Type: application/json
+
+###
+GET http://localhost/store/hanbok
+Content-Type: application/json
