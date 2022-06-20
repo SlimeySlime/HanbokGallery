@@ -4,21 +4,58 @@ const RentalTemplate = () => {
 
     return(
         <div className="mt-12 m-4 flex-1 justify-center items-center">
-            <img src="/img/rentaling.jpg" alt="" />
+            {/* 이전 대여 이미지 */}
+            {/* <img src="/img/rentaling.jpg" alt="" /> */}
+            {/* 대여 과정 */}
+            <div className="my-8 flex flex-1 w-full justify-center items-center">
+                <p className="text-4xl font-preten font-semibold text-center">비단본가 한복 대여 과정</p>
+            </div>
             <div className="flex flex-1 w-full items-center justify-between">
-                <div className="p-12 border rounded-full bg-teal-700 text-white font-preten font-sans">
-                    <p>1. 한복 선택</p>
-                    <img src="" alt="" />
+                <div className="flex-col m-4">
+                    <div className="relative w-60 h-60 p-4 rounded-full bg-teal-700 text-white">
+                        <p className="mt-4 font-preten font-semibold text-2xl text-center">1. 한복 선택</p>
+                        <div className="p-4 flex flex-1 justify-center items-center">
+                            <img src="/img/template/hanbok.png" className="h-32" alt="hanbok" />
+                        </div>
+                    </div>
+                    <p className="mt-4 pb-12 font-preten font-semibold text-center">
+                        한복 디자인을 선택해주세요
+                    </p>
                 </div>
-                <div className="p-12 border rounded-full bg-pink-400 text-white">
-                    <p>1. 한복 선택</p>
-                    <img src="" alt="" />
-                </div><div className="p-12 border rounded-full bg-teal-700 text-white">
-                    <p>1. 한복 선택</p>
-                    <img src="" alt="" />
-                </div><div className="p-12 border rounded-full bg-teal-700 text-white">
-                    <p>1. 한복 선택</p>
-                    <img src="" alt="" />
+                <div className="flex-col m-4">
+                    <div className="relative w-60 h-60 p-4 rounded-full bg-pink-400 text-white">
+                        <p className="mt-4 font-preten font-semibold text-2xl text-center">2. 문의 상담</p>
+                        <div className="p-4 flex flex-1 justify-center items-center">
+                            <img src="/img/template/chat-white.png" className="h-32" alt="hanbok" />
+                        </div>
+                    </div>
+                    <p className="mt-4 font-preten font-semibold text-center">
+                        대여 가능 여부, 사이즈를 확인해주세요 <br />
+                        ( 전화 010 - 6847 - 5165)    <br />
+                        ( 문자 010 - 8681 - 5165)
+                    </p>
+                </div>
+                <div className="flex-col m-4">
+                <div className="relative w-60 h-60 p-4 rounded-full bg-teal-700 text-white">
+                        <p className="mt-4 font-preten font-semibold text-2xl text-center">3. 한복 배송</p>
+                        <div className="p-4 flex flex-1 justify-center items-center">
+                            <img src="/img/template/truck.png" className="h-32" alt="hanbok" />
+                        </div>
+                    </div>
+                    <p className="mt-4 pb-12 font-preten font-semibold text-center">
+                        행사일로부터 3일 전 발송
+                    </p>
+                </div>
+                <div className="flex-col m-4">
+                    <div className="relative w-60 h-60 p-4 rounded-full bg-pink-400 text-white">
+                        <p className="mt-4 font-preten font-semibold text-2xl text-center">4. 한복 반납</p>
+                        <div className="p-4 flex flex-1 justify-center items-center">
+                            <img src="/img/template/delivery-van-white.png" className="h-32" alt="hanbok" />
+                        </div>
+                    </div>
+                    <p className="mt-4 pb-12 font-preten font-semibold text-center">
+                        행사 다음 날 택배반납 (자동예약)
+                    </p>
                 </div>
             </div>
             <h2 className="mt-12  text-3xl font-preten font-semibold">예약전 필독사항</h2>

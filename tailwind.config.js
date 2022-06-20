@@ -13,6 +13,8 @@ module.exports = {
         'classic' : ['classic'],
         'alice' : ['EliceDigitalBaeum_Bold'],
         'preten' : ['Pretendard'],
+        'jua' : ['BMJUA'],
+        
       },
       screens: {
         // 'mobile' : '640px',
