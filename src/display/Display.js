@@ -47,10 +47,10 @@ const Display = ({itemInfo}) => {
         )
     }
 
-    const sizes = (bigo) => {
-        let bigos = bigo.split(',')
-        bigos.unshift(bigos[0] - 11)
-        return bigos.join(', ')
+    const sizes = (size) => {
+        let sizes = size?.split(/[.,]+/)
+        // bigos.unshift(bigos[0] - 11)
+        return sizes.join(', ')
     }
 
     return(
@@ -69,8 +69,7 @@ const Display = ({itemInfo}) => {
                                 // width={50} 
                                 className='p-2 hover:bg-slate-200 rounded-lg w-20' 
                                 onMouseEnter={(e) => {setPreviewIndex(e.target.id)}}
-                                onClick={(e) => {setPreviewIndex(e.target.id)}}
-                                onError={(e) => {ERROR_HIDE(e)}} />    
+                                onClick={(e) => {setPreviewIndex(e.target.id)}} />    
                         )}
                         </div>
                     </div>

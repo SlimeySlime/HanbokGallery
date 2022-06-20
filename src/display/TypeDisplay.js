@@ -144,7 +144,7 @@ const TypeDisplay = ({imageList}) => {
     // 하위 사이즈 추가해서 리턴 
     const itemSizes = (size) => {
         let sizes = size?.split(/[.,]+/)
-        sizes.unshift(sizes[0] - 11)
+        // sizes.unshift(sizes[0] - 11) // 이미 -11 사이즈가 db에 들어가있음
         return sizes.join(', ')
     }
 

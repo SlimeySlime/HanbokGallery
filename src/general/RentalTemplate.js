@@ -5,6 +5,22 @@ const RentalTemplate = () => {
     return(
         <div className="mt-12 m-4 flex-1 justify-center items-center">
             <img src="/img/rentaling.jpg" alt="" />
+            <div className="flex flex-1 w-full items-center justify-between">
+                <div className="p-12 border rounded-full bg-teal-700 text-white font-preten font-sans">
+                    <p>1. 한복 선택</p>
+                    <img src="" alt="" />
+                </div>
+                <div className="p-12 border rounded-full bg-pink-400 text-white">
+                    <p>1. 한복 선택</p>
+                    <img src="" alt="" />
+                </div><div className="p-12 border rounded-full bg-teal-700 text-white">
+                    <p>1. 한복 선택</p>
+                    <img src="" alt="" />
+                </div><div className="p-12 border rounded-full bg-teal-700 text-white">
+                    <p>1. 한복 선택</p>
+                    <img src="" alt="" />
+                </div>
+            </div>
             <h2 className="mt-12  text-3xl font-preten font-semibold">예약전 필독사항</h2>
 
             <p className="p-2 mt-4 text-katuri font-semibold text-2xl mobile:xl">※ 주문시</p>
