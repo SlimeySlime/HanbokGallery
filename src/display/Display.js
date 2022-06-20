@@ -26,23 +26,23 @@ const Display = ({itemInfo}) => {
         return(
             <div className='flex flex-col justify-center items-center'>
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/1.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 border rounded-lg w-2/3'  />
+                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3'  />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/2.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 border rounded-lg w-2/3' width={800} />
+                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/3.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 border rounded-lg w-2/3' width={800} />
+                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/4.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 border rounded-lg w-2/3' width={800} />
+                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/5.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 border rounded-lg w-2/3' width={800} />
+                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/6.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 border rounded-lg w-2/3' width={800} />
+                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/7.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 border rounded-lg w-2/3' width={800} />
+                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/8.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 border rounded-lg w-2/3' width={800} />
+                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/9.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 border rounded-lg w-2/3' width={800} />
+                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
             </div>
         )
     }

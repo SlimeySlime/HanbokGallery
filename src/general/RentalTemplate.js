@@ -8,9 +8,9 @@ const RentalTemplate = () => {
             {/* <img src="/img/rentaling.jpg" alt="" /> */}
             {/* 대여 과정 */}
             <div className="my-8 flex flex-1 w-full justify-center items-center">
-                <p className="text-4xl font-preten font-semibold text-center">비단본가 한복 대여 과정</p>
+                <p className="text-4xl font-preten font-semibold text- mobile:text-2xl">비단본가 한복 대여 과정</p>
             </div>
-            <div className="flex flex-1 w-full items-center justify-between">
+            <div className="flex flex-1 mobile:flex-col w-full items-center justify-between">
                 <div className="flex-col m-4">
                     <div className="relative w-60 h-60 p-4 rounded-full bg-teal-700 text-white">
                         <p className="mt-4 font-preten font-semibold text-2xl text-center">1. 한복 선택</p>
