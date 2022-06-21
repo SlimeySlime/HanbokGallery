@@ -9,6 +9,11 @@ import {CookiesProvider} from 'react-cookie';
 import store from './store';
 import { Provider } from 'react-redux';
 
+if (process.env.NODE_ENV === "production") {
+  console.log = function no_console() {};
+  console.warn = function no_console() {};
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

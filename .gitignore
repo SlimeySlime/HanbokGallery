@@ -10,6 +10,7 @@
 # testing
 /coverageg
 /src/trash
+/src/testing
 
 # production
 /build

@@ -24,25 +24,25 @@ const Display = ({itemInfo}) => {
     const imageList = (css, onHover, onClick, w) => {
         
         return(
-            <div className='flex flex-col justify-center items-center'>
+            <div className='flex flex-col m-4 justify-center items-center'>
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/1.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3'  />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto'  />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/2.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/3.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/4.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/5.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/6.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/7.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/8.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/9.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-4 m-4 mb-12 mobile:p-0 border rounded-lg w-2/3' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
             </div>
         )
     }
@@ -76,10 +76,11 @@ const Display = ({itemInfo}) => {
                     {/* 좌측 */}
                     <div className='m-4 mb-12 w-auto mobile:w-auto'>
                         {/* 타이틀 */}
-                        <h2 className='text-3xl ml-2 m-4 mb-8 font-samlip'>
+                        {/* <h2 className='text-3xl ml-2 m-4 mb-8 font-samlip'>
                             [{imageData.bs_code}] {imageData.bs_gsname1?.split(' ')[0]} {imageData.bs_gsname2?.split(' ')[0]} 
-                        </h2>
-                        <div className='mb-12 p-4 border'>
+                        </h2> */}
+                        <div className='mb-12 p-4 border-no'>
+                            <p  className='pt-4 text-2xl font-katuri border-b-2 pb-4'>[{imageData.bs_code}] {imageData.bs_gsname1?.split(' ')[0]} {imageData.bs_gsname2?.split(' ')[0]}</p>
                             <p className='pt-4 text-2xl font-katuri'>{imageData.bs_gskind1} - {imageData.bs_gsname1?.split(' ')[0]}</p>
                             <p className='pt-4 text-2xl font-katuri'>size - {imageData.bs_bigo && sizes(imageData.bs_bigo)}</p>
                             <p className='pt-4 text-2xl font-katuri'>{imageData.bs_gsname2 && `${imageData.bs_gskind2} - ${imageData.bs_gsname2}`}</p>

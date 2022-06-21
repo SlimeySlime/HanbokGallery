@@ -43,27 +43,47 @@ const Main = () => {
         map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
     }, [])
 
+    const Gradient = (text, style) => {
+        return(
+            <p className={"text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-pink-600 " + style}>{text}</p>
+        )
+    }
+
     return(
         <div className="flex flex-col">
             {/* Logo */}
-            <div className="flex flex-1 justify-center">
+            <div className="flex flex-1 mobile:flex-col justify-center items-center my-24 mobile:my-12">
                 {/* <img className='w-1/4 mobile:w-2/4' src="img/text_logo.jpg" alt="blog" /> */}
-                <img className='mt-8 p-4 mobile:p-0 w-1/4 mobile:w-2/4' src="img/text_logo2.png" alt="blog" />
+                <div className="container flex justify-center items-center p-2 w-2/5 mobile:w-auto mr-24 mobile:m-0">
+                    <img className='object-cover' src="img/text_logo2.png" alt="blog" />
+
+                </div>
+                <div className="flex flex-col justify-center items-center m-12">
+                    {Gradient('전품목 7만원 균일가 대여', "text-4xl font-preten font-semibold")}
+                    {/* <p className="text-3xl font-preten font-semibold">전품목 7만원 균일가 대여 </p> */}
+                    <p className="font-preten font-semibold pb-12 from-blue-500 to-white">( 핸드백, 신발, 액세서리 등 모두포함 )</p>
+                    <p className="text-2xl font-preten font-semibold text-center pb-8">
+                        한분 한분께 최선을 다하고자 <br />
+                        <b className="text-red-500">예약제</b>를 운영중입니다.
+                    </p>
+                    <p className="text-lg font-preten font-semibold">( 예약문의 043 - 234 - 5165 )</p>    
+                </div>
             </div>
 
             {/* swiper */}
             <div className="container justify-center w-auto mx-24 my-8 mobile:m-4">
                 <Swiper
                     pagination={true}
-                    // navigation={true}
                     navigation={{
                         prevEl: prevNavigation.current,
                         nextEl: nextNavigation.current,
                     }}
-                    // onBeforeInit={{
-                    //     swiper.params.navigation.prevEl = navigationPrevRef.current;
-                    //     swiper.params.navigation.nextEl = navigationNextRef.current;
-                    // }}
+                    onBeforeInit={{
+                        // swiper.params.navigation.prevEl = navigationPrevRef.current;
+                        // swiper.params.navigation.nextEl = navigationNextRef.current;
+                        prevEl: prevNavigation.current,
+                        nextEl: nextNavigation.current,
+                    }}
                     modules={[Navigation, Pagination]}
                     spaceBetween={12}
                     slidesPerView={isMobile ? 1 : 3}>
@@ -113,13 +133,12 @@ const Main = () => {
             <div className="container m-16 mobile:m-2 flex flex-col ">
                 <h3 className="flex flex-1 font-preten text-3xl font-semibold? border-b-2 pb-2">오시는길</h3>
                 {/* 지도 컨테이너 */}
-                <div className="w-auto h-auto m-4 p-1">
+                <div className="mobile:hidden w-auto h-auto m-4 p-1">
                     <div id='map' className="w-52 f-52 relative"
                         style={{
                             width: 'auto', 
                             height: isMobile ? '300px' : '500px' }} />
                 </div>
-
                 <div className="border-b-2 flex flex-1 items-center p-4">
                     <GrMapLocation className="w-8 h-8 mobile:w-4 mobile:h-4"/>
                     <p className="m-4 w-24 text-xl font-semibold font-preten">위치</p>
