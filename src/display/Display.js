@@ -1,8 +1,15 @@
 import axios from 'axios'
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { useParams } from "react-router-dom"
+import { MdArrowForwardIos, MdArrowBackIosNew }  from "react-icons/md";
 import { IMAGE_PATH, SERVER_PATH, ERROR_HIDE } from "../general/General"
 import RentalTemplate from '../general/RentalTemplate'
+
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Pagination, Navigation } from 'swiper'
+import 'swiper/css'
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 const Display = ({itemInfo}) => {
     // /:id -> useParams()
@@ -12,6 +19,9 @@ const Display = ({itemInfo}) => {
 
     const [imageData, setImageData] = useState({})
     const [previewIndex, setPreviewIndex] = useState(1)
+
+    const prevNavigation = useRef(null)
+    const nextNavigation = useRef(null)
 
     useEffect(() => {
         const searchPath = `${SERVER_PATH}/${id}`
@@ -49,27 +59,101 @@ const Display = ({itemInfo}) => {
 
     const sizes = (size) => {
         let sizes = size?.split(/[.,]+/)
-        // bigos.unshift(bigos[0] - 11)
         return sizes.join(', ')
+    }
+    
+    const ImageSlide = () => {
+        return(
+        <Swiper
+            pagination={true}
+            navigation={{
+                prevEl: prevNavigation.current,
+                nextEl: nextNavigation.current,
+            }}
+            onBeforeInit={{
+                prevEl: prevNavigation.current,
+                nextEl: nextNavigation.current,
+            }}
+            modules={[Navigation, Pagination]}
+            >
+            <SwiperSlide>
+                <img src="/img/1.jpg" alt="" />
+            </SwiperSlide>
+            <SwiperSlide>
+                <img src="/img/1.jpg" alt="" />
+            </SwiperSlide>
+            <SwiperSlide>
+                <img src="/img/1.jpg" alt="" />
+            </SwiperSlide>
+            <SwiperSlide>
+                <img src="/img/1.jpg" alt="" />
+            </SwiperSlide>
+            <SwiperSlide>
+                <img src="/img/1.jpg" alt="" />
+            </SwiperSlide>
+            <div className="absolute top-1/2 -translate-y-1/2 float-left z-10 rounded-full border bg-white p-3 m-1 hover:bg-slate-200 
+                mobile:p-1"
+                ref={prevNavigation}><MdArrowBackIosNew /></div>
+            <div className="absolute top-1/2 right-0 -translate-y-1/2 float-right z-10 rounded-full border bg-white p-3 m-1 hover:bg-slate-200
+                mobile:p-1" 
+                ref={nextNavigation}><MdArrowForwardIos /></div>
+        </Swiper>
+        )
     }
 
     return(
         <div className='container mx-auto flex flex-1 mobile:flex-col '>
             <div className='flex flex-1 flex-col justify-center items-center'>
                 {/* 상단 */}
-                <div className='mt-12 p-4 flex mobile:flex-col border'>
+                <div className='mt-12 p-4 flex flex-1 mobile:flex-col border'>
+                    <div className='hidden mobile:flex flex-1 w-72 justify-center items-center'>
+                        <Swiper
+                        pagination={true}
+                        navigation={{
+                            prevEl: prevNavigation.current,
+                            nextEl: nextNavigation.current,
+                        }}
+                        onBeforeInit={{
+                            prevEl: prevNavigation.current,
+                            nextEl: nextNavigation.current,
+                        }}
+                        modules={[Navigation, Pagination]}
+                        >
+                        <SwiperSlide>
+                            <img src="/img/1.jpg" alt="" />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <img src="/img/1.jpg" alt="" />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <img src="/img/1.jpg" alt="" />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <img src="/img/1.jpg" alt="" />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <img src="/img/1.jpg" alt="" />
+                        </SwiperSlide>
+                        <div className="absolute top-1/2 -translate-y-1/2 float-left z-10 rounded-full border bg-white p-3 m-1 hover:bg-slate-200 
+                            mobile:p-1"
+                            ref={prevNavigation}><MdArrowBackIosNew /></div>
+                        <div className="absolute top-1/2 right-0 -translate-y-1/2 float-right z-10 rounded-full border bg-white p-3 m-1 hover:bg-slate-200
+                            mobile:p-1" 
+                            ref={nextNavigation}><MdArrowForwardIos /></div>
+                        </Swiper>
+                    </div>
                     {/* 크게보기 이미지 */}
-                    <div className='flex flex-col justify-center items-center'>
+                    <div className='mobile:hidden flex flex-col justify-center items-center'>
                         <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${previewIndex}.jpg`} alt={imageData.bs_code} 
                         // width={400}
                         className='p-2 pb-0 w-full max-w-lg' />
                         <div className='mt-4 flex mobile:grid mobile:grid-cols-4 justify-center '>
                         {imageLength.map((num) => 
                             <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${num}.jpg`} alt={imageData.bs_code} id={num}
-                                // width={50} 
                                 className='p-2 hover:bg-slate-200 rounded-lg w-20' 
                                 onMouseEnter={(e) => {setPreviewIndex(e.target.id)}}
-                                onClick={(e) => {setPreviewIndex(e.target.id)}} />    
+                                onClick={(e) => {setPreviewIndex(e.target.id)}}
+                                onError={(e) => {ERROR_HIDE(e)}} />    
                         )}
                         </div>
                     </div>

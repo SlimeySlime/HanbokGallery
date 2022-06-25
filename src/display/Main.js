@@ -3,8 +3,6 @@ import { useMediaQuery } from 'react-responsive'
 import { GrCamera, GrHome, GrMapLocation, GrPhone } from "react-icons/gr";
 import { HiClock } from "react-icons/hi";
 import { MdArrowForwardIos, MdArrowBackIosNew }  from "react-icons/md";
-// import AliceCarousel from 'react-alice-carousel';
-// import 'react-alice-carousel/lib/alice-carousel.css';
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Navigation } from 'swiper'
 import 'swiper/css'
@@ -64,7 +62,7 @@ const Main = () => {
                     <p className="font-preten font-semibold pb-12 from-blue-500 to-white">( 핸드백, 신발, 액세서리 등 모두포함 )</p>
                     <p className="text-2xl font-preten font-semibold text-center pb-8">
                         한분 한분께 최선을 다하고자 <br />
-                        <b className="text-red-500">예약제</b>를 운영중입니다.
+                        <b className="text-red-500">예약제</b>로 운영중입니다.
                     </p>
                     <p className="text-lg font-preten font-semibold">( 예약문의 043 - 234 - 5165 )</p>    
                 </div>
@@ -79,8 +77,6 @@ const Main = () => {
                         nextEl: nextNavigation.current,
                     }}
                     onBeforeInit={{
-                        // swiper.params.navigation.prevEl = navigationPrevRef.current;
-                        // swiper.params.navigation.nextEl = navigationNextRef.current;
                         prevEl: prevNavigation.current,
                         nextEl: nextNavigation.current,
                     }}
