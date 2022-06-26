@@ -164,8 +164,8 @@ const TypeDisplay = ({imageList}) => {
             return(
             <div className="relative">
                 <img className="object-cover w-full" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} alt={`[${item.bs_code}]`}  />
-                <div className="absolute bottom-0 right-0 translate-y-6 mobile:translate-y-6-nono flex z-10 items-center justify-center bg-slate-200 bg-opacity-70">
-                    <p className="p-1 font-preten font-semibold text-sm mobile:text-xs">{itemSizes(item.bs_bigo)} size</p>
+                <div className="absolute bottom-0 right-0 translate-y-6no flex z-10 items-center justify-center bg-slate-200 bg-opacity-70">
+                    <p className="p-1 font-preten font-semibold text-sm mobile:text-xs mobile:p-220">{itemSizes(item.bs_bigo)} size</p>
                 </div>
             </div>
             )

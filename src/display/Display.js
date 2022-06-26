@@ -36,23 +36,23 @@ const Display = ({itemInfo}) => {
         return(
             <div className='flex flex-col m-4 justify-center items-center'>
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/1.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto'  />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}}  />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/2.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/3.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/4.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/5.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/6.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/7.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/8.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/9.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' width={800} />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
             </div>
         )
     }
@@ -76,21 +76,12 @@ const Display = ({itemInfo}) => {
             }}
             modules={[Navigation, Pagination]}
             >
-            <SwiperSlide>
-                <img src="/img/1.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide>
-                <img src="/img/1.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide>
-                <img src="/img/1.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide>
-                <img src="/img/1.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide>
-                <img src="/img/1.jpg" alt="" />
-            </SwiperSlide>
+            {imageLength.map((num) => 
+                <SwiperSlide>
+                    <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${num}.jpg`} alt={imageData.bs_code} id={num} />
+                </SwiperSlide>
+                
+            )}
             <div className="absolute top-1/2 -translate-y-1/2 float-left z-10 rounded-full border bg-white p-3 m-1 hover:bg-slate-200 
                 mobile:p-1"
                 ref={prevNavigation}><MdArrowBackIosNew /></div>
@@ -106,41 +97,9 @@ const Display = ({itemInfo}) => {
             <div className='flex flex-1 flex-col justify-center items-center'>
                 {/* 상단 */}
                 <div className='mt-12 p-4 flex flex-1 mobile:flex-col border'>
-                    <div className='hidden mobile:flex flex-1 w-72 justify-center items-center'>
-                        <Swiper
-                        pagination={true}
-                        navigation={{
-                            prevEl: prevNavigation.current,
-                            nextEl: nextNavigation.current,
-                        }}
-                        onBeforeInit={{
-                            prevEl: prevNavigation.current,
-                            nextEl: nextNavigation.current,
-                        }}
-                        modules={[Navigation, Pagination]}
-                        >
-                        <SwiperSlide>
-                            <img src="/img/1.jpg" alt="" />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <img src="/img/1.jpg" alt="" />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <img src="/img/1.jpg" alt="" />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <img src="/img/1.jpg" alt="" />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <img src="/img/1.jpg" alt="" />
-                        </SwiperSlide>
-                        <div className="absolute top-1/2 -translate-y-1/2 float-left z-10 rounded-full border bg-white p-3 m-1 hover:bg-slate-200 
-                            mobile:p-1"
-                            ref={prevNavigation}><MdArrowBackIosNew /></div>
-                        <div className="absolute top-1/2 right-0 -translate-y-1/2 float-right z-10 rounded-full border bg-white p-3 m-1 hover:bg-slate-200
-                            mobile:p-1" 
-                            ref={nextNavigation}><MdArrowForwardIos /></div>
-                        </Swiper>
+                    {/* 모바일 크게보기 슬라이드 */}
+                    <div className='hidden mobile:flex flex-1 w-screen justify-center items-center'>
+                        {ImageSlide()}
                     </div>
                     {/* 크게보기 이미지 */}
                     <div className='mobile:hidden flex flex-col justify-center items-center'>

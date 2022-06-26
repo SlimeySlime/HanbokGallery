@@ -106,7 +106,7 @@ function App() {
   }
 
   return (
-    <div className='flex flex-col justify-betwe2en min-h-screen'>
+    <div className='flex flex-col min-h-screen'>
 
       <NavWind setEventDate={changeEventDate} eventDate={eventDate}/>
       {/* <Nav2 /> */}

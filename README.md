@@ -1,70 +1,69 @@
-# Getting Started with Create React App
-
+비단본가 한복갤러리
+=========
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- - - - - -
 
-## Available Scripts
+## 메인
+bootstrap -> tailwindcss로 교체
+```js
+screens: {
+    'mobile' : {'max': '640px'},
+},
+```
+kakao map api 사용 (모바일은 hidden)
 
-In the project directory, you can run:
+swiperjs로 간단하게 슬라이드 제작
 
-### `npm start`
+*****
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## redux
+> 1. 전체한복
+> 2. 갤러리 전시용 한복
+> 3. 행사날짜 대여한복 리스트
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 타입 디스플레이
+```js
+const TYPE_TO_KOREAN = (type) => {
+    // id -> `${type} 한복`
+    switch (type) {
+        case 'bride':
+            return '신부'
+        case 'groom':
+            return '신랑'
+        case 'parent':
+            return '혼주'        
+        case 'guest':
+            return '하객'
+        case 'best' :
+            return '인기'
+        case 'all':
+            return '전체'
+        default:
+            return '에러'
+    }
+}
+```
+```js
+    // useEffect()
+    const onLoad(() => {
+        // 1. redux data에서 해당 상품의 rentals / stock 이 들어가도록 매핑
+        rentalMapping()
+        // 2. 해당상품이 rentals >= stock 이면 unavail = true
+        setUnavailList()
+        // 3. 대여가능 여부에 따라 image div 변경    
+        setGalleryData()
+    },[])
+```
 
-### `npm test`
+## 디테일 디스플레이
+해당 상품 id로 axios로 자세한 정보를 불러와서 보여주기
+```js
+function onLoad() {
+    const searchPath = `${SERVER_PATH}/${id}`
+    axios.get(searchPath).then((result) => {
+        setImageData(result)
+    })
+}
+```
+대여 템플릿은 동일하게 사용
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
