@@ -1,7 +1,6 @@
 비단본가 한복갤러리
 =========
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-- - - - - -
+(https://github.com/facebook/create-react-app)으로 시작
 
 ## 메인
 bootstrap -> tailwindcss로 교체
@@ -44,15 +43,15 @@ const TYPE_TO_KOREAN = (type) => {
 }
 ```
 ```js
-    // useEffect()
-    const onLoad(() => {
-        // 1. redux data에서 해당 상품의 rentals / stock 이 들어가도록 매핑
-        rentalMapping()
-        // 2. 해당상품이 rentals >= stock 이면 unavail = true
-        setUnavailList()
-        // 3. 대여가능 여부에 따라 image div 변경    
-        setGalleryData()
-    },[])
+// useEffect()
+function onLoad() {
+    // 1. redux data에서 해당 상품의 rentals / stock 이 들어가도록 매핑
+    rentalMapping()
+    // 2. 해당상품이 rentals >= stock 이면 unavail = true
+    setUnavailList()
+    // 3. 대여가능 여부에 따라 image div 변경    
+    setGalleryData()
+}
 ```
 
 ## 디테일 디스플레이

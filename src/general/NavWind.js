@@ -21,6 +21,18 @@ const NavWind = ({eventDate, setEventDate}) => {
         setNavVisible(!navVisible)
     }
 
+    const initialEventDate = () => {
+        // return new Date()
+        if (cookie.eventdate !== undefined) {
+            console.log('return cookie')
+            return cookie.eventdate
+        }else{
+            const now = new Date()
+            const nowStr = now.toISOString().split('T')[0]
+            return nowStr
+        }
+    }
+
     return(
     <nav className="flex flex-wrap stickyno items-center justify-between bg-teal-800 p-4 
                     mobile:p-2 mobile:sticky top-0 z-50 mobile:w-full">
@@ -65,8 +77,8 @@ const NavWind = ({eventDate, setEventDate}) => {
                 </div>
                 <input className='pl-2 py-0.5 mr-2 rounded-md font-katuri mobile:inline-block' type="date" title='행사날짜를 지정해주세요' id='eventDate' name="" 
                     onChange={(e) => {setEventDate(e)}} 
-                    // value={eventDate}/>
-                    value={cookie.eventdate}/>
+                    // value={cookie.eventdate}/>
+                    value={initialEventDate()}/>
                 {/* 검색 -> 모바일에선 x */}
                 <div className='mobile:hidden inline-flex border-blue-400 hover:shadow-md mobile:mt-4' >
                     <button>
@@ -120,7 +132,8 @@ const NavWind = ({eventDate, setEventDate}) => {
                 <label className='mr-2 text-xl text-slate-100 font-katuri has-tooltip2'>행사날짜</label>
                 <input className='pl-4 py-0.5 mr-2 rounded-md font-katuri mobile:inline-block' type="date" title='행사날짜를 지정해주세요' id='eventDate' name="" 
                     onChange={(e) => {setEventDate(e)}} 
-                    value={cookie.eventdate}/>
+                    // value={cookie.eventdate}/>
+                    value={initialEventDate()}/>
                 {/* 검색 */}
                 <div className='hiddeno inline-flex border-blue-400 hover:shadow-md mobile:mt-4' >
                     <button>

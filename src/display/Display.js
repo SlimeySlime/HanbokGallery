@@ -15,7 +15,7 @@ const Display = ({itemInfo}) => {
     // /:id -> useParams()
     const {id} = useParams()
     // 약간 무식한 방법
-    const imageLength = [1,2,3,4,5,6,7,8,9]
+    const imageLength = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 
     const [imageData, setImageData] = useState({})
     const [previewIndex, setPreviewIndex] = useState(1)
