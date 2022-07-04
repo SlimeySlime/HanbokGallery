@@ -31,7 +31,7 @@ const RentalTemplate = () => {
                     </div>
                     <p className="mt-4 font-preten font-semibold text-center">
                         대여 가능 여부, 사이즈를 확인해주세요 <br />
-                        ( 전화 010 - 6847 - 5165)    <br />
+                        ( 전화 043 - 234 - 5165)    <br />
                         ( 문자 010 - 8681 - 5165)
                     </p>
                 </div>
@@ -74,6 +74,7 @@ const RentalTemplate = () => {
             <p className="font-preten font-semibold text-lg mobile:md">
                 - 행사 다음날 방문 수거가 자동으로 접수됩니다 <br />
                 - 주말행사 : 월요일에 방문 수거가 자동으로 접수됩니다 <br />
+                - 평일 : 행사 다음 날에 방문 수거가 자동으로 접수됩니다 <br />
                 - 한복과 구성품을 상자에 담아서, 보내드린 택배박스에 넣어주세요 <br />
                 - 택배 기사님 전화를 꼭 받아주세요 <br />
                 - 고객님 사정으로 반납이 연체 될 경우 연체료가 부과될 수 있습니다 

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useMediaQuery } from 'react-responsive'
 import { GrCamera, GrHome, GrMapLocation, GrPhone } from "react-icons/gr";
-import { HiClock } from "react-icons/hi";
+import { HiClock, HiHome } from "react-icons/hi";
 import { MdArrowForwardIos, MdArrowBackIosNew }  from "react-icons/md";
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Navigation } from 'swiper'
@@ -56,11 +56,14 @@ const Main = () => {
                     <img className='object-cover' src="img/text_logo2.png" alt="blog" />
 
                 </div>
-                <div className="flex flex-col justify-center items-center m-12">
-                    {Gradient('전품목 7만원 균일가 대여', "text-4xl font-preten font-semibold")}
+                <div className="flex flex-col justify-center items-center m-12 mobile:m-2">
+                    {Gradient('전품목 7만원 균일가 대여', "text-4xl font-preten font-semibold mobile:text-2xl")}
                     {/* <p className="text-3xl font-preten font-semibold">전품목 7만원 균일가 대여 </p> */}
-                    <p className="font-preten font-semibold pb-12 from-blue-500 to-white">( 핸드백, 신발, 액세서리 등 모두포함 )</p>
-                    <p className="text-2xl font-preten font-semibold text-center pb-8">
+                    <p className="font-preten font-semibold pb-12 from-blue-500 to-white">
+                        ( 핸드백, 신발, 액세서리 등 모두포함 )
+                    </p>
+                    <p className="text-2xl font-preten font-semibold text-center pb-8
+                                mobile:text-lg mobile:p-2">
                         한분 한분께 최선을 다하고자 <br />
                         <b className="text-red-500">예약제</b>로 운영중입니다.
                     </p>
@@ -143,7 +146,7 @@ const Main = () => {
                 <div className="border-b-2 flex flex-1 items-center p-4">
                     <GrPhone className="w-8 h-8 mobile:w-4 mobile:h-4"/>
                     <p className="m-4 w-24 text-xl font-semibold font-preten mobile:text-base mobile:m-2">전화번호</p>
-                    <p className="m-4 text-xl font-preten mobile:text-base mobile:m-0">043 - 234 - 5165 &nbsp; / &nbsp; 010 - 6847 - 5165</p>
+                    <p className="m-4 text-xl font-preten mobile:text-base mobile:m-0">043 - 234 - 5165 </p>
                 </div>
                 <div className="border-b-2 flex flex-1 items-center p-4">
                     <HiClock className="w-8 h-8 mobile:w-4 mobile:h-4"/>
@@ -154,6 +157,7 @@ const Main = () => {
                     </div>
                 </div>
                 <div className="border-b-2 flex flex-1 items-center p-4">
+                    {/* <HiHome className="w-8 h-8 mobile:w-4 mobile:h-4"/> */}
                     <GrHome className="w-8 h-8 mobile:w-4 mobile:h-4"/>
                     <p className="m-4 w-24 text-xl font-semibold font-preten mobile:text-base mobile:m-2">블로그</p>
                     <a className="m-4 text-xl font-preten mobile:text-base mobile:m-0" href="https://blog.naver.com/bdan_no1">blog.naver.com/bdan_no1</a>
