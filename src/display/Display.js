@@ -173,7 +173,7 @@ const Display = ({itemInfo}) => {
                 <div className='mt-12 p-4 flex flex-1 mobile:flex-col border'>
                     {/* <button className='p-2 bg-blue-500 rounded' onClick={() => checkImageDebug()}>디버그</button> */}
                     {/* 모바일 크게보기 슬라이드 */}
-                    <div className='hidden mobile:flex flex-1 w-screen justify-center items-center'>
+                    <div className='hidden mobile:flex w-screen justify-center items-center'>
                         {ImageSlide()}
                     </div>
                     {/* 데스크톱 크게보기 이미지 */}

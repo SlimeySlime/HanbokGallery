@@ -11,7 +11,7 @@ const RentalTemplate = () => {
                 <p className="text-4xl font-preten font-semibold text- mobile:text-2xl">비단본가 한복 대여 과정</p>
             </div>
             <div className="flex flex-1 mobile:flex-col w-full items-start justify-between">
-                <div className="flex-col m-4">
+                <div className="flex-col m-4 mobile:m-0">
                     <div className="relative w-60 h-60 p-4 rounded-full bg-teal-700 text-white">
                         <p className="mt-4 font-preten font-semibold text-2xl text-center">1. 한복 선택</p>
                         <div className="p-4 flex flex-1 justify-center items-center">
@@ -22,7 +22,7 @@ const RentalTemplate = () => {
                         한복 디자인을 선택해주세요
                     </p>
                 </div>
-                <div className="flex-col m-4">
+                <div className="flex-col m-4 mobile:m-0">
                     <div className="relative w-60 h-60 p-4 rounded-full bg-pink-400 text-white">
                         <p className="mt-4 font-preten font-semibold text-2xl text-center">2. 문의 상담</p>
                         <div className="p-4 flex flex-1 justify-center items-center">
@@ -35,7 +35,7 @@ const RentalTemplate = () => {
                         ( 문자 010 - 8681 - 5165)
                     </p>
                 </div>
-                <div className="flex-col m-4">
+                <div className="flex-col m-4 mobile:m-0">
                 <div className="relative w-60 h-60 p-4 rounded-full bg-teal-700 text-white">
                         <p className="mt-4 font-preten font-semibold text-2xl text-center">3. 한복 배송</p>
                         <div className="p-4 flex flex-1 justify-center items-center">
@@ -46,7 +46,7 @@ const RentalTemplate = () => {
                         행사일로부터 3일 전 발송
                     </p>
                 </div>
-                <div className="flex-col m-4">
+                <div className="flex-col m-4 mobile:m-0">
                     <div className="relative w-60 h-60 p-4 rounded-full bg-pink-400 text-white">
                         <p className="mt-4 font-preten font-semibold text-2xl text-center">4. 한복 반납</p>
                         <div className="p-4 flex flex-1 justify-center items-center">
