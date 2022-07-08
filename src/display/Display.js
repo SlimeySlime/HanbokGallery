@@ -15,7 +15,8 @@ const Display = ({itemInfo}) => {
     // /:id -> useParams()
     const {id} = useParams()
     // 약간 무식한 방법
-    const imageLength = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+    const [imageLength, setImageLength] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
+    const [mobileSlideLength, setMobileSlideLength] = useState([1,2,3,4,5,6,7,8,9])
 
     const [imageData, setImageData] = useState({})
     const [previewIndex, setPreviewIndex] = useState(1)
@@ -28,32 +29,104 @@ const Display = ({itemInfo}) => {
         axios.get(searchPath).then((result) => {
             setImageData(result.data[0])
             console.log(result.data[0])
+            
+            checkedImage()
         })
-    }, [])
+
+    }, [id])
+
+    const checkImageDebug = () => {
+
+        const url2 =  IMAGE_PATH + `Store/[${imageData.bs_code}]/${11}.jpg`
+
+        let xml = new XMLHttpRequest()
+        // const url =  `https://s3.ap-northeast-2.amazonaws.com/bdanbonga.hanbok.com/Store/[A013]/3.jpg`
+        // const url3 = `https://s3.ap-northeast-2.amazonaws.com/bdanbonga.hanbok.com/` + `Store/[${imageData.bs_code}]/${3}.jpg`
+
+        // xml.onload = function() {
+        //     console.log('xml onload')
+        //     const status = xml.status
+        //     if (status === 200) {
+        //         // console.log(`index ${index} send GET ${url} request 200 `)
+        //         console.log('200')
+                
+        //     }else if (status === 403){
+        //         // console.log(`index ${index} send GET ${url} request 404`)
+        //         console.log('404 delete imageLength')
+
+        //     }else{
+        //         // console.log(`xml.status error at send GET ${url}`)
+        //         console.log('err')
+        //     }
+        // }
+        
+        xml.open('GET', url2, 'false')
+        try{
+            xml.send()
+        }catch(e){
+            console.log('error at ??', e)
+        }
+
+    }
+    const checkedImage = () => {
+        let xml = new XMLHttpRequest()
+        xml.onload = function() {
+            const status = xml.status
+            if (status === 200) {
+                // console.log(`index ${index} send GET ${url} request 200 `)
+                console.log('200')
+                
+            }else if (status === 403){
+                console.log('404 delete imageLength')
+                imageLength.splice()
+            }else{
+                // console.log(`xml.status error at send GET ${url}`)
+                console.log('err')
+            }
+        }
+
+        imageLength.forEach(index => {
+            const url = IMAGE_PATH + `Store/[${imageData.bs_code}]/${index}.jpg`
+            console.log('check status at ', url)
+
+            xml.open('GET', url, 'false')
+            xml.send()
+
+            // const result = xml.status
+        });
+    }
 
     const imageList = (css, onHover, onClick, w) => {
         
         return(
             <div className='flex flex-col m-4 justify-center items-center'>
-                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/1.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}}  />
-                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/2.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
-                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/3.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
-                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/4.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
-                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/5.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
-                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/6.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
-                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/7.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
-                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/8.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
-                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/9.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
+                {imageLength.map((num) => 
+                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${num}.jpg`} alt={imageData.bs_gsname1} 
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' 
+                    onError={(e) => {ERROR_HIDE(e)}}  />
+                )}
+
             </div>
+            // <div className='flex flex-col m-4 justify-center items-center'>
+            //     <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/1.jpg`} alt={imageData.bs_gsname1} 
+            //         className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}}  />
+            //     <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/2.jpg`} alt={imageData.bs_gsname1} 
+            //         className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
+            //     <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/3.jpg`} alt={imageData.bs_gsname1} 
+            //         className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
+            //     <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/4.jpg`} alt={imageData.bs_gsname1} 
+            //         className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
+            //     <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/5.jpg`} alt={imageData.bs_gsname1} 
+            //         className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
+            //     <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/6.jpg`} alt={imageData.bs_gsname1} 
+            //         className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
+            //     <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/7.jpg`} alt={imageData.bs_gsname1} 
+            //         className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
+            //     <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/8.jpg`} alt={imageData.bs_gsname1} 
+            //         className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
+            //     <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/9.jpg`} alt={imageData.bs_gsname1} 
+            //         className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' onError={(e) => {ERROR_HIDE(e)}} width={800} />
+            // </div>
         )
     }
 
@@ -76,9 +149,10 @@ const Display = ({itemInfo}) => {
             }}
             modules={[Navigation, Pagination]}
             >
-            {imageLength.map((num) => 
-                <SwiperSlide>
-                    <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${num}.jpg`} alt={imageData.bs_code} id={num} />
+            {mobileSlideLength.map((num) => 
+                <SwiperSlide onError={(e) => {ERROR_HIDE(e)}}>
+                    <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${num}.jpg`} alt={imageData.bs_code} id={num}  />
+                    {/* // onError={(e) => {console.log('error slide on', e)}}/> */}
                 </SwiperSlide>
                 
             )}
@@ -97,11 +171,12 @@ const Display = ({itemInfo}) => {
             <div className='flex flex-1 flex-col justify-center items-center'>
                 {/* 상단 */}
                 <div className='mt-12 p-4 flex flex-1 mobile:flex-col border'>
+                    {/* <button className='p-2 bg-blue-500 rounded' onClick={() => checkImageDebug()}>디버그</button> */}
                     {/* 모바일 크게보기 슬라이드 */}
                     <div className='hidden mobile:flex flex-1 w-screen justify-center items-center'>
                         {ImageSlide()}
                     </div>
-                    {/* 크게보기 이미지 */}
+                    {/* 데스크톱 크게보기 이미지 */}
                     <div className='mobile:hidden flex flex-col justify-center items-center'>
                         <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${previewIndex}.jpg`} alt={imageData.bs_code} 
                         // width={400}
@@ -140,9 +215,6 @@ const Display = ({itemInfo}) => {
                                 🧵 정확하게 맞는 치수가 아니더라도 <br />
                                 고객님의 키, 가슴둘레, 화장길이에 맞춰서 수선해드릴 수 있습니다.
                             </p>
-                        </div>
-                        <div>
-                            
                         </div>
                     </div>  
                 </div>

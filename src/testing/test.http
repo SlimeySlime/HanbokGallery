@@ -10,3 +10,15 @@ Content-Type: application/json
 ###
 GET http://localhost/store/hanbok
 Content-Type: application/json
+
+### 
+GET https://storage.googleapis.com/hanbok.bdanbonga.com/Store/[A012]/4.jpg
+Content-Type: application/xml
+
+### 
+GET https://storage.googleapis.com/hanbok.bdanbonga.com/Store/[A012]/12.jpg
+Content-Type: application/xml
+
+###
+GET https://s3.ap-northeast-2.amazonaws.com/bdanbonga.hanbok.com/Store/[A012]/1.jpg
+Content-Type: application/xml

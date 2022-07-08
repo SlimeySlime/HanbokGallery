@@ -20,21 +20,9 @@ const TestingPage = () => {
     }
 
     return(
-        // <div className="container flex-1 m-16 justify-center space-x-12">
-        <div className="container">
-            <h1>Drag the carousel along the x-axies...</h1>
-            <Carousel _data={items} {...setting}>
-            {
-                items.map((i, _i) => (
-                <div
-                    key={_i}
-                    className='item'
-                    style={{ ...itemStyle }}>
-                    <p>{i}</p>
-                </div>
-                ))
-            }
-            </Carousel>
+        <div className="container p-16 flex flex-col bg-slate-50 border rounded justify-center items-center">
+            <h1 className="flex flex-1 text-4xl">판매 상품</h1>
+            <p className="text-4xl">균일가 5만원</p>
         </div>
     )
 }

@@ -1,7 +1,8 @@
 
 const SERVER_PATH = process.env.NODE_ENV === 'production' ? '/store' : 'http://localhost:3003/store'
 // const SERVER_PATH = process.env.REACT_APP_SEARCH_PATH 
-const IMAGE_PATH = 'https://storage.googleapis.com/hanbok.bdanbonga.com/'
+// const IMAGE_PATH = 'https://storage.googleapis.com/hanbok.bdanbonga.com/'
+const IMAGE_PATH = 'https://s3.ap-northeast-2.amazonaws.com/bdanbonga.hanbok.com/'
 const DEV_SERVER_PATH = 'http://localhost:3003/store'
 const ERROR_HIDE = (e) => {
     e.target.style.display = 'none'

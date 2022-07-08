@@ -38,12 +38,14 @@ const NavWind = ({eventDate, setEventDate}) => {
                     mobile:p-2 mobile:sticky top-0 z-50 mobile:w-full">
         {/* 로고 */}
         <div className="flex items-center justify-between text-white mr-6">
+            <Link className="hover:text-green-500 justify-center items-center" to={'/'}>
+                <img className='fill-white w-8 mr-2 inline' src={logo} fill='#f4f4f4' alt=""/>
+                <span className="mobile:hidden font-dimibang text-3xl tracking-tight">비단본가</span>
+            </Link>
             {/* <svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg> */}
-            <img className='fill-white w-8 mr-2' src={logo} fill='#f4f4f4' alt=""/>
-            <span className="font-dimibang text-3xl tracking-tight">
-                <Link className="mobile:hidden hover:text-green-500" to={'/'}>비단본가</Link>
+                {/* <Link className="mobile:hidden hover:text-green-500" to={'/'}>비단본가</Link> */}
                 {/* <p className='text-sm font-sans'>process.env : {process.env.REACT_APP_SEARCH_PATH}</p> */}
-            </span>
+            {/* </span> */}
         </div>
         {/* 모바일 메뉴 */}
         <div className='hidden mobile:flex float-right'>
