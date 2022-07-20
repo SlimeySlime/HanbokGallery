@@ -30,7 +30,7 @@ const Display = ({itemInfo}) => {
             setImageData(result.data[0])
             console.log(result.data[0])
             
-            checkedImage()
+            // checkedImage()
         })
 
     }, [id])
@@ -68,6 +68,7 @@ const Display = ({itemInfo}) => {
         }
 
     }
+
     const checkedImage = () => {
         let xml = new XMLHttpRequest()
         xml.onload = function() {
@@ -102,8 +103,8 @@ const Display = ({itemInfo}) => {
             <div className='flex flex-col m-4 justify-center items-center'>
                 {imageLength.map((num) => 
                 <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${num}.jpg`} alt={imageData.bs_gsname1} 
-                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' />
-                    // onError={(e) => {ERROR_HIDE(e)}}  />
+                    className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' 
+                    onError={(e) => {ERROR_HIDE(e)}}  />
                 )}
             </div>
         )

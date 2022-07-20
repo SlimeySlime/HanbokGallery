@@ -154,7 +154,7 @@ const TypeDisplay = ({imageList}) => {
             console.log(`${item.bs_gsname1} is unavail`)
             return(
             <div className="relative cursor-not-allowed">
-                <img className="object-cover w-full" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} alt={`[${item.bs_code}]`}  />
+                <img className="object-cover w-full" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} alt={`[${item.bs_code}]`} loading='lazy' />
                 <div className="absolute bottom-0 left-0 flex flex-1 z-10 w-full items-center justify-center bg-teal-600 bg-opacity-50">
                     <p className="m-2 text-white text-center text-md mobile:text-xs font-preten font-semibold">이 상품은 해당날짜에 <br /> 대여불가능합니다.</p>    
                 </div>
@@ -163,7 +163,7 @@ const TypeDisplay = ({imageList}) => {
         }else{
             return(
             <div className="relative">
-                <img className="object-cover w-full" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} alt={`[${item.bs_code}]`}  />
+                <img className="object-cover w-full" src={IMAGE_PATH + `Store/[${item.bs_code}]/1.jpg`} alt={`[${item.bs_code}]`} loading='lazy'  />
                 <div className="absolute bottom-0 right-0 translate-y-6no flex z-10 items-center justify-center bg-slate-200 bg-opacity-70">
                     <p className="p-1 font-preten font-semibold text-sm mobile:text-xs mobile:p-220">{itemSizes(item.bs_bigo)} size</p>
                 </div>
