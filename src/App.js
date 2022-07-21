@@ -16,6 +16,9 @@ import TestingPage from './general/TestingPage';
 import SearchResult from './display/SearchResult';
 import { useCookies } from 'react-cookie';
 import CookieWanring from './general/CookieWarning';
+import {  } from "react-icons/ai";
+import { HiArrowUp } from 'react-icons/hi';
+
 // import Nav2 from './general/Nav2';
 
 function App() {
@@ -105,6 +108,10 @@ function App() {
     setWarningVisible(bool)
   }
 
+  function topArrow(){
+    window.scrollTo(0, 0)
+  }
+
   return (
     <div className='flex flex-col min-h-screen'>
 
@@ -121,6 +128,11 @@ function App() {
       
       {/* eventdate warning */}
       {warningVisible ? <CookieWanring warningClose={setWarning}/> : '' }
+
+      <div className='m-2 sticky bottom-0 left-0 w-10 bg-blue-500 opacity-75 text-white rounded-full '
+        onClick={() => {topArrow()}}>
+          <HiArrowUp className='p-1 w-10 h-10'/>
+      </div>
       <Footer />
 
     </div>

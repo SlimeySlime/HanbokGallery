@@ -152,6 +152,7 @@ const NavWind = ({eventDate, setEventDate}) => {
             hover:text-teal-500 hover:bg-white mt-4">로그인 / 회원가입</a>
         </div> */}
         </div>
+        
     </nav>
     )
 }

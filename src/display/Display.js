@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState, useRef } from "react"
+import React, { useEffect, useState, useRef, useLayoutEffect } from "react"
 import { useParams } from "react-router-dom"
 import { MdArrowForwardIos, MdArrowBackIosNew }  from "react-icons/md";
 import { IMAGE_PATH, SERVER_PATH, ERROR_HIDE } from "../general/General"
@@ -34,6 +34,14 @@ const Display = ({itemInfo}) => {
         })
 
     }, [id])
+
+    useLayoutEffect(() => {
+
+        window.scrollTo(0, 0)
+        // return () => {
+        //     window.scrollTo(0, 0)
+        // };
+    }, [])
 
     const checkImageDebug = () => {
 
