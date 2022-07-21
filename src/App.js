@@ -129,7 +129,7 @@ function App() {
       {/* eventdate warning */}
       {warningVisible ? <CookieWanring warningClose={setWarning}/> : '' }
 
-      <div className='m-2 sticky bottom-0 left-0 w-10 bg-blue-500 opacity-75 text-white rounded-full '
+      <div className='sticky bottom-2 right-2 w-10 bg-blue-500 opacity-75 text-white rounded-full '
         onClick={() => {topArrow()}}>
           <HiArrowUp className='p-1 w-10 h-10'/>
       </div>
