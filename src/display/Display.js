@@ -36,12 +36,29 @@ const Display = ({itemInfo}) => {
     }, [id])
 
     useLayoutEffect(() => {
-
+        // window.location.href = 'top'
         window.scrollTo(0, 0)
-        // return () => {
-        //     window.scrollTo(0, 0)
-        // };
+        setImageLength([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
     }, [])
+
+    const previewImageDiv = () => {
+        return(
+        <div className='mobile:hidden flex flex-col justify-center items-center'>
+            <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${previewIndex}.jpg`} alt={imageData.bs_code} 
+            // width={400}
+            className='p-2 pb-0 w-full max-w-lg' />
+            <div className='mt-4 flex mobile:grid mobile:grid-cols-4 justify-center '>
+            {imageLength.map((num) => 
+                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${num}.jpg`} alt={imageData.bs_code} id={num}
+                    className='p-2 hover:bg-slate-200 rounded-lg w-20' 
+                    onMouseEnter={(e) => {setPreviewIndex(e.target.id)}}
+                    onClick={(e) => {setPreviewIndex(e.target.id)}} 
+                    onError={(e) => {ERROR_HIDE(e)}} />    
+            )}
+            </div>
+        </div>
+        )
+    }
 
     const checkImageDebug = () => {
 
@@ -123,6 +140,10 @@ const Display = ({itemInfo}) => {
         return sizes.join(', ')
     }
     
+    function mouseTest(e) {
+        console.log('mouse click')
+    }
+
     const ImageSlide = () => {
         return(
         <Swiper
@@ -154,8 +175,9 @@ const Display = ({itemInfo}) => {
     }
 
     return(
-        <div className='container mx-auto flex flex-1 mobile:flex-col '>
-            <div className='flex flex-1 flex-col justify-center items-center'>
+        <div className='container mx-auto flex flex-1 mobile:flex-col '
+        onMouseDown={() => {}}>
+            <div className='flex flex-1 flex-col justify-center items-center' id='top'>
                 {/* 상단 */}
                 <div className='mt-12 p-4 flex flex-1 mobile:flex-col border'>
                     {/* <button className='p-2 bg-blue-500 rounded' onClick={() => checkImageDebug()}>디버그</button> */}

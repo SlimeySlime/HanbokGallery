@@ -46,8 +46,11 @@ function App() {
   function getStoreData() {
     axios.get(SERVER_PATH)
     .then((result) => {
+        const storeResult = result.data[0]
+        // redux 하면서 사실상 사용안함
         setStoreData(result.data[0]);
         console.log('all Store data', result.data[0])
+        
         dispatch(setStore(result.data[0]))
         return result.data[0]
     })
@@ -113,7 +116,7 @@ function App() {
   }
 
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex flex-col min-h-screen justify-between'>
 
       <NavWind setEventDate={changeEventDate} eventDate={eventDate}/>
       {/* <Nav2 /> */}
@@ -129,7 +132,7 @@ function App() {
       {/* eventdate warning */}
       {warningVisible ? <CookieWanring warningClose={setWarning}/> : '' }
 
-      <div className='sticky bottom-2 right-2 w-10 bg-blue-500 opacity-75 text-white rounded-full '
+      <div className='sticky m-2 bottom-2 right-2 w-10 h-10 bg-blue-500 opacity-75 text-white rounded-full z-50 '
         onClick={() => {topArrow()}}>
           <HiArrowUp className='p-1 w-10 h-10'/>
       </div>
