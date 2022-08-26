@@ -49,6 +49,14 @@ const NavWind = ({eventDate, setEventDate}) => {
         </div>
         {/* 모바일 메뉴 */}
         <div className='hidden mobile:flex float-right'>
+            <div className='mt-2 mr-2 text-preten text-white font-sans font-semibold'>
+                행사날짜
+            </div>
+            <input className='pl-2 py-0.5 mr-2 rounded-md font-katuri mobile:inline-block'
+                type="date" title='행사날짜를 지정해주세요' id='eventDate' name="eventDate" 
+                onChange={(e) => {setEventDate(e)}} 
+                // value={cookie.eventdate}/>
+                value={initialEventDate()}/>
             <HiMenuAlt2 className='w-10 h-10 p-1' color='white' onClick={() => {onOffNav()}}/>
             <p className='inline text-white py-2 font-preten font-semibold' onClick={() => {onOffNav()}}>메뉴</p>
         </div>
