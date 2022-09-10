@@ -19,7 +19,7 @@ const TypeDisplay = ({imageList}) => {
     const [filterdBlogData, setFilteredBlogData] = useState([]);
     // filter로 변경됨에 따라 blogData를 filteredList로 작명?
 
-    // 1. unavailRentalMap   2. hanbokFilter  3. hanbokFiltered.unavail = ture / false 
+    // 1. unavailRentalMap   2. hanbokFilter  3. hanbokFiltered.unavail = true / false 
     useEffect(() => {
         eventRentalMap()
     }, [type])
@@ -51,6 +51,8 @@ const TypeDisplay = ({imageList}) => {
                 }
             }
         })
+        console.log('eventRental', eventRental)
+        console.log('unavailMap', unavailMap)
         // 3.
         setUnavailList(unavailMap)
         return unavailMap

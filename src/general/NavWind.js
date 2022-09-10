@@ -37,25 +37,23 @@ const NavWind = ({eventDate, setEventDate}) => {
     <nav className="flex flex-wrap stickyno items-center justify-between bg-teal-800 p-4 
                     mobile:p-2 mobile:sticky top-0 z-50 mobile:w-full">
         {/* 로고 */}
-        <div className="flex items-center justify-between text-white mr-6">
-            <Link className="hover:text-green-500 justify-center items-center" to={'/'}>
-                <img className='fill-white w-8 mr-2 inline' src={logo} fill='#f4f4f4' alt=""/>
-                <span className="mobile:hidden font-dimibang text-3xl tracking-tight">비단본가</span>
+        <div className="flex items-center justify-center text-white mr-6">
+            <Link className="hover:text-green-500" to={'/'}>
+                <img className='fill-white w-8 mr-2 inline-block' src={logo} fill='#f4f4f4' alt=""/>
             </Link>
-            {/* <svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg> */}
-                {/* <Link className="mobile:hidden hover:text-green-500" to={'/'}>비단본가</Link> */}
-                {/* <p className='text-sm font-sans'>process.env : {process.env.REACT_APP_SEARCH_PATH}</p> */}
-            {/* </span> */}
+            <Link className="hover:text-green-500" to={'/'}>
+                <span className="mobile:hidden inline-block leading-2 font-dimibang text-3xl tracking-tight">비단본가</span>
+            </Link>
         </div>
         {/* 모바일 메뉴 */}
         <div className='hidden mobile:flex float-right'>
-            <div className='mt-2 mr-2 text-preten text-white font-sans font-semibold'>
+            <div className='flex items-center mr-1 text-preten text-xs text-white font-sans font-semibold'>
                 행사날짜
             </div>
-            <input className='pl-2 py-0.5 mr-2 rounded-md font-katuri mobile:inline-block'
+            {/* <p className='inline-block mr-2 text-white text-xs font-semibold '>행사날짜</p> */}
+            <input className='pl-2 my-1 mr-2 w-36 rounded-md font-katuri mobile:inline-block'
                 type="date" title='행사날짜를 지정해주세요' id='eventDate' name="eventDate" 
                 onChange={(e) => {setEventDate(e)}} 
-                // value={cookie.eventdate}/>
                 value={initialEventDate()}/>
             <HiMenuAlt2 className='w-10 h-10 p-1' color='white' onClick={() => {onOffNav()}}/>
             <p className='inline text-white py-2 font-preten font-semibold' onClick={() => {onOffNav()}}>메뉴</p>

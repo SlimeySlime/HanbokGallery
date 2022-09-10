@@ -124,8 +124,8 @@ function App() {
         <Route path='/' element={<Main />}/>
         <Route path='/main/:type' element={<TypeDisplay imageList={allStoreData} />} />
         <Route path='/display/:id' element={<Display />} />
-        <Route path='/fonts' element={<FontSheet />} />
-        <Route path='/test' element={<TestingPage />} />
+        {/* <Route path='/fonts' element={<FontSheet />} />
+        <Route path='/test' element={<TestingPage />} /> */}
         <Route path='/searchResult/:keywords' element={<SearchResult />} />
       </Routes>
       
