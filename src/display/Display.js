@@ -26,19 +26,18 @@ const Display = ({itemInfo}) => {
 
     useEffect(() => {
         const searchPath = `${SERVER_PATH}/${id}`
-        axios.get(searchPath).then((result) => {
+        axios.get(searchPath)
+        .then((result) => {
+            // 한복 정보
             setImageData(result.data[0])
-            console.log(result.data[0])
-            
+            // console.log('useEffect[id] : ', result.data[0])
             // checkedImage()
         })
 
     }, [id])
 
     useLayoutEffect(() => {
-        // window.location.href = 'top'
         window.scrollTo(0, 0)
-        setImageLength([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
     }, [])
 
     const previewImageDiv = () => {
@@ -60,74 +59,14 @@ const Display = ({itemInfo}) => {
         )
     }
 
-    const checkImageDebug = () => {
-
-        const url2 =  IMAGE_PATH + `Store/[${imageData.bs_code}]/${11}.jpg`
-
-        let xml = new XMLHttpRequest()
-        // const url =  `https://s3.ap-northeast-2.amazonaws.com/bdanbonga.hanbok.com/Store/[A013]/3.jpg`
-        // const url3 = `https://s3.ap-northeast-2.amazonaws.com/bdanbonga.hanbok.com/` + `Store/[${imageData.bs_code}]/${3}.jpg`
-
-        // xml.onload = function() {
-        //     console.log('xml onload')
-        //     const status = xml.status
-        //     if (status === 200) {
-        //         // console.log(`index ${index} send GET ${url} request 200 `)
-        //         console.log('200')
-                
-        //     }else if (status === 403){
-        //         // console.log(`index ${index} send GET ${url} request 404`)
-        //         console.log('404 delete imageLength')
-
-        //     }else{
-        //         // console.log(`xml.status error at send GET ${url}`)
-        //         console.log('err')
-        //     }
-        // }
-        
-        xml.open('GET', url2, 'false')
-        try{
-            xml.send()
-        }catch(e){
-            console.log('error at ??', e)
-        }
-
-    }
-
-    const checkedImage = () => {
-        let xml = new XMLHttpRequest()
-        xml.onload = function() {
-            const status = xml.status
-            if (status === 200) {
-                // console.log(`index ${index} send GET ${url} request 200 `)
-                console.log('200')
-                
-            }else if (status === 403){
-                console.log('404 delete imageLength')
-                imageLength.splice()
-            }else{
-                // console.log(`xml.status error at send GET ${url}`)
-                console.log('err')
-            }
-        }
-
-        imageLength.forEach(index => {
-            const url = IMAGE_PATH + `Store/[${imageData.bs_code}]/${index}.jpg`
-            console.log('check status at ', url)
-
-            xml.open('GET', url, 'false')
-            xml.send()
-
-            // const result = xml.status
-        });
-    }
 
     const imageList = (css, onHover, onClick, w) => {
         
+        // imageData.bs_code -> [`{id}`]
         return(
             <div className='flex flex-col m-4 justify-center items-center'>
                 {imageLength.map((num) => 
-                <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${num}.jpg`} alt={imageData.bs_gsname1} 
+                <img src={IMAGE_PATH + `Store/[${id}]/${num}.jpg`} alt={imageData.bs_gsname1} 
                     className='p-2 mb-36 mobile:mb-12 mobile:p-0 border rounded-lg w-2/3 mobile:w-auto' 
                     onError={(e) => {ERROR_HIDE(e)}}  />
                 )}
@@ -160,7 +99,7 @@ const Display = ({itemInfo}) => {
             >
             {mobileSlideLength.map((num) => 
                 <SwiperSlide>
-                    <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${num}.jpg`} alt={imageData.bs_code} id={num}  />
+                    <img src={IMAGE_PATH + `Store/[${id}]/${num}.jpg`} alt={imageData.bs_code} id={num}  />
                 </SwiperSlide>
                 
             )}
@@ -180,19 +119,18 @@ const Display = ({itemInfo}) => {
             <div className='flex flex-1 flex-col justify-center items-center' id='top'>
                 {/* 상단 */}
                 <div className='mt-12 p-4 flex flex-1 mobile:flex-col border'>
-                    {/* <button className='p-2 bg-blue-500 rounded' onClick={() => checkImageDebug()}>디버그</button> */}
                     {/* 모바일 크게보기 슬라이드 */}
                     <div className='hidden mobile:flex w-screen justify-center items-center'>
                         {ImageSlide()}
                     </div>
                     {/* 데스크톱 크게보기 이미지 */}
                     <div className='mobile:hidden flex flex-col justify-center items-center'>
-                        <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${previewIndex}.jpg`} alt={imageData.bs_code} 
+                        <img src={IMAGE_PATH + `Store/[${id}]/${previewIndex}.jpg`} alt={imageData.bs_code} 
                         // width={400}
                         className='p-2 pb-0 w-full max-w-lg' />
                         <div className='mt-4 flex mobile:grid mobile:grid-cols-4 justify-center '>
                         {imageLength.map((num) => 
-                            <img src={IMAGE_PATH + `Store/[${imageData.bs_code}]/${num}.jpg`} alt={imageData.bs_code} id={num}
+                            <img src={IMAGE_PATH + `Store/[${id}]/${num}.jpg`} alt={imageData.bs_code} id={num}
                                 className='p-2 hover:bg-slate-200 rounded-lg w-20' 
                                 onMouseEnter={(e) => {setPreviewIndex(e.target.id)}}
                                 onClick={(e) => {setPreviewIndex(e.target.id)}} 
@@ -200,14 +138,14 @@ const Display = ({itemInfo}) => {
                         )}
                         </div>
                     </div>
-                    {/* 좌측 */}
+                    {/* 우측 상세설명 */}
                     <div className='m-4 mb-12 w-auto mobile:w-auto'>
                         {/* 타이틀 */}
                         {/* <h2 className='text-3xl ml-2 m-4 mb-8 font-samlip'>
                             [{imageData.bs_code}] {imageData.bs_gsname1?.split(' ')[0]} {imageData.bs_gsname2?.split(' ')[0]} 
                         </h2> */}
                         <div className='mb-12 p-4 border-no'>
-                            <p  className='pt-4 text-2xl font-katuri border-b-2 pb-4'>[{imageData.bs_code}] {imageData.bs_gsname1?.split(' ')[0]} {imageData.bs_gsname2?.split(' ')[0]}</p>
+                            <p className='pt-4 text-2xl font-katuri border-b-2 pb-4'>[{imageData.bs_code}] {imageData.bs_gsname1?.split(' ')[0]} {imageData.bs_gsname2?.split(' ')[0]}</p>
                             <p className='pt-4 text-2xl font-katuri'>{imageData.bs_gskind1} - {imageData.bs_gsname1?.split(' ')[0]}</p>
                             <p className='pt-4 text-2xl font-katuri'>size - {imageData.bs_bigo && sizes(imageData.bs_bigo)}</p>
                             <p className='pt-4 text-2xl font-katuri'>{imageData.bs_gsname2 && `${imageData.bs_gskind2} - ${imageData.bs_gsname2}`}</p>
