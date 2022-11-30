@@ -134,6 +134,10 @@ const NavWind = ({eventDate, setEventDate}) => {
                     <NavLink to={'/test'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200") + ' text-sm'  }>테스팅</NavLink>
                 </p>
+                <p className="p-1 text-teal-200 mr-4">
+                    <NavLink to={'/user/login'}
+                        className={(state) => (state.isActive ? "text-white" : "text-teal-200") + ' text-sm'  }>로그인</NavLink>
+                </p>
             </div>
             {/* 행사날짜 및 검색 */}
             <div className='inline-flex h-full p-2 float-right items-center mobile:block mobile:float-left'> 

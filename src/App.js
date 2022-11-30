@@ -18,6 +18,7 @@ import { useCookies } from 'react-cookie';
 import CookieWanring from './general/CookieWarning';
 import {  } from "react-icons/ai";
 import { HiArrowUp } from 'react-icons/hi';
+import { Login } from './user/login';
 
 // import Nav2 from './general/Nav2';
 
@@ -127,6 +128,7 @@ function App() {
         {/* <Route path='/fonts' element={<FontSheet />} />
         <Route path='/test' element={<TestingPage />} /> */}
         <Route path='/searchResult/:keywords' element={<SearchResult />} />
+        <Route path='/user/login' element={<Login />} />
       </Routes>
       
       {/* eventdate warning */}
