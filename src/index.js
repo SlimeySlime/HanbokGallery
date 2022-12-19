@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 if (process.env.NODE_ENV === "production") {
   console.log = function no_console() {};
   console.warn = function no_console() {};
+  //  ok
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
