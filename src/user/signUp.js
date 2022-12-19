@@ -1,10 +1,10 @@
+import React, { useEffect } from "react";
+import { useState } from "react";
 import axios from 'axios';
-import React, { useEffect } from "react"
-import { useState } from "react"
 
-export const Login = () => {
+export const SignUp = () => {
 
-    const [userInfo, setUserInfo] = useState({})
+    const [userInfo, setUserInfo] =  useState()
 
     const userInfoChange = (type, info) => {
 
@@ -13,41 +13,38 @@ export const Login = () => {
             [type]: info
         })
     }
-
     useEffect(() => {
-        console.log(userInfo)
-    }, [userInfo])
-    
-    const testing = () => {
-        axios.get('http://localhost:3000/hanbok/diff')
-        .then((result) => {
-            console.log(result)
-        })
+
+    }, [])
+
+    const signUpButton = () => {
+        // TODO
     }
 
-    return (
+    return(
         <div className="container flex flex-1 m-12 mt-20 justify-center">
             <div className="min-w-md flex-col">
                 <div className="flex flex-col p-2 rounded ">
+
                     <p className="p-1 text-xs">아이디</p>
                     <input className="p-2 border-2" type="text" 
                         onChange={(e) => {userInfoChange("id", e.target.value)}}
                         placeholder="id"/>
+
+                    <p className="p-1 text-xs">이메일</p>
+                    <input className="p-2 border-2" type="text" 
+                        onChange={(e) => {userInfoChange("email", e.target.value)}}
+                        placeholder="email"/>
+
                     <p className="p-1 text-xs">비밀번호</p>
                     <input className="p-2 border-2" type="text" 
                         onChange={(e) => {userInfoChange("password", e.target.value)}}
-                        placeholder="id"/>
+                        placeholder="password"/>
                 </div>
-                <div className="m-2 p-4 flex w-full rounded bg-blue-300 justify-center font-bold font-sans">
-                    로그인
+                <div className="m-2 p-4 flex w-full rounded bg-blue-300 justify-center font-bold font-sans"
+                    onClick={() => {signUpButton()}}>
+                    회원가입
                 </div>
-                <div>
-                    <div>이메일로 회원가입</div>
-                    <div className="float-right"> 비밀번호 찾기</div>
-                </div>
-            </div>
-            <div className='m-4'>
-                <button className='p-2 bg-blue-200' onClick={() => testing()}>디버그</button>
             </div>
         </div>
     )
