@@ -53,7 +53,7 @@ const Main = () => {
             <div className="flex flex-1 mobile:flex-col justify-center items-center my-24 mobile:my-12">
                 {/* <img className='w-1/4 mobile:w-2/4' src="img/text_logo.jpg" alt="blog" /> */}
                 <div className="container flex justify-center items-center p-2 w-2/5 mobile:w-auto mr-24 mobile:m-0">
-                    <img className='object-cover' src="img/text_logo2.png" alt="blog" />
+                    <img className='object-cover' src="/img/text_main.png" alt="blog" />
 
                 </div>
                 <div className="flex flex-col justify-center items-center m-12 mobile:m-2">
