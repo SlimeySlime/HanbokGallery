@@ -18,6 +18,7 @@ import { useCookies } from 'react-cookie';
 import CookieWanring from './general/CookieWarning';
 import {  } from "react-icons/ai";
 import { HiArrowUp } from 'react-icons/hi';
+import WanringTooltip from './general/WarningTooltip';
 
 // import Nav2 from './general/Nav2';
 
@@ -130,7 +131,8 @@ function App() {
       </Routes>
       
       {/* eventdate warning */}
-      {warningVisible ? <CookieWanring warningClose={setWarning}/> : '' }
+      {/* {warningVisible ? <CookieWanring warningClose={setWarning}/> : '' } */}
+      {warningVisible ? <WanringTooltip warningClose={setWarning}/> : '' }
 
       <div className='sticky m-2 bottom-2 right-2 w-10 h-10 bg-blue-500 opacity-75 text-white rounded-full z-50 '
         onClick={() => {topArrow()}}>

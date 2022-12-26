@@ -15,7 +15,7 @@ const RentalTemplate = () => {
                     <div className="relative w-60 h-60 p-4 rounded-full bg-teal-700 text-white">
                         <p className="mt-4 font-preten font-semibold text-2xl text-center">1. 한복 선택</p>
                         <div className="p-4 flex flex-1 justify-center items-center">
-                            <img src="/img/template/hanbok.png" className="h-32" alt="hanbok" />
+                            <img src="/img/hanbok.png" className="h-32" alt="hanbok" />
                         </div>
                     </div>
                     <p className="m-4 mobile:mb-8 font-preten font-semibold text-center">
@@ -26,7 +26,7 @@ const RentalTemplate = () => {
                     <div className="relative? w-60 h-60 p-4 rounded-full bg-pink-400 text-white">
                         <p className="mt-4 font-preten font-semibold text-2xl text-center">2. 문의 상담</p>
                         <div className="p-4 flex flex-1 justify-center items-center">
-                            <img src="/img/template/chat-white.png" className="h-32" alt="hanbok" />
+                            <img src="/img/chat-white.png" className="h-32" alt="hanbok" />
                         </div>
                     </div>
                     <p className="m-4 mobile:mb-8 font-preten font-semibold text-center">
@@ -39,7 +39,7 @@ const RentalTemplate = () => {
                     <div className="relative w-60 h-60 p-4 rounded-full bg-teal-700 text-white">
                         <p className="mt-4 font-preten font-semibold text-2xl text-center">3. 한복 배송</p>
                         <div className="p-4 flex flex-1 justify-center items-center">
-                            <img src="/img/template/truck.png" className="h-32" alt="hanbok" />
+                            <img src="/img/truck.png" className="h-32" alt="hanbok" />
                         </div>
                     </div>
                     <p className="m-4 mobile:mb-8 font-preten font-semibold text-center">
@@ -50,7 +50,7 @@ const RentalTemplate = () => {
                     <div className="relative w-60 h-60 p-4 rounded-full bg-pink-400 text-white">
                         <p className="mt-4 font-preten font-semibold text-2xl text-center">4. 한복 반납</p>
                         <div className="p-4 flex flex-1 justify-center items-center">
-                            <img src="/img/template/delivery-van-white.png" className="h-32" alt="hanbok" />
+                            <img src="/img/delivery-van-white.png" className="h-32" alt="hanbok" />
                         </div>
                     </div>
                     <p className="m-4 mobile:mb-8 font-preten font-semibold text-center">

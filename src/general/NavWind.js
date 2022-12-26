@@ -23,8 +23,9 @@ const NavWind = ({eventDate, setEventDate}) => {
 
     const initialEventDate = () => {
         // return new Date()
-        if (cookie.eventdate !== undefined) {
-            console.log('return cookie')
+        console.log('cookie.eventdate : ', cookie.eventdate)
+        if (cookie.eventdate != undefined) {
+            console.log('return cookie.eventdate')
             return cookie.eventdate
         }else{
             const now = new Date()
