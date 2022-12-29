@@ -14,16 +14,24 @@ if (process.env.NODE_ENV === "production") {
   console.warn = function no_console() {};
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+
+// root.render(
+//   <React.StrictMode>
+//     <CookiesProvider>
+//       <Provider store={store}>
+//         <BrowserRouter>
+//           <App />
+//         </BrowserRouter>
+//       </Provider>
+//     </CookiesProvider>
+//   </React.StrictMode>
+// );
 root.render(
   <React.StrictMode>
-    <CookiesProvider>
-      <Provider store={store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </Provider>
-    </CookiesProvider>
+    <App />
   </React.StrictMode>
 );
 
