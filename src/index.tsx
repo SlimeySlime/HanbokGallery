@@ -18,20 +18,15 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-// root.render(
-//   <React.StrictMode>
-//     <CookiesProvider>
-//       <Provider store={store}>
-//         <BrowserRouter>
-//           <App />
-//         </BrowserRouter>
-//       </Provider>
-//     </CookiesProvider>
-//   </React.StrictMode>
-// );
 root.render(
   <React.StrictMode>
-    <App />
+    <CookiesProvider>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </CookiesProvider>
   </React.StrictMode>
 );
 

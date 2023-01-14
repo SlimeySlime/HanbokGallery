@@ -72,7 +72,6 @@ function App() {
   function changeEventDate(e) {
     const date = e.target.value
     setCookie('eventdate', date, { path:'/' })
-    // console.log('changeEventDate', date)
     if (date !== undefined) getRentalList(date)
     
   }
@@ -89,7 +88,7 @@ function App() {
               endDate: endStr
           }
       }).then((result) => {
-          console.log(result.data[0])
+          console.log('rentalItems -5 to 8 ', result.data[0])
           // -5일 ~ 8일로 필터
           filterRental(result.data[0], DATE_TO_SQLSTRING(DATE_ADD(date, -5)), DATE_TO_SQLSTRING(DATE_ADD(date, 8)))
       })
@@ -104,7 +103,6 @@ function App() {
               cantRental.push(item)
           }
       })
-      // console.log('filterd cant\' rental', cantRental)
       dispatch(setRental(cantRental))
   }
 
