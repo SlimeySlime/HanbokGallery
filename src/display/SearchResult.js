@@ -1,7 +1,7 @@
 import React, { createRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { IMAGE_PATH } from "../general/General";
+import { IMAGE_PATH } from "../general/Config";
 
 const SearchResult = () => {
     const eventRental = useSelector(state => state.event.eventRental)

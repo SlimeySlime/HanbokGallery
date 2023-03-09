@@ -4,7 +4,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useCookies } from 'react-cookie';
-import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './General';
+import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './Config';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { setRental } from '../reducing/rentalDispatch';
 import { HiMenuAlt2 } from "react-icons/hi";

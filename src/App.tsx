@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import NavWind from './general/NavWind';
 import Footer from './general/Footer';
@@ -9,16 +10,17 @@ import Display from './display/Display';
 import FontSheet from './general/FontSheet';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './general/General';
+import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './general/Config';
 import { useDispatch } from 'react-redux';
 import {setHanbok, setRental, setStore} from './reducing/rentalDispatch';
 import TestingPage from './general/TestingPage';
 import SearchResult from './display/SearchResult';
 import { useCookies } from 'react-cookie';
 import CookieWanring from './general/CookieWarning';
-import {  } from "react-icons/ai";
 import { HiArrowUp } from 'react-icons/hi';
 import WanringTooltip from './general/WarningTooltip';
+import {Hanbok_Min_Rental} from './domain/rental_minimum_info';
+
 
 // import Nav2 from './general/Nav2';
 
@@ -45,14 +47,10 @@ function App() {
   }, [])
 
   function getStoreData() {
-    axios.get(SERVER_PATH)
+    axios.get(SERVER_PATH + '/gallery')
     .then((result) => {
-        const storeResult = result.data[0]
-        // redux 하면서 사실상 사용안함
-        setStoreData(result.data[0]);
-        console.log('all Store data', result.data[0])
-        
-        dispatch(setStore(result.data[0]))
+        dispatch(setStore(result.data))
+        console.log('all Gallery / Store data', result.data)
         return result.data[0]
     })
   }
@@ -60,12 +58,8 @@ function App() {
   function getAllHanbok() {
     axios.get(SERVER_PATH + '/hanbok')
     .then((result) => {
-      const hanbokData = result.data[0]
-      console.log('all hanbok data', hanbokData)
-      setAllHanbokData(result.data[0])
-      dispatch(setHanbok(result.data[0]))
-      // can't redux map -> dispatch(setHanbok(hanbokMapping(hanbokData))) (x)
-      return result.data[0]
+      dispatch(setHanbok(result.data))
+      console.log('all hanbok data', result.data)
     })
   }
 
@@ -82,15 +76,16 @@ function App() {
       const end = DATE_ADD(date, 14)
       const endStr = DATE_TO_SQLSTRING(end)
       // console.log(startStr, endStr)
-      axios.get(SERVER_PATH + '/rentalItems', {
+      axios.get(SERVER_PATH + '/rental', {
           params: {
-              startDate: startStr,
-              endDate: endStr
+              eventStart: startStr,
+              eventEnd: endStr
           }
       }).then((result) => {
-          console.log('rentalItems -5 to 8 ', result.data[0])
-          // -5일 ~ 8일로 필터
-          filterRental(result.data[0], DATE_TO_SQLSTRING(DATE_ADD(date, -5)), DATE_TO_SQLSTRING(DATE_ADD(date, 8)))
+          console.log('rentalItems -5 to 8 ', result.data)
+          // -5일 +8일로 필터
+          let hanboks: Hanbok_Min_Rental = result.data;
+          filterRental(result.data, DATE_TO_SQLSTRING(DATE_ADD(date, -5)), DATE_TO_SQLSTRING(DATE_ADD(date, 8)))
       })
   }
   // ★ filtering
