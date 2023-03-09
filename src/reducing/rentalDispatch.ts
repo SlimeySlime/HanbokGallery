@@ -21,6 +21,7 @@ export const eventdateChange = createSlice({
 
 })
 
-export const {changeDate, setRental, setHanbok, setStore} = eventdateChange.actions
+// export const {changeDate, setRental, setHanbok, setStore} = eventdateChange.actions
+export const {setRental, setHanbok, setStore} = eventdateChange.actions
 
 export default eventdateChange.reducer

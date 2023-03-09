@@ -11,7 +11,7 @@ import 'swiper/css'
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-const Display = ({itemInfo}) => {
+const HanbokDisplay = ({itemInfo}) => {
     // /:id -> useParams()
     const {id} = useParams()
     // 약간 무식한 방법
@@ -178,4 +178,4 @@ const Display = ({itemInfo}) => {
     )
 }
 
-export default Display
+export default HanbokDisplay

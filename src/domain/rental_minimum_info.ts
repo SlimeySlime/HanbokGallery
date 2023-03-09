@@ -3,10 +3,14 @@
 export interface Hanbok_Min_Rental {
   id: number;
   
-  eventDate: string | null | undefined;
+  rentalDate: string;
+
+  eventDate: string;
   
-  contractDate: string | null | undefined;
+  contractDate: string;
   
+  returnDate: string;
+
   hanbok_type1: string | null | undefined;
 
   hanbok_type2: string | null | undefined;
@@ -43,4 +47,6 @@ export interface Hanbok_Min_Rental {
 
   hanbok_barcode6: string | null | undefined;
 
+  rtGubun: string;
+  
 }
