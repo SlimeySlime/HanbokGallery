@@ -4,19 +4,21 @@ import { Link, useParams } from "react-router-dom"
 import {IMAGE_PATH, SERVER_PATH, ERROR_HIDE, TYPE_TO_KOREAN} from '../general/Config';
 import { useSelector } from "react-redux";
 import { Gallery_Item } from '../domain/gallery_item';
+import { Hanbok_Item } from "domain/hanbok_item";
+import { RootState } from "reducing/store";
 
 // 타입별 파라미터에 따라 조회 
 // useParams => type
 const TypeDisplay = ({}) => {
-    const eventRental = useSelector(state => state.event.eventRental)
-    const storeData = useSelector(state => state.event.store)
-    const hanboks = useSelector(state => state.event.hanbok)
+    const eventRental = useSelector( (state:RootState) => state.gallery.eventRental)
+    const storeData = useSelector( (state:RootState) => state.gallery.galleryInfos)
+    const hanboks = useSelector( (state:RootState) => state.gallery.hanboks)
 
     const { type } = useParams();
     const typeString = TYPE_TO_KOREAN(type)
 
     // 행사일자에 대여나가는 한복리스트 
-    const [blogData, setBlogData] = useState([]);
+    const [blogData, setBlogData] = useState<Gallery_Item[]>([]);
     const [filterdBlogData, setFilteredBlogData] = useState([]);
     // filter로 변경됨에 따라 blogData를 filteredList로 작명?
 
@@ -35,27 +37,31 @@ const TypeDisplay = ({}) => {
     // eventRental => unavailMap[name] = item + count, stock
     const eventRentalMap = () => {
         // 검색에 용이하게 Map으로
-        const hanbokMap = new Map()
+        const hanbokMap = new Map<string, string>()
         hanboks?.map((item) => {
-            hanbokMap[item.name] = item
+            hanbokMap[item.barcode] = item
         })
+        console.log(hanbokMap)
         // eventRental Map
         let unavailMap = new Map()
         eventRental.map((item) => {
-            if (item.hanbok_name1 in unavailMap) {
-                unavailMap[item.hanbok_name1].count += 1
+            if (hanbokMap.has(item.hanbok_barcode1)) {
+                unavailMap[item.hanbok_barcode1].count += 1
             }else{
-                unavailMap[item.hanbok_name1] = {
+                unavailMap[item.hanbok_barcode1] = {
                     ...item,
                     count : 1,
-                    stock : hanbokMap[item.hanbok_name1]?.stock,  
+                    stock : hanbokMap[item.hanbok_barcode1]?.stock,  
                 }
             }
         })
         console.log('eventRental', eventRental)
         console.log('unavailMap', unavailMap)
+        for (const item of unavailMap.keys()){ 
+            console.log('unavail keys', item)
+        }
         // 3.
-        setUnavailList(unavailMap)
+        // setUnavailList(unavailMap)
         return unavailMap
     }
     // 기존 storeData(blogData)를 Map으로 만들고 unavailable을 추가 
@@ -63,9 +69,9 @@ const TypeDisplay = ({}) => {
         // const unavailList = new Map()
         const filteredHanbok = filterHanbok(type)   // type으로 필터링된 갤러리 아이템 
         const newFilterd = filteredHanbok.map((item) => {
-            console.log(`check ${item.hanbok_maker1} ${item.hanbok_name1} in unavailMap`)
+            console.log(`check unavailMap.has ${item.hanbok_barcode1} `)
             // if (item.hanbok_name1 in unavailMap){
-            if (unavailMap.has(`${item.hanbok_maker1} ${item.hanbok_name1}`)){
+            if (unavailMap.contains(item.hanbok_barcode1)){
                 // 일단은 hanbok_name1 만
                 const countStock = unavailMap[item.hanbok_name1].count / unavailMap[item.hanbok_name1].stock 
                 const unavail = countStock >= 1 ? true : false
@@ -86,13 +92,13 @@ const TypeDisplay = ({}) => {
         setBlogData(newFilterd)
     }
     
-    function filterHanbok(keyword) {
+    function filterHanbok(keyword: string) {
         if (keyword === 'all') {
             // setBlogData(storeData)
             return storeData
         }else{
-            let filtered = []
-            storeData?.map((item) => {
+            let filtered:Gallery_Item[] = []
+            storeData?.map((item: Gallery_Item) => {
                 if (item.customer_type?.includes(typeString)) {
                     filtered.push(item)
                 }
@@ -103,7 +109,7 @@ const TypeDisplay = ({}) => {
     }
     // search by keyword
     
-    const ImageDiv = (item) => {
+    const ImageDiv = (item: Gallery_Item) => {
         const unavailable = item.unavailable
         if (unavailable) {      // 대여불가능 상품 
             console.log(`${item.hanbok_name1} is unavail`)
@@ -126,13 +132,13 @@ const TypeDisplay = ({}) => {
     }
 
     // 하위 사이즈 추가해서 리턴 
-    const itemSizes = (size) => {
+    const itemSizes = (size: string) => {
         let sizes = size?.split(/[.,]+/)
         // sizes.unshift(sizes[0] - 11) // 이미 -11 사이즈가 db에 들어가있음
         return sizes?.join(', ')
     }
 
-    const ImageDiv2 = (item) => {
+    const ImageDiv2 = (item: Gallery_Item ) => {
         const unavailable = item.unavailable
         if (unavailable) {      // 대여불가능 상품 
             console.log(`${item.hanbok_name1} is unavail`)

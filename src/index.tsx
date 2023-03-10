@@ -6,7 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import {CookiesProvider} from 'react-cookie';
 
-import store from './store';
+// import store from './store';
+import { store } from 'reducing/store';
 import { Provider } from 'react-redux';
 
 if (process.env.NODE_ENV === "production") {

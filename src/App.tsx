@@ -10,7 +10,8 @@ import TypeDisplay from './display/TypeDisplay';
 import Main from './display/Main';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setHanbok, setRental, setStore } from './reducing/rentalDispatch';
+// import { setHanbok, setRental, setStore } from './reducing/rentalDispatch';
+import { setRentals, setHanboks, setGalleryInfos } from './reducing/galleryRedux';
 import SearchResult from './display/SearchResult';
 import { useCookies } from 'react-cookie';
 import { HiArrowUp } from 'react-icons/hi';
@@ -48,7 +49,7 @@ function App() {
     axios.get(SERVER_PATH + '/gallery')
     .then((result) => {
         setGalleryData(result.data)
-        dispatch(setStore(result.data))
+        dispatch(setGalleryInfos(result.data))
         console.log('all Gallery / Store data', result.data)
         return result.data[0]
     })
@@ -57,7 +58,7 @@ function App() {
   function getAllHanbok() {
     axios.get(SERVER_PATH + '/hanbok')
     .then((result) => {
-      dispatch(setHanbok(result.data))
+      dispatch(setHanboks(result.data))
       console.log('all hanbok data', result.data)
     })
   }
@@ -97,7 +98,7 @@ function App() {
               cantRental.push(item)
           }
       })
-      dispatch(setRental(cantRental))
+      dispatch(setRentals(cantRental))
   }
 
   function setWarning(bool: boolean){
@@ -115,7 +116,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Main />}/>
         <Route path='/main/:type' element={<TypeDisplay />} />
-        <Route path='/display/:id' element={<HanbokDisplay itemInfo={undefined} />} />
+        <Route path='/display/:id' element={<HanbokDisplay />} />
+        {/* <Route path='/display/:id' element={<HanbokDisplay itemInfo={undefined} />} /> */}
         {/* <Route path='/fonts' element={<FontSheet />} />
         <Route path='/test' element={<TestingPage />} /> */}
         <Route path='/searchResult/:keywords' element={<SearchResult />} />
