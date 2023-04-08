@@ -6,21 +6,21 @@ import { useSelector } from "react-redux";
 import { Gallery_Item } from '../domain/gallery_item';
 import { Hanbok_Item } from "domain/hanbok_item";
 import { RootState } from "reducing/store";
+import { Rental_Item } from "domain/rental_item";
+import { FilteredHanbok } from "util/display_filter";
 
 // 타입별 파라미터에 따라 조회 
 // useParams => type
 const TypeDisplay = ({}) => {
+    const rentalItems:Rental_Item[] = useSelector( (state:RootState) => state.gallery.rentalItems)
     const eventRental = useSelector( (state:RootState) => state.gallery.eventRental)
-    const storeData = useSelector( (state:RootState) => state.gallery.galleryInfos)
+    const galleryData = useSelector( (state:RootState) => state.gallery.galleryInfos)
     const hanboks = useSelector( (state:RootState) => state.gallery.hanboks)
 
     const { type } = useParams();
     const typeString = TYPE_TO_KOREAN(type)
 
-    // 행사일자에 대여나가는 한복리스트 
-    const [blogData, setBlogData] = useState<Gallery_Item[]>([]);
-    const [filterdBlogData, setFilteredBlogData] = useState([]);
-    // filter로 변경됨에 따라 blogData를 filteredList로 작명?
+    const [galleryItem, setGalleryItem] = useState<Gallery_Item[]>([]);
 
     // 1. unavailRentalMap  대여중인 한복을 검색해 재고현황 추가
     // 2. hanbokFilter      
@@ -28,54 +28,56 @@ const TypeDisplay = ({}) => {
 
     useEffect(() => {
         eventRentalMap()
-    }, [type, eventRental])
+    }, [type, rentalItems]) // eventRental -> rentalItems
 
     useEffect(() => {
-        console.log('blog data filtered to ', blogData)
-    }, [blogData])
+        // console.log('blog data filtered to ', galleryItem)
+    }, [galleryItem])
 
     // eventRental => unavailMap[name] = item + count, stock
     const eventRentalMap = () => {
         // 검색에 용이하게 Map으로
-        const hanbokMap = new Map<string, string>()
-        hanboks?.map((item) => {
-            hanbokMap[item.barcode] = item
+        const hanbokMap = new Map<string, Rental_Item>()    // Hanbok_Item -> Rental_Item
+        rentalItems.map((item) => {
+            hanbokMap.set(item.hanbok_barcode!, item)
         })
         console.log(hanbokMap)
         // eventRental Map
-        let unavailMap = new Map()
-        eventRental.map((item) => {
-            if (hanbokMap.has(item.hanbok_barcode1)) {
-                unavailMap[item.hanbok_barcode1].count += 1
-            }else{
-                unavailMap[item.hanbok_barcode1] = {
-                    ...item,
-                    count : 1,
-                    stock : hanbokMap[item.hanbok_barcode1]?.stock,  
+        let unavailMap = new Map<string, Rental_Item>()
+        rentalItems.map((item) => {
+            if (item.hanbok_barcode) {
+                if (unavailMap.has(item.hanbok_barcode)) {
+                    unavailMap.get(item.hanbok_barcode)!.count += 1
+                }else {
+                    unavailMap.set(item.hanbok_barcode, {
+                        ...item,
+                        count : 1
+                    })
                 }
             }
         })
-        console.log('eventRental', eventRental)
         console.log('unavailMap', unavailMap)
-        for (const item of unavailMap.keys()){ 
-            console.log('unavail keys', item)
-        }
+        // for (const item of unavailMap.keys()){ 
+        //     console.log('unavail keys', item)
+        // }
         // 3.
-        // setUnavailList(unavailMap)
+        setUnavailList(unavailMap)
         return unavailMap
     }
-    // 기존 storeData(blogData)를 Map으로 만들고 unavailable을 추가 
-    function setUnavailList(unavailMap){
-        // const unavailList = new Map()
-        const filteredHanbok = filterHanbok(type)   // type으로 필터링된 갤러리 아이템 
-        const newFilterd = filteredHanbok.map((item) => {
-            console.log(`check unavailMap.has ${item.hanbok_barcode1} `)
+    // 기존 galleryData(galleryItem)를 Map으로 만들고 unavailable을 추가 
+    function setUnavailList(unavailMap: Map<string, Rental_Item>){
+
+        // const filteredGalleryItem = filterHanbok(type)   // type으로 필터링된 갤러리 아이템 
+        const filteredGalleryItem = FilteredHanbok(galleryData, type!)
+
+        const newFilterd = filteredGalleryItem.map((item) => {
+            console.log(`check unavailMap.has ${item.hanbok_barcode1} - ${item.hanbok_name1} `)
             // if (item.hanbok_name1 in unavailMap){
-            if (unavailMap.contains(item.hanbok_barcode1)){
+            if (unavailMap.has(item.hanbok_barcode1)){
                 // 일단은 hanbok_name1 만
-                const countStock = unavailMap[item.hanbok_name1].count / unavailMap[item.hanbok_name1].stock 
+                const countStock = unavailMap.get(item.hanbok_barcode1)!.count / unavailMap.get(item.hanbok_barcode1)!.stock
                 const unavail = countStock >= 1 ? true : false
-                console.log(`item.${item.hanbok_name1} is ${unavailMap[item.hanbok_name1].count} / ${unavailMap[item.hanbok_name1].stock }`)
+                console.log(`item.${item.hanbok_name1} is ${unavailMap.get(item.hanbok_barcode1)!.count / unavailMap.get(item.hanbok_barcode1)!.stock }`)
                 return {
                     ...item,
                     unavailable : unavail
@@ -89,25 +91,24 @@ const TypeDisplay = ({}) => {
             }
         })
         console.log('new filtered', newFilterd)
-        setBlogData(newFilterd)
+        setGalleryItem(newFilterd)
     }
     
-    function filterHanbok(keyword: string) {
+    function filterHanbok(keyword: string | undefined) {
         if (keyword === 'all') {
-            // setBlogData(storeData)
-            return storeData
-        }else{
+            return galleryData
+        }else if (keyword) {
             let filtered:Gallery_Item[] = []
-            storeData?.map((item: Gallery_Item) => {
+            galleryData?.map((item: Gallery_Item) => {
                 if (item.customer_type?.includes(typeString)) {
                     filtered.push(item)
                 }
             })
-            // setBlogData(filtered)
             return filtered
+        }else {
+            return galleryData
         }
     }
-    // search by keyword
     
     const ImageDiv = (item: Gallery_Item) => {
         const unavailable = item.unavailable
@@ -117,7 +118,7 @@ const TypeDisplay = ({}) => {
             <div className="relative h-56 w-full mobile:h-32 overflow-hidden rounded justify-center items-center cursor-not-allowed">
                 <img className="absolute object-cover blur-sm inset-0 w-full rounded " src={IMAGE_PATH + `Store/[${item.display_code}]/1.jpg`} width={500} alt="" />
                 <div className="absolute w-full h-full flex bg-slate-400 bg-opacity-50 justify-center items-center">
-                    <p className="text-white text-center text-md mobile:text-xs font-sans font-semibold">해당상품은 <br /> 대여불가능합니다.</p>    
+                    <p className="text-white text-center text-md mobile:text-xs font-sans font-semibold">해당상품은 <br /> 대여가 어렵습니다.</p>    
                 </div>
             </div>
             )
@@ -146,7 +147,7 @@ const TypeDisplay = ({}) => {
             <div className="relative cursor-not-allowed">
                 <img className="object-cover w-full" src={IMAGE_PATH + `Store/[${item.display_code}]/1.jpg`} alt={`[${item.display_code}]`} loading='lazy' />
                 <div className="absolute bottom-0 left-0 flex flex-1 z-10 w-full items-center justify-center bg-teal-600 bg-opacity-50">
-                    <p className="m-2 text-white text-center text-md mobile:text-xs font-preten font-semibold">이 상품은 해당날짜에 <br /> 대여불가능합니다.</p>    
+                    <p className="m-2 text-white text-center text-md mobile:text-xs font-preten font-semibold">이 상품은 해당날짜에 <br /> 대여가 어렵습니다.</p>    
                 </div>
             </div>
             )
@@ -167,8 +168,8 @@ const TypeDisplay = ({}) => {
         <div className="container mx-auto px-8 mobile:p-0">
             <h3 className="text-2xl font-katuri m-8">{typeString} 한복</h3> 
             <div className="container grid mobile:grid-cols-2 grid-cols-6 mobile:gap-1 gap-6 ">
-                {/* {filterdBlogData?.map((item) => */}
-                {blogData?.map((item) =>
+                {/* {filterdgalleryItem?.map((item) => */}
+                {galleryItem?.map((item) =>
                 <div className="cursor-pointer" id='image link container'>
                 {/* blur여부 + div hidden 여부 */}
                 <Link to={`/display/${item.display_code}`}>

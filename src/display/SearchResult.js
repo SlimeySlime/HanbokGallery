@@ -4,8 +4,9 @@ import { Link, useParams } from "react-router-dom";
 import { IMAGE_PATH } from "../general/Config";
 
 const SearchResult = () => {
+    const rentalItem = useSelector(state => state.event.rentalItem)
     const eventRental = useSelector(state => state.event.eventRental)
-    const storeData = useSelector(state => state.event.store)
+    const galleryItem = useSelector(state => state.event.store)
     const hanboks = useSelector(state => state.event.hanbok)
     // 행사일자에 대여나가는 한복리스트 
     const [hanbokList, setHanbokList] = useState([]);
@@ -15,7 +16,7 @@ const SearchResult = () => {
     const {keywords} = useParams()
 
     useEffect(() => {
-        console.log('current param ', keywords)
+        console.log('current param(keyword) ', keywords)
     }, [])
     // ★★ 1. unavailRentalMap -> 2. hanbokFilter -> 3. hanbokFiltered.unavail = ture / false 
     // 초기 불러오기
@@ -48,7 +49,7 @@ const SearchResult = () => {
         setUnavailList(unavailMap)
         // return unavailMap
     }
-    // 기존 storeData(blogData)를 Map으로 만들고 unavailable을 추가 
+    // 기존 galleryItem(blogData)를 Map으로 만들고 unavailable을 추가 
     function setUnavailList(unavailMap){
         // const unavailList = new Map()
         const filteredHanbok = filterHanbok(keywords)   // 2.
@@ -72,7 +73,7 @@ const SearchResult = () => {
     // axios 대신 filtering
     function filterHanbok(keyword) {
         let filtered = []
-        storeData?.map((item) => {
+        galleryItem?.map((item) => {
             if (item.bs_gsname1?.includes(keyword)){
                 console.log(`${item.bs_gsname1} in ${keyword}`)
                 filtered.push(item)

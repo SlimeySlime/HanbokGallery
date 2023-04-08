@@ -11,14 +11,15 @@ import Main from './display/Main';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { setHanbok, setRental, setStore } from './reducing/rentalDispatch';
-import { setRentals, setHanboks, setGalleryInfos } from './reducing/galleryRedux';
+import { setRentals, setHanboks, setGalleryInfos, setRentalItems } from './reducing/galleryRedux';
 import SearchResult from './display/SearchResult';
 import { useCookies } from 'react-cookie';
 import { HiArrowUp } from 'react-icons/hi';
 import WanringTooltip from './general/WarningTooltip';
-import {Hanbok_Min_Rental} from './domain/rental_minimum_info';
+// import { Hanbok_Min_Rental} from './domain/rental_minimum_info';
 import HanbokDisplay from './display/HanbokDisplay';
 import { Gallery_Item } from 'domain/gallery_item';
+import { Rental_Item } from 'domain/rental_item';
 
 
 // import Nav2 from './general/Nav2';
@@ -71,34 +72,23 @@ function App() {
   }
   // rentalList 조회 후 filter
   function getRentalList(date: Date){
-      const start = DATE_ADD(date, -14)
+      // const start = DATE_ADD(date, -14)
+      const start = DATE_ADD(date, -5)
       const startStr = DATE_TO_SQLSTRING(start)
-      const end = DATE_ADD(date, 14)
+      // const end = DATE_ADD(date, -14)
+      const end = DATE_ADD(date, 8)
       const endStr = DATE_TO_SQLSTRING(end)
       // console.log(startStr, endStr)
-      axios.get(SERVER_PATH + '/rental', {
+      axios.get(SERVER_PATH + '/rentalItem', {
           params: {
-              eventStart: startStr,
-              eventEnd: endStr
+              rentalStart: startStr,
+              rentalEnd: endStr
           }
       }).then((result) => {
-          console.log('rentalItems -5 to 8 ', result.data)
-          // -5일 +8일로 필터
-          let hanboks: Hanbok_Min_Rental[] = result.data;
-          filterRental(hanboks, DATE_TO_SQLSTRING(DATE_ADD(date, -5)), DATE_TO_SQLSTRING(DATE_ADD(date, 8)))
+          console.log(`rentalItems -5 ${startStr} to 8 ${endStr} `, result.data)
+          let hanboks: Rental_Item[] = result.data;
+          dispatch(setRentalItems(result.data))
       })
-  }
-
-  // ★ filtering
-  function filterRental(rentals: Hanbok_Min_Rental[], start: string, end: string) {
-      // const hanbokMap = HANBOK_MAP(hanboks)
-      let cantRental:Hanbok_Min_Rental[] = []
-      rentals.map((item) => {
-          if (item.rentalDate >= start && item.returnDate <= end && item.rtGubun) {
-              cantRental.push(item)
-          }
-      })
-      dispatch(setRentals(cantRental))
   }
 
   function setWarning(bool: boolean){
