@@ -7,15 +7,14 @@ import { Gallery_Item } from '../domain/gallery_item';
 import { Hanbok_Item } from "domain/hanbok_item";
 import { RootState } from "reducing/store";
 import { Rental_Item } from "domain/rental_item";
-import { FilteredHanbok } from "util/display_filter";
+import { AVAILABLE_GALLERY_ITEM, AVAILABLE_ITEM, FilteredHanbok } from "util/display_filter";
 
 // 타입별 파라미터에 따라 조회 
 // useParams => type
 const TypeDisplay = ({}) => {
     const rentalItems:Rental_Item[] = useSelector( (state:RootState) => state.gallery.rentalItems)
-    const eventRental = useSelector( (state:RootState) => state.gallery.eventRental)
+    // const eventRental = useSelector( (state:RootState) => state.gallery.eventRental)
     const galleryData = useSelector( (state:RootState) => state.gallery.galleryInfos)
-    const hanboks = useSelector( (state:RootState) => state.gallery.hanboks)
 
     const { type } = useParams();
     const typeString = TYPE_TO_KOREAN(type)
@@ -27,12 +26,20 @@ const TypeDisplay = ({}) => {
     // 3. hanbokFiltered.unavail = true / false 
 
     useEffect(() => {
-        eventRentalMap()
-    }, [type, rentalItems]) // eventRental -> rentalItems
+        // eventRentalMap()
+        setAvailableList()
+    }, [type, rentalItems]) 
 
     useEffect(() => {
         // console.log('blog data filtered to ', galleryItem)
     }, [galleryItem])
+
+    const setAvailableList = () => {
+        const filteredHanbok: Gallery_Item[] = FilteredHanbok(galleryData, type!)
+        const unavailable_map: Map<string, Rental_Item> = AVAILABLE_ITEM(rentalItems)
+        const available_gallery_items = AVAILABLE_GALLERY_ITEM(unavailable_map, filteredHanbok)
+        setGalleryItem(available_gallery_items)
+    }
 
     // eventRental => unavailMap[name] = item + count, stock
     const eventRentalMap = () => {
@@ -66,8 +73,8 @@ const TypeDisplay = ({}) => {
     }
     // 기존 galleryData(galleryItem)를 Map으로 만들고 unavailable을 추가 
     function setUnavailList(unavailMap: Map<string, Rental_Item>){
-
         // const filteredGalleryItem = filterHanbok(type)   // type으로 필터링된 갤러리 아이템 
+        // type으로 필터링된 갤러리 아이템 
         const filteredGalleryItem = FilteredHanbok(galleryData, type!)
 
         const newFilterd = filteredGalleryItem.map((item) => {
@@ -77,7 +84,7 @@ const TypeDisplay = ({}) => {
                 // 일단은 hanbok_name1 만
                 const countStock = unavailMap.get(item.hanbok_barcode1)!.count / unavailMap.get(item.hanbok_barcode1)!.stock
                 const unavail = countStock >= 1 ? true : false
-                console.log(`item.${item.hanbok_name1} is ${unavailMap.get(item.hanbok_barcode1)!.count / unavailMap.get(item.hanbok_barcode1)!.stock }`)
+                console.log(`item.${item.hanbok_name1} is ${unavailMap.get(item.hanbok_barcode1)!.count} / ${unavailMap.get(item.hanbok_barcode1)!.stock }`)
                 return {
                     ...item,
                     unavailable : unavail
@@ -94,21 +101,21 @@ const TypeDisplay = ({}) => {
         setGalleryItem(newFilterd)
     }
     
-    function filterHanbok(keyword: string | undefined) {
-        if (keyword === 'all') {
-            return galleryData
-        }else if (keyword) {
-            let filtered:Gallery_Item[] = []
-            galleryData?.map((item: Gallery_Item) => {
-                if (item.customer_type?.includes(typeString)) {
-                    filtered.push(item)
-                }
-            })
-            return filtered
-        }else {
-            return galleryData
-        }
-    }
+    // function filterHanbok(keyword: string | undefined) {
+    //     if (keyword === 'all') {
+    //         return galleryData
+    //     }else if (keyword) {
+    //         let filtered:Gallery_Item[] = []
+    //         galleryData?.map((item: Gallery_Item) => {
+    //             if (item.customer_type?.includes(typeString)) {
+    //                 filtered.push(item)
+    //             }
+    //         })
+    //         return filtered
+    //     }else {
+    //         return galleryData
+    //     }
+    // }
     
     const ImageDiv = (item: Gallery_Item) => {
         const unavailable = item.unavailable
@@ -173,7 +180,7 @@ const TypeDisplay = ({}) => {
                 <div className="cursor-pointer" id='image link container'>
                 {/* blur여부 + div hidden 여부 */}
                 <Link to={`/display/${item.display_code}`}>
-                    <div className="mb-4 p-2 hover:shadow-lg"> 
+                    <div className="mb-4 p-2 shadow-md hover:shadow-lg"> 
                         {ImageDiv2(item)}
                         {/* <img src={IMAGE_PATH + `Store/[${item.display_code}]/1.jpg`} alt={`[${item.display_code}]`}  /> */}
                         <p className="mt-1 text-xs font-sans tracking-tight">{typeString}한복</p>

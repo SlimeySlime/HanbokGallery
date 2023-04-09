@@ -17,4 +17,5 @@ export interface Rental_Item {
     return_date: string | null;
 
     count: number;
+    available: boolean;
 } 
