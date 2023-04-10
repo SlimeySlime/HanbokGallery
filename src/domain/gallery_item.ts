@@ -1,9 +1,9 @@
 
 
 export class Gallery_Item {
-  id!: number;
-  date!: string;
-  display_code!: string;
+  id!: number | null;
+  date!: string | null;
+  display_code!: string | null;
   views!: number;
   customer_type!: string;
 

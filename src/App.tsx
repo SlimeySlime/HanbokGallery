@@ -5,8 +5,6 @@ import axios from 'axios';
 import NavWind from './general/NavWind';
 import Footer from './general/Footer';
 import { Route, Routes } from 'react-router-dom';
-// import TypeDisplay from './display/TypeDisplay';
-import TypeDisplay from './display/TypeDisplay';
 import Main from './display/Main';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -20,6 +18,7 @@ import WanringTooltip from './general/WarningTooltip';
 import HanbokDisplay from './display/HanbokDisplay';
 import { Gallery_Item } from 'domain/gallery_item';
 import { Rental_Item } from 'domain/rental_item';
+import TypeDisplay from 'display/TypeDisplay';
 
 
 // import Nav2 from './general/Nav2';

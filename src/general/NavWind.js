@@ -1,21 +1,20 @@
-// import logo from '../bdanlogo.svg';
 import logo from '../logo_1.svg';
-import axios from 'axios';
-import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+// import axios from 'axios';
+// import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './Config';
+import React, { useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
-import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './Config';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { setRental } from '../reducing/rentalDispatch';
 import { HiMenuAlt2 } from "react-icons/hi";
+import SearchResult from 'display/SearchResult';
 
 const NavWind = ({eventDate, setEventDate}) => {
     // eventdate 쿠키
     // const [eventDate, setEventDate] = useState(null);
-    const [cookie, setCookie, removeCookie] = useCookies(['eventdate']);
+    const [cookie, , ] = useCookies(['eventdate']);
     
     const [navVisible, setNavVisible] = useState(false);
     const [searchKeyword, setSearchKeyword] = useState('');
+    const navigate = useNavigate()
 
     function onOffNav(){
         setNavVisible(!navVisible)
@@ -31,6 +30,12 @@ const NavWind = ({eventDate, setEventDate}) => {
             const now = new Date()
             const nowStr = now.toISOString().split('T')[0]
             return nowStr
+        }
+    }
+
+    const searchKeyEvent =(e) => {
+        if(e.key === 'Enter') {
+            navigate(`searchResult/${searchKeyword}`)
         }
     }
 
@@ -144,13 +149,16 @@ const NavWind = ({eventDate, setEventDate}) => {
                     // value={cookie.eventdate}/>
                     value={initialEventDate()}/>
                 {/* 검색 */}
-                <div className='hiddeno inline-flex border-blue-400 hover:shadow-md mobile:mt-4' >
+                <div className='hiddeno inline-flex border-blue-400 hover:shadow-md mobile:mt-4' 
+                    onKeyDown={(e) => searchKeyEvent(e)}>
                     <button>
                         <Link to={`searchResult/${searchKeyword}`}>
                             <svg class="rounded-l-md w-8 h-8 bg-white text-gray-500 fill-slate-400" fill="currentColor2" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                         </Link>
                     </button>
-                    <input className=' rounded-r-md focus:outline-none' onKeyDown={() => {}} id='search' type="text" onChange={(e) => {setSearchKeyword(e.target.value)}} placeholder='검색'/>
+                    <input className=' rounded-r-md focus:outline-none' 
+                        onKeyDown={(e) => searchKeyEvent(e)} id='search' type="text" 
+                        onChange={(e) => {setSearchKeyword(e.target.value)}} placeholder='검색'/>
                 </div>
             </div>
         {/* <div">

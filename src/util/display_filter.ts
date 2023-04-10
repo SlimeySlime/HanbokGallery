@@ -4,13 +4,28 @@ import { Rental_Item } from "domain/rental_item"
 
 
 
-const FilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) => {
+const CustomerFilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) => {
     if (keyword === 'all') {
         return hanbokList
     }else if (keyword) {
         let filtered:Gallery_Item[] = []
         hanbokList.map((item: Gallery_Item) => {
             if (item.customer_type?.includes(TYPE_TO_KOREAN(keyword))) {
+                filtered.push(item)
+            }
+        })
+        return filtered
+    }else {
+        return hanbokList
+    }
+}
+const HanboknameFilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) => {
+    if (keyword) {
+        let filtered:Gallery_Item[] = []
+        hanbokList.map((item: Gallery_Item) => {
+            if (item.hanbok_name1?.includes(TYPE_TO_KOREAN(keyword)) || 
+                item.hanbok_name2?.includes(TYPE_TO_KOREAN(keyword)) ||
+                item.hanbok_name3?.includes(TYPE_TO_KOREAN(keyword)) ) {
                 filtered.push(item)
             }
         })
@@ -45,7 +60,7 @@ const AVAILABLE_ITEM = (rentalItems: Rental_Item[]) => {
 }
 
 const AVAILABLE_GALLERY_ITEM = (rental_item_map: Map<string, Rental_Item>, gallery_item: Gallery_Item[]) => {
-    // const filteredGalleryItem = FilteredHanbok(galleryData, type!)
+    // const filteredGalleryItem = CustomerFilteredHanbok(galleryData, type!)
 
     const filtered_list = gallery_item.map((hanbok) => {
         // TODO - barcode 1,2,3,4
@@ -67,4 +82,4 @@ const AVAILABLE_GALLERY_ITEM = (rental_item_map: Map<string, Rental_Item>, galle
     return filtered_list
 }
 
-export { FilteredHanbok, AVAILABLE_ITEM, AVAILABLE_GALLERY_ITEM }
+export { CustomerFilteredHanbok, HanboknameFilteredHanbok, AVAILABLE_ITEM, AVAILABLE_GALLERY_ITEM }

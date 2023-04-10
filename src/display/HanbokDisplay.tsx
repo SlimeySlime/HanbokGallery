@@ -45,12 +45,12 @@ const HanbokDisplay = () => {
     const previewImageDiv = () => {
         return(
         <div className='mobile:hidden flex flex-col justify-center items-center'>
-            <img src={IMAGE_PATH + `Store/[${imageData.display_code}]/${previewIndex}.jpg`} alt={imageData.display_code} 
+            <img src={IMAGE_PATH + `Store/[${imageData.display_code}]/${previewIndex}.jpg`} alt={imageData.display_code!} 
             // width={400}
             className='p-2 pb-0 w-full max-w-lg' />
             <div className='mt-4 flex mobile:grid mobile:grid-cols-4 justify-center '>
             {imageLength.map((num) => 
-                <img src={IMAGE_PATH + `Store/[${imageData.display_code}]/${num}.jpg`} alt={imageData.display_code} id={num.toString()}
+                <img src={IMAGE_PATH + `Store/[${imageData.display_code}]/${num}.jpg`} alt={imageData.display_code!} id={num.toString()}
                     className='p-2 hover:bg-slate-200 rounded-lg w-20' 
                     onMouseEnter={(e) => {setPreviewIndex(+e.currentTarget.id)}}
                     onClick={(e) => {setPreviewIndex(+e.currentTarget.id)}} 
@@ -99,7 +99,7 @@ const HanbokDisplay = () => {
             >
             {mobileSlideLength.map((num) => 
                 <SwiperSlide>
-                    <img src={IMAGE_PATH + `Store/[${id}]/${num}.jpg`} alt={imageData.display_code} id={num.toString()}  />
+                    <img src={IMAGE_PATH + `Store/[${id}]/${num}.jpg`} alt={imageData.display_code!} id={num.toString()}  />
                 </SwiperSlide>
                 
             )}
@@ -125,12 +125,12 @@ const HanbokDisplay = () => {
                     </div>
                     {/* 데스크톱 크게보기 이미지 */}
                     <div className='mobile:hidden flex flex-col justify-center items-center'>
-                        <img src={IMAGE_PATH + `Store/[${id}]/${previewIndex}.jpg`} alt={imageData.display_code} 
+                        <img src={IMAGE_PATH + `Store/[${id}]/${previewIndex}.jpg`} alt={imageData.display_code!} 
                         // width={400}
                         className='p-2 pb-0 w-full max-w-lg' />
                         <div className='mt-4 flex mobile:grid mobile:grid-cols-4 justify-center '>
                         {imageLength.map((num) => 
-                            <img src={IMAGE_PATH + `Store/[${id}]/${num}.jpg`} alt={imageData.display_code} id={num.toString()}
+                            <img src={IMAGE_PATH + `Store/[${id}]/${num}.jpg`} alt={imageData.display_code!} id={num.toString()}
                                 className='p-2 hover:bg-slate-200 rounded-lg w-20' 
                                 onMouseEnter={(e) => {setPreviewIndex(+e.currentTarget.id)}}     // parseInt by +
                                 onClick={(e) => {setPreviewIndex(+e.currentTarget.id)}} 
