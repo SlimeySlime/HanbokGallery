@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './general/Config';
+import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './config/Config';
 import axios from 'axios';
 import NavWind from './general/NavWind';
 import Footer from './general/Footer';

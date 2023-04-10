@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import axios from 'axios'
 import { Link, useParams } from "react-router-dom"
-import {IMAGE_PATH, SERVER_PATH, ERROR_HIDE} from '../general/Config';
+import {IMAGE_PATH, SERVER_PATH, ERROR_HIDE} from '../general/ConfigDeprecate';
 
 const Marriage = (props) => {
     // const {id} = useParams();

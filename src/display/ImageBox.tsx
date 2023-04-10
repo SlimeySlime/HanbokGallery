@@ -1,5 +1,5 @@
 import { Gallery_Item } from "domain/gallery_item";
-import { IMAGE_PATH } from "general/Config";
+import { IMAGE_PATH } from "config/Config";
 import React from "react";
 
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Carousel from "./Carousel";
 // import overlay2 from '../../public/img/overlay';
-import { IMAGE_PATH } from "./Config";
+import { IMAGE_PATH } from "./ConfigDeprecate";
 
 const TestingPage = () => {
     const items = ['one', 'two', 'three', 'four', 'five']

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { IMAGE_PATH, TYPE_TO_KOREAN } from '../general/Config';
+import { IMAGE_PATH, TYPE_TO_KOREAN } from '../config/Config';
 import { useSelector } from "react-redux";
 import { Gallery_Item } from '../domain/gallery_item';
 import { RootState } from "reducing/store";

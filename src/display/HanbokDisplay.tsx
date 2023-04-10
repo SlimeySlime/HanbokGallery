@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState, useRef, useLayoutEffect } from "react"
 import { useParams } from "react-router-dom"
 import { MdArrowForwardIos, MdArrowBackIosNew }  from "react-icons/md";
-import { IMAGE_PATH, SERVER_PATH, ERROR_HIDE } from "../general/Config"
+import { IMAGE_PATH, SERVER_PATH, ERROR_HIDE } from "../config/Config"
 import RentalTemplate from '../general/RentalTemplate'
 
 import { Swiper, SwiperSlide } from 'swiper/react'

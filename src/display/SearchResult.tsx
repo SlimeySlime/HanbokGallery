@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { RootState } from "reducing/store";
 import { AVAILABLE_GALLERY_ITEM, AVAILABLE_ITEM, HanboknameFilteredHanbok } from "util/display_filter";
-import { IMAGE_PATH } from "../general/Config";
+import { IMAGE_PATH } from "../config/Config";
 import ImageBox from "./ImageBox";
 
 const SearchResult = () => {
