@@ -22,6 +22,10 @@ body {
   /* background-color: #e6e6e6; */
 }
 
+.main_image {
+  background-image: url('../public/img/testbackground.jpg');
+}
+
 /* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

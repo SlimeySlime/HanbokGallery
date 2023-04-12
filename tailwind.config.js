@@ -22,6 +22,9 @@ module.exports = {
       },
       transitionProperty: {
         'left' : 'left',
+      },
+      backgroundImage: {
+        'main_page_image': "url('/public/img/testbackground.jpg')"
       }
     },
   },

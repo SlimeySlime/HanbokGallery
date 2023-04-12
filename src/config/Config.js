@@ -1,6 +1,6 @@
 
-// const SERVER_PATH = process.env.NODE_ENV === 'production' ? 'slimeyslime.net/api' : 'http://localhost:3000/bdanbonga'
-const SERVER_PATH = 'https://slimeyslime.net/api/bdanbonga'
+// const SERVER_PATH = 'https://slimeyslime.net/api/bdanbonga'
+const SERVER_PATH = process.env.NODE_ENV === 'production' ? 'https://slimeyslime.net/api/bdanbonga' : 'http://localhost:3000/bdanbonga'
 const IMAGE_PATH = 'https://storage.googleapis.com/hanbok.bdanbonga.com/'
 // const IMAGE_PATH = 'https://s3.ap-northeast-2.amazonaws.com/bdanbonga.hanbok.com/'
 const DEV_SERVER_PATH = 'http://localhost:3000/bdanbonga'

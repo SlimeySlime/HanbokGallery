@@ -4,7 +4,7 @@ import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './config/C
 import axios from 'axios';
 import NavWind from './general/NavWind';
 import Footer from './general/Footer';
-import { Route, Routes } from 'react-router-dom';
+import { NavigationType, Route, Routes } from 'react-router-dom';
 import Main from './display/Main';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -19,7 +19,15 @@ import HanbokDisplay from './display/HanbokDisplay';
 import { Gallery_Item } from 'domain/gallery_item';
 import { Rental_Item } from 'domain/rental_item';
 import TypeDisplay from 'display/TypeDisplay';
+import MainBeautiy from 'display/MainBeauty';
+import NavBeauty from 'general/NavBeauty';
 
+
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
 
 // import Nav2 from './general/Nav2';
 
@@ -101,9 +109,11 @@ function App() {
   return (
     <div className='flex flex-col min-h-screen justify-between'>
 
-      <NavWind setEventDate={changeEventDate} eventDate={eventDate}/>
+      {/* <NavWind setEventDate={changeEventDate} eventDate={eventDate}/> */}
+      <NavBeauty />
       <Routes>
         <Route path='/' element={<Main />}/>
+        <Route path='/main2' element={<MainBeautiy />}/>
         <Route path='/main/:type' element={<TypeDisplay />} />
         <Route path='/display/:id' element={<HanbokDisplay />} />
         {/* <Route path='/display/:id' element={<HanbokDisplay itemInfo={undefined} />} /> */}
