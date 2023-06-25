@@ -15,6 +15,7 @@ const Main = () => {
 
     const prevNavigation = useRef(null)
     const nextNavigation = useRef(null)
+    const [mapLoaded, setMapLoaded] = useState(false)
 
     const isMobile = useMediaQuery({
         query: '(max-width : 760px)'
@@ -24,6 +25,7 @@ const Main = () => {
     useEffect(() => {
         const container = document.getElementById('map')
         if (kakao) {
+            setMapLoaded(true)
 
             console.log('kakao is not null')
             console.log(kakao)
@@ -45,6 +47,7 @@ const Main = () => {
             var mapTypeControl = new kakao.maps.MapTypeControl();
             map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
         }else {
+            setMapLoaded(false)
             console.log('kakao api is null')
             console.log(kakao)
         }
@@ -145,10 +148,12 @@ const Main = () => {
                 <h3 className="flex flex-1 font-preten text-3xl font-semibold? border-b-2 pb-2">오시는길</h3>
                 {/* 지도 컨테이너 */}
                 <div className="mobile:hidden w-auto h-auto m-4 p-1">
+                    { mapLoaded ? 
                     <div id='map' className="w-52 f-52 relative"
                         style={{
                             width: 'auto', 
                             height: isMobile ? '300px' : '500px' }} />
+                    : <div></div>}
                 </div>
                 <div className="border-b-2 flex flex-1 items-center p-4">
                     <GrMapLocation className="w-8 h-8 mobile:w-4 mobile:h-4"/>
