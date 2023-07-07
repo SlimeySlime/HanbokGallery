@@ -33,6 +33,7 @@ function App() {
   const [warningVisible, setWarningVisible] = useState(true);
 
   useEffect(() => {
+    console.log('current server path is ', SERVER_PATH)
     getAllHanbok()
     getStoreData()
     // setEventDate(new Date(cookie.eventdate))
