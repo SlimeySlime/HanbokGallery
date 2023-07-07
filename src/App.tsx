@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './config/Config';
+import { DATE_ADD, DATE_TO_SQLSTRING, GALLERY_API, HANBOK_API, HANBOK_MAP, RENTAL_ITEM_API, SERVER_PATH } from './config/Config';
 import axios from 'axios';
 import NavWind from './general/NavWind';
 import Footer from './general/Footer';
@@ -47,7 +47,8 @@ function App() {
   }, [])
 
   function getStoreData() {
-    axios.get(SERVER_PATH + '/gallery')
+    // axios.get(SERVER_PATH + '/gallery')
+    axios.get(GALLERY_API)
     .then((result) => {
         setGalleryData(result.data)
         dispatch(setGalleryInfos(result.data))
@@ -57,7 +58,8 @@ function App() {
   }
 
   function getAllHanbok() {
-    axios.get(SERVER_PATH + '/hanbok')
+    // axios.get(SERVER_PATH + '/hanbok')
+    axios.get(HANBOK_API)
     .then((result) => {
       dispatch(setHanboks(result.data))
       console.log('all hanbok data', result.data)
@@ -79,7 +81,8 @@ function App() {
       const end = DATE_ADD(date, 8)
       const endStr = DATE_TO_SQLSTRING(end)
       // console.log(startStr, endStr)
-      axios.get(SERVER_PATH + '/rentalItem', {
+      // axios.get(SERVER_PATH + '/rentalItem', {
+      axios.get(RENTAL_ITEM_API, {
           params: {
               rentalStart: startStr,
               rentalEnd: endStr
