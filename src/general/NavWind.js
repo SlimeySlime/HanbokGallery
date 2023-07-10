@@ -75,7 +75,7 @@ const NavWind = ({eventDate, setEventDate}) => {
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200" )} onClick={()=>{setNavVisible(false)}}>신부한복</NavLink>
                 </p>
                 <p className="p-2 flex flex-1 text-teal-200 text-lg border-b">
-                    <NavLink to={'/main/bride'}
+                    <NavLink to={'/main/groom'}
                         className={(state) => (state.isActive ? "text-white" : "text-teal-200" )} onClick={()=>{setNavVisible(false)}}>신랑한복</NavLink>
                 </p>
                 <p className="p-2 block text-teal-200 text-lg border-b">
