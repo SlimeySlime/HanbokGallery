@@ -1,6 +1,6 @@
 
 // const SERVER_PATH = process.env.NODE_ENV === 'production' ? 'slimeyslime.net/api/spring' : 'http://localhost:8080'
-const SERVER_PATH =  'http://slimeyslime.net/api/spring'
+const SERVER_PATH =  'https://slimeyslime.net/api/spring'
 // const SERVER_PATH =  'http://slimeyslime.net/api/bdanbonga'
 const HANBOK_API = SERVER_PATH + "/hanboks/all"
 const GALLERY_API = SERVER_PATH + "/gallery/all"
