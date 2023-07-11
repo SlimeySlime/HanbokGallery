@@ -59,7 +59,7 @@ const AVAILABLE_ITEM = (rentalItems: Rental_Item[]) => {
 
 const AVAILABLE_GALLERY_ITEM = (rental_item_map: Map<string, Rental_Item>, gallery_item: Gallery_Item[]) => {
     // const filteredGalleryItem = CustomerFilteredHanbok(galleryData, type!)
-
+    console.log('check gallery_item to filtered_list', gallery_item)
     const filtered_list = gallery_item?.map((hanbok) => {
         // TODO - barcode 1,2,3,4
         if (rental_item_map.has(hanbok.hanbok_barcode1)){   
