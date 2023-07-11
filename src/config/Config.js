@@ -1,8 +1,12 @@
 
-const SERVER_PATH = process.env.NODE_ENV === 'production' ? 'slimeyslime.net/api' : 'http://localhost:8080'
+// const SERVER_PATH = process.env.NODE_ENV === 'production' ? 'slimeyslime.net/api/spring' : 'http://localhost:8080'
+// const SERVER_PATH =  'http://slimeyslime.net/api/spring'
+const SERVER_PATH =  'http://slimeyslime.net/api/bdanbonga'
 const HANBOK_API = SERVER_PATH + "/hanboks/all"
-const GALLERY_API = SERVER_PATH + "/gallery/all"
+// const GALLERY_API = SERVER_PATH + "/gallery/all"
+const GALLERY_API = SERVER_PATH + "/gallery"
 const RENTAL_ITEM_API = SERVER_PATH + "/rentals/rentalItems"
+
 // const SERVER_PATH = 'https://slimeyslime.net/api/bdanbonga'
 const IMAGE_PATH = 'https://storage.googleapis.com/hanbok.bdanbonga.com/'
 // const IMAGE_PATH = 'https://s3.ap-northeast-2.amazonaws.com/bdanbonga.hanbok.com/'
