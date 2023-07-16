@@ -22,9 +22,7 @@ const NavWind = ({eventDate, setEventDate}) => {
 
     const initialEventDate = () => {
         // return new Date()
-        console.log('cookie.eventdate : ', cookie.eventdate)
-        if (cookie.eventdate != undefined) {
-            console.log('return cookie.eventdate')
+        if (cookie.eventdate !== undefined) {
             return cookie.eventdate
         }else{
             const now = new Date()
@@ -93,12 +91,14 @@ const NavWind = ({eventDate, setEventDate}) => {
                 <div className='mt-4 text-base text-white font-sans font-semibold'>
                     행사날짜
                 </div>
-                <input className='pl-2 py-0.5 mr-2 rounded-md font-katuri mobile:inline-block' type="date" title='행사날짜를 지정해주세요' id='eventDate' name="" 
-                    onChange={(e) => {setEventDate(e)}} 
-                    // value={cookie.eventdate}/>
-                    value={initialEventDate()}/>
+                <div className='inline-flex'>
+                    <input className='pl-2 py-0.5 mr-2 rounded-md font-katuri mobile:inline-block' type="date" title='행사날짜를 지정해주세요' id='eventDate' name="" 
+                        onChange={(e) => {setEventDate(e)}} 
+                        // value={cookie.eventdate}/>
+                        value={initialEventDate()}/>
+                </div>
                 {/* 검색 -> 모바일에선 x */}
-                <div className='mobile:hidden inline-flex border-blue-400 hover:shadow-md mobile:mt-4' >
+                <div className='mobile:hidden inline-flex border-blue-400 hover:shadow-md mobile:mt-4'  >
                     <button>
                         <Link to={`searchResult/${searchKeyword}`}>
                             <svg class="rounded-l-md w-8 h-8 bg-white text-gray-500 fill-slate-400" fill="currentColor2" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
@@ -147,13 +147,13 @@ const NavWind = ({eventDate, setEventDate}) => {
             </div>
             {/* 행사날짜 및 검색 */}
             <div className='inline-flex h-full p-2 float-right items-center mobile:block mobile:float-left'> 
-                <label className='mr-2 text-xl text-slate-100 font-katuri has-tooltip2'>행사날짜</label>
+                <label className='mr-2 text-xl text-slate-100 font-katuri has-tooltip'>행사날짜</label>
                 <input className='pl-4 py-0.5 mr-2 rounded-md font-katuri mobile:inline-block' type="date" title='행사날짜를 지정해주세요' id='eventDate' name="" 
                     onChange={(e) => {setEventDate(e)}} 
                     // value={cookie.eventdate}/>
                     value={initialEventDate()}/>
                 {/* 검색 */}
-                <div className='hiddeno inline-flex border-blue-400 hover:shadow-md mobile:mt-4' 
+                <div className='inline-flex border-blue-400 hover:shadow-md mobile:mt-4' 
                     onKeyDown={(e) => searchKeyEvent(e)}>
                     <button>
                         <Link to={`searchResult/${searchKeyword}`}>
