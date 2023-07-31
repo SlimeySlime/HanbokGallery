@@ -46,7 +46,7 @@ function App() {
   }, [])
 
   function getStoreData() {
-    axios.get(SERVER_PATH + '/gallery')
+    axios.get(SERVER_PATH + '/gallery/all')
     .then((result) => {
         setGalleryData(result.data)
         dispatch(setGalleryInfos(result.data))
@@ -56,7 +56,7 @@ function App() {
   }
 
   function getAllHanbok() {
-    axios.get(SERVER_PATH + '/hanbok')
+    axios.get(SERVER_PATH + '/hanboks/all')
     .then((result) => {
       dispatch(setHanboks(result.data))
       console.log('all hanbok data', result.data)
@@ -78,7 +78,7 @@ function App() {
       const end = DATE_ADD(date, 8)
       const endStr = DATE_TO_SQLSTRING(end)
       // console.log(startStr, endStr)
-      axios.get(SERVER_PATH + '/rentalItem', {
+      axios.get(SERVER_PATH + '/rentals/rentalItems', {
           params: {
               rentalStart: startStr,
               rentalEnd: endStr
