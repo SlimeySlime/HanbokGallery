@@ -31,8 +31,7 @@ const RentalTemplate = () => {
                     </div>
                     <p className="m-4 mobile:mb-8 font-preten font-semibold text-center">
                         대여 가능 여부, <br /> 사이즈를 확인해주세요 <br />
-                        ( 전화 043 - 234 - 5165)    <br />
-                        ( 문자 010 - 2375  - 5165)
+                        ( 전화 043 - 234 - 5165)  
                     </p>
                 </div>
                 <div className="flex-col m-4 mobile:m-0">
