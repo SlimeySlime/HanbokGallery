@@ -15,10 +15,12 @@ import { useCookies } from 'react-cookie';
 import { HiArrowUp } from 'react-icons/hi';
 import WanringTooltip from './general/WarningTooltip';
 // import { Hanbok_Min_Rental} from './domain/rental_minimum_info';
-import HanbokDisplay from './display/HanbokDisplay';
+// import HanbokDisplay from './display/HanbokDisplay';
+import HanbokDisplay from 'display/HanbokDisplay';
 import { Gallery_Item } from 'domain/gallery_item';
 import { Rental_Item } from 'domain/rental_item';
 import TypeDisplay from 'display/TypeDisplay';
+import HanbokDisplayTS from 'display/HanbokDisplayTS';
 
 
 // import Nav2 from './general/Nav2';
@@ -105,7 +107,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Main />}/>
         <Route path='/main/:type' element={<TypeDisplay />} />
-        <Route path='/display/:id' element={<HanbokDisplay />} />
+        {/* <Route path='/display/:id' element={<HanbokDisplay />} /> */}
+        <Route path='/display/:id' element={<HanbokDisplayTS />} />
         {/* <Route path='/display/:id' element={<HanbokDisplay itemInfo={undefined} />} /> */}
         {/* <Route path='/fonts' element={<FontSheet />} />
         <Route path='/test' element={<TestingPage />} /> */}
