@@ -97,9 +97,8 @@ const RentalTemplate = () => {
             <p className="font-preten font-semibold text-lg mobile:md">
                 - 상품을 주문하시면 행사일에 맞춰 대여를 확정하기때문에 <br />
                  해당 한복을 다른 고객님의 예약을 못 받는 상태이므로 환불이 어렵습니다. <br />
-                - 행사 4주전 : 100% 환불 <br />
-                - 행사 2주전 : 50% 환불 <br />
-                - 행사 1주전 : 환불 불가 <br />
+                - 행사 4주전 : 30% 환불 <br />
+                - 행사 2주전 : 환불 불가 <br />
             </p>
 
         </div>
