@@ -61,46 +61,40 @@ const SET_ITEM_AVAILABLE = (rentalItems: Rental_Item[]) => {
 const CHECK_ITEM_AVAILABILITY = (rental_item_map: Map<string, Rental_Item>, gallery_item: Gallery_Item[]) => {
     // const filteredGalleryItem = CustomerFilteredHanbok(galleryData, type!)
 
+    // TODO - barcode 1,2,3,4
     const filtered_list = gallery_item?.map((hanbok) => {
 
-        let updated_hanbok = hanbok
-        let is_unavailable = false
-        // TODO - barcode 1,2,3,4
-        const rental_item = rental_item_map.get(hanbok.hanbok_barcode1)
+        // let updated_hanbok = hanbok
+        let unavailablity = false
+        
+        let rental_item = rental_item_map.get(hanbok.hanbok_barcode1)
         if (rental_item_map.has(hanbok.hanbok_barcode1)){   
             console.log(`${hanbok.display_code})${hanbok.hanbok_name1}  ${hanbok.hanbok_type1} is ${rental_item!.count} / ${rental_item!.stock }`)
-            // return {
-            //     ...hanbok,
-            //     unavailable : rental_item!.available
-            // }
-            is_unavailable = true
+            unavailablity = rental_item!.available
         }else{
-            is_unavailable = false
             console.log(`${hanbok.display_code})${hanbok.hanbok_name1}  ${hanbok.hanbok_type1} is not in rental`)
-            // return {
-            //     ...hanbok,
-            //     unavailable : false
-            // } 
         }
 
-        // if (rental_item_map.has(hanbok.hanbok_barcode2)){   
-        //     const rental_item = rental_item_map.get(hanbok.hanbok_barcode2)
-        //     console.log(`${hanbok.display_code}).${hanbok.hanbok_name2} ${hanbok.hanbok_type2} is ${rental_item!.count} / ${rental_item!.stock }`)
-        //     return {
-        //         ...hanbok,
-        //         unavailable : rental_item!.available
-        //     }
-        // }else{
-        //     console.log(`${hanbok.hanbok_name2} not in rental`)
-        //     return {
-        //         ...hanbok,
-        //         unavailable : false
-        //     } 
-        // }
+        rental_item = rental_item_map.get(hanbok.hanbok_barcode2)
+        if (rental_item_map.has(hanbok.hanbok_barcode2)){   
+            console.log(`${hanbok.display_code})${hanbok.hanbok_name2}  ${hanbok.hanbok_type2} is ${rental_item!.count} / ${rental_item!.stock }`)
+            unavailablity = rental_item!.available
+        }else{
+            console.log(`${hanbok.display_code})${hanbok.hanbok_name2}  ${hanbok.hanbok_type2} is not in rental`)
+        }
+
+        rental_item = rental_item_map.get(hanbok.hanbok_barcode3)
+        if (rental_item_map.has(hanbok.hanbok_barcode3)){   
+            console.log(`${hanbok.display_code})${hanbok.hanbok_name3}  ${hanbok.hanbok_type3} is ${rental_item!.count} / ${rental_item!.stock }`)
+            unavailablity = rental_item!.available
+        }else{
+            console.log(`${hanbok.display_code})${hanbok.hanbok_name3}  ${hanbok.hanbok_type3} is not in rental`)
+        }
+
 
         return {
             ...hanbok,
-            unavailable: is_unavailable
+            unavailable: unavailablity
         }
 
     })
