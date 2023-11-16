@@ -33,8 +33,9 @@ const HanboknameFilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) =
     }
 }
 
-const AVAILABLE_ITEM = (rentalItems: Rental_Item[]) => {
-    const hanbokMap = new Map<string, Rental_Item>()    // Hanbok_Item -> Rental_Item
+const SET_ITEM_AVAILABLE = (rentalItems: Rental_Item[]) => {
+    // hanbokMap<barcode, item>
+    const hanbokMap = new Map<string, Rental_Item>()    
     rentalItems?.map((item) => {
         hanbokMap.set(item.hanbok_barcode!, item)
     })
@@ -57,27 +58,54 @@ const AVAILABLE_ITEM = (rentalItems: Rental_Item[]) => {
     return unavailMap
 }
 
-const AVAILABLE_GALLERY_ITEM = (rental_item_map: Map<string, Rental_Item>, gallery_item: Gallery_Item[]) => {
+const CHECK_ITEM_AVAILABILITY = (rental_item_map: Map<string, Rental_Item>, gallery_item: Gallery_Item[]) => {
     // const filteredGalleryItem = CustomerFilteredHanbok(galleryData, type!)
 
     const filtered_list = gallery_item?.map((hanbok) => {
+
+        let updated_hanbok = hanbok
+        let is_unavailable = false
         // TODO - barcode 1,2,3,4
+        const rental_item = rental_item_map.get(hanbok.hanbok_barcode1)
         if (rental_item_map.has(hanbok.hanbok_barcode1)){   
-            const rental_item = rental_item_map.get(hanbok.hanbok_barcode1)
-            console.log(`item.${hanbok.hanbok_name1} is ${rental_item!.count} / ${rental_item!.stock }`)
-            return {
-                ...hanbok,
-                unavailable : rental_item!.available
-            }
+            console.log(`${hanbok.display_code})${hanbok.hanbok_name1}  ${hanbok.hanbok_type1} is ${rental_item!.count} / ${rental_item!.stock }`)
+            // return {
+            //     ...hanbok,
+            //     unavailable : rental_item!.available
+            // }
+            is_unavailable = true
         }else{
-            console.log(`${hanbok.hanbok_name1} not in rental`)
-            return {
-                ...hanbok,
-                unavailable : false
-            } 
+            is_unavailable = false
+            console.log(`${hanbok.display_code})${hanbok.hanbok_name1}  ${hanbok.hanbok_type1} is not in rental`)
+            // return {
+            //     ...hanbok,
+            //     unavailable : false
+            // } 
         }
+
+        // if (rental_item_map.has(hanbok.hanbok_barcode2)){   
+        //     const rental_item = rental_item_map.get(hanbok.hanbok_barcode2)
+        //     console.log(`${hanbok.display_code}).${hanbok.hanbok_name2} ${hanbok.hanbok_type2} is ${rental_item!.count} / ${rental_item!.stock }`)
+        //     return {
+        //         ...hanbok,
+        //         unavailable : rental_item!.available
+        //     }
+        // }else{
+        //     console.log(`${hanbok.hanbok_name2} not in rental`)
+        //     return {
+        //         ...hanbok,
+        //         unavailable : false
+        //     } 
+        // }
+
+        return {
+            ...hanbok,
+            unavailable: is_unavailable
+        }
+
     })
+
     return filtered_list
 }
 
-export { CustomerFilteredHanbok, HanboknameFilteredHanbok, AVAILABLE_ITEM, AVAILABLE_GALLERY_ITEM }
+export { CustomerFilteredHanbok, HanboknameFilteredHanbok, SET_ITEM_AVAILABLE, CHECK_ITEM_AVAILABILITY }

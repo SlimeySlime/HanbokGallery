@@ -109,9 +109,6 @@ function App() {
         <Route path='/main/:type' element={<TypeDisplay />} />
         {/* <Route path='/display/:id' element={<HanbokDisplay />} /> */}
         <Route path='/display/:id' element={<HanbokDisplayTS />} />
-        {/* <Route path='/display/:id' element={<HanbokDisplay itemInfo={undefined} />} /> */}
-        {/* <Route path='/fonts' element={<FontSheet />} />
-        <Route path='/test' element={<TestingPage />} /> */}
         <Route path='/searchResult/:keywords' element={<SearchResult />} />
       </Routes>
       

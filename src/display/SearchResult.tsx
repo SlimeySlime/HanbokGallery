@@ -4,7 +4,7 @@ import React, { createRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { RootState } from "reducing/store";
-import { AVAILABLE_GALLERY_ITEM, AVAILABLE_ITEM, HanboknameFilteredHanbok } from "util/display_filter";
+import { CHECK_ITEM_AVAILABILITY, SET_ITEM_AVAILABLE, HanboknameFilteredHanbok } from "util/display_filter";
 import { IMAGE_PATH } from "../config/Config";
 import ImageBox from "./ImageBox";
 
@@ -31,8 +31,8 @@ const SearchResult = () => {
 
     const setAvailableList = () => {
         const filteredHanbok: Gallery_Item[] = HanboknameFilteredHanbok(galleryData, keywords!)
-        const unavailable_map: Map<string, Rental_Item> = AVAILABLE_ITEM(rentalItems)
-        const available_gallery_items = AVAILABLE_GALLERY_ITEM(unavailable_map, filteredHanbok)
+        const unavailable_map: Map<string, Rental_Item> = SET_ITEM_AVAILABLE(rentalItems)
+        const available_gallery_items = CHECK_ITEM_AVAILABILITY(unavailable_map, filteredHanbok)
         setGalleryItems(available_gallery_items)
     }
     

@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Gallery_Item } from '../domain/gallery_item';
 import { RootState } from "reducing/store";
 import { Rental_Item } from "domain/rental_item";
-import { AVAILABLE_GALLERY_ITEM, AVAILABLE_ITEM, CustomerFilteredHanbok } from "util/display_filter";
+import { CHECK_ITEM_AVAILABILITY, SET_ITEM_AVAILABLE, CustomerFilteredHanbok } from "util/display_filter";
 import ImageBox from "./ImageBox";
 
 // 타입별 파라미터에 따라 조회 
@@ -29,40 +29,10 @@ const TypeDisplay = () => {
 
     const setAvailableList = () => {
         const CustomerfilteredHanbok: Gallery_Item[] = CustomerFilteredHanbok(galleryData, type!)
-        const unavailable_map: Map<string, Rental_Item> = AVAILABLE_ITEM(rentalItems)
-        const available_gallery_items = AVAILABLE_GALLERY_ITEM(unavailable_map, CustomerfilteredHanbok)
+        const unavailable_map: Map<string, Rental_Item> = SET_ITEM_AVAILABLE(rentalItems)
+        const available_gallery_items = CHECK_ITEM_AVAILABILITY(unavailable_map, CustomerfilteredHanbok)
+        // Gallery_Item 리스트에 unavailable 항목이 추가되어 리턴 
         setGalleryItem(available_gallery_items)
-    }
-
-    // 하위 사이즈 추가해서 리턴 
-    const itemSizes = (size: string) => {
-        let sizes = size?.split(/[.,]+/)
-        // sizes.unshift(sizes[0] - 11) // 이미 -11 사이즈가 db에 들어가있음
-        return sizes?.join(', ')
-    }
-
-    const ImageDiv2 = (item: Gallery_Item ) => {
-        const unavailable = item.unavailable
-        if (unavailable) {      // 대여불가능 상품 
-            console.log(`${item.hanbok_name1} is unavail`)
-            return(
-            <div className="relative cursor-not-allowed">
-                <img className="object-cover h-60 w-full" src={IMAGE_PATH + `Store/[${item.display_code}]/1.jpg`} alt={`[${item.display_code}]`} loading='lazy' />
-                <div className="absolute bottom-0 left-0 flex flex-1 z-10 w-full items-center justify-center bg-teal-600 bg-opacity-50">
-                    <p className="m-2 text-white text-center text-md mobile:text-xs font-preten font-semibold">이 상품은 해당날짜에 <br /> 대여가 어렵습니다.</p>    
-                </div>
-            </div>
-            )
-        }else{
-            return(
-            <div className="relative">
-                <img className="object-cover h-60 w-full" src={IMAGE_PATH + `Store/[${item.display_code}]/1.jpg`} alt={`[${item.display_code}]`} loading='lazy'  />
-                <div className="absolute bottom-0 right-0 translate-y-6no flex z-10 items-center justify-center bg-slate-200 bg-opacity-70">
-                    <p className="p-1 font-preten font-semibold text-sm mobile:text-xs mobile:p-220">{itemSizes(item.available_size)} size</p>
-                </div>
-            </div>
-            )
-        }
     }
 
     // 이미지경로 - IMAGE_PATH + Store/[A001]/1.jpg
@@ -81,7 +51,7 @@ const TypeDisplay = () => {
                         <p className="mt-1 text-xs font-sans tracking-tight">{typeString}한복</p>
                         <p className="font-sans mobile:text-sm ">[{item.display_code}] {item.hanbok_name1?.split(' ')[0]}</p>
                         <p className="font-sans mobile:text-sm">{item.hanbok_name2?.split(' ')[0]} {item.hanbok_name3?.split(' ')[0]}</p>
-                        <p className="inline-blockno hidden mr-2 font-sans font-semibold mobile:text-sm">70,000원</p>
+                        {/* <p className="inline-blockno hidden mr-2 font-sans font-semibold mobile:text-sm">70,000원</p> */}
                         {/* <p className="inline font-sans font-thin text-slate-600 line-through mobile:text-sm">100,000원</p> */}
                     </div>
                 </Link>  
