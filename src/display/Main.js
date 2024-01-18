@@ -71,10 +71,11 @@ const Main = () => {
 
                 </div>
                 <div className="flex flex-col justify-center items-center m-12 mobile:m-2">
-                    {Gradient('전품목 7만원 균일가 대여', "text-4xl font-preten font-semibold mobile:text-2xl")}
+                    {Gradient('전품목 7만 7천원 균일가 대여', "text-4xl font-preten font-semibold mobile:text-2xl")}
                     {/* <p className="text-3xl font-preten font-semibold">전품목 7만원 균일가 대여 </p> */}
                     <p className="font-preten font-semibold pb-12 from-blue-500 to-white">
                         ( 핸드백, 신발, 액세서리 등 모두포함 )  <br />
+                        ( 부가세 포함 )  <br />
                         ( 택배 배송비 별도)
                     </p>
                     <p className="text-2xl font-preten font-semibold text-center pb-8
