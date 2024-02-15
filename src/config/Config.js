@@ -1,7 +1,7 @@
 
 // const SERVER_PATH = process.env.NODE_ENV === 'production' ? 'slimeyslime.net/api/spring' : 'http://localhost:8080/api/spring'
 // const SERVER_PATH = process.env.NODE_ENV === 'production' ? 'http://1.234.36.147:8000/bdanbonga/' : 'http://localhost:8000/bdanbonga/'
-const SERVER_PATH = 'http://1.234.36.147:8000/bdanbonga/'
+const SERVER_PATH = '1.234.36.147:8000/bdanbonga/'
 /**
  * gallery path
 */
