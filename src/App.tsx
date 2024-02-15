@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './config/Config';
+import { DATE_ADD, DATE_TO_SQLSTRING, GALLERY_FILTER_PATH, GALLERY_PATH, HANBOK_MAP, SERVER_PATH } from './config/Config';
 import axios from 'axios';
 import NavWind from './general/NavWind';
 import Footer from './general/Footer';
@@ -9,7 +9,7 @@ import Main from './display/Main';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { setHanbok, setRental, setStore } from './reducing/rentalDispatch';
-import { setRentals, setHanboks, setGalleryInfos, setRentalItems } from './reducing/galleryRedux';
+import { setRentals, setHanboks, setGalleryInfos, setRentalItems, setGalleryFiltered } from './reducing/galleryRedux';
 import SearchResult from './display/SearchResult';
 import { useCookies } from 'react-cookie';
 import { HiArrowUp } from 'react-icons/hi';
@@ -24,7 +24,6 @@ import HanbokDisplayTS from 'display/HanbokDisplayTS';
 
 
 // import Nav2 from './general/Nav2';
-
 function App() {
   const dispatch = useDispatch()
   const [allGalleryData, setGalleryData] = useState<Gallery_Item[]>([]);
@@ -36,10 +35,9 @@ function App() {
 
   useEffect(() => {
     getAllHanbok()
-    getStoreData()
+    getGalleryItem()
     // setEventDate(new Date(cookie.eventdate))
     if (cookie.eventdate !== undefined){
-      // console.log(cookie.eventdate)
       setWarningVisible(false)
       getRentalList(new Date(cookie.eventdate))
     }else{
@@ -47,9 +45,8 @@ function App() {
     }
   }, [])
 
-  function getStoreData() {
-    // axios.get(SERVER_PATH + '/gallery/all')
-    axios.get('http://localhost:8000/bdanbonga' + '/gallery/')
+  function getGalleryItem() {
+    axios.get(GALLERY_PATH)
     .then((result) => {
         setGalleryData(result.data)
         dispatch(setGalleryInfos(result.data))
@@ -65,7 +62,7 @@ function App() {
       console.log('all hanbok data', result.data)
     })
   }
-
+  // nav change event
   function changeEventDate(e: any) {
     const date = e.target.value
     setCookie('eventdate', date, { path:'/' })
@@ -74,14 +71,11 @@ function App() {
   }
   // rentalList 조회 후 filter
   function getRentalList(date: Date){
-      // const start = DATE_ADD(date, -14)
       const start = DATE_ADD(date, -5)
       const startStr = DATE_TO_SQLSTRING(start)
-      // const end = DATE_ADD(date, -14)
       const end = DATE_ADD(date, 8)
       const endStr = DATE_TO_SQLSTRING(end)
-      // console.log(startStr, endStr)
-      axios.get(SERVER_PATH + '/rentals/rentalItems', {
+      axios.get(GALLERY_FILTER_PATH, {
           params: {
               rentalStart: startStr,
               rentalEnd: endStr
@@ -89,7 +83,8 @@ function App() {
       }).then((result) => {
           console.log(`rentalItems -5 ${startStr} to 8 ${endStr} `, result.data)
           let hanboks: Rental_Item[] = result.data;
-          dispatch(setRentalItems(result.data))
+          // dispatch(setRentalItems(result.data))
+          dispatch(setGalleryFiltered(result.data))
       })
   }
 

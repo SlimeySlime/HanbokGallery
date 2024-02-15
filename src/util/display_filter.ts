@@ -10,6 +10,10 @@ const CustomerFilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) => 
         hanbokList?.map((item: Gallery_Item) => {
             if (item.customer_type?.includes(TYPE_TO_KOREAN(keyword))) {
                 filtered.push(item)
+                console.log('item is ', item.unavailable)
+            }
+            if (item.unavailable) {
+                console.log('item is unavailable', item)
             }
         })
         return filtered

@@ -11,6 +11,7 @@ const gallerySlice = createSlice({
         rentalItems : [] as Rental_Item[],
         hanboks: [] as Hanbok_Item[],
         galleryInfos: [] as Gallery_Item[],
+        galleryFiltered: [] as Gallery_Item[],
     },
     reducers: {
         setRentals(state, action:PayloadAction<Hanbok_Min_Rental[]>) {
@@ -26,11 +27,15 @@ const gallerySlice = createSlice({
         setGalleryInfos(state, action:PayloadAction<Gallery_Item[]>) {
             state.galleryInfos = action.payload
         },
+        setGalleryFiltered(state, action:PayloadAction<Gallery_Item[]>) {
+            console.log('filtered gallery data', action.payload)
+            state.galleryFiltered = action.payload
+        },
     },
 })
 
 
-export const { setRentals, setHanboks, setGalleryInfos, setRentalItems } = gallerySlice.actions
+export const { setRentals, setHanboks, setGalleryInfos, setRentalItems, setGalleryFiltered } = gallerySlice.actions
 export default gallerySlice.reducer
 
 

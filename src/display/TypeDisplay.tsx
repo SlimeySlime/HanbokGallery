@@ -11,29 +11,24 @@ import ImageBox from "./ImageBox";
 // 타입별 파라미터에 따라 조회 
 // useParams => type
 const TypeDisplay = () => {
-    const rentalItems:Rental_Item[] = useSelector( (state:RootState) => state.gallery.rentalItems)
-    const galleryData = useSelector( (state:RootState) => state.gallery.galleryInfos)
     const { type } = useParams();
     const typeString = TYPE_TO_KOREAN(type)
+    const rentalItems:Rental_Item[] = useSelector( (state:RootState) => state.gallery.rentalItems)
+    // const galleryData = useSelector( (state:RootState) => state.gallery.galleryInfos)
+    const galleryFiltered = useSelector( (state:RootState) => state.gallery.galleryFiltered)
 
     const [galleryItem, setGalleryItem] = useState<Gallery_Item[]>([]);
 
     useEffect(() => {
         // eventRentalMap()
-        setAvailableList()
-    }, [type, rentalItems]) 
+        // setAvailableList()
+        setTypeFilter()
+    }, [type, galleryFiltered]) 
 
-    useEffect(() => {
-        // console.log('blog data filtered to ', galleryItem)
-    }, [galleryItem])
-
-    const setAvailableList = () => {
-        const CustomerfilteredHanbok: Gallery_Item[] = CustomerFilteredHanbok(galleryData, type!)
-        const unavailable_map: Map<string, Rental_Item> = SET_ITEM_AVAILABLE(rentalItems)
-        const available_gallery_items = CHECK_ITEM_AVAILABILITY(unavailable_map, CustomerfilteredHanbok)
-        // Gallery_Item 리스트에 unavailable 항목이 추가되어 리턴 
-        setGalleryItem(available_gallery_items)
-        console.log('available_gallery_items', available_gallery_items)
+    function setTypeFilter() {
+        console.log('set type filter to ', type)
+        const typeFiltered: Gallery_Item[] = CustomerFilteredHanbok(galleryFiltered, type!)
+        setGalleryItem(typeFiltered)
     }
 
     // 이미지경로 - IMAGE_PATH + Store/[A001]/1.jpg
