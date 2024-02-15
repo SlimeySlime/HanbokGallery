@@ -34,9 +34,9 @@ function App() {
   const [warningVisible, setWarningVisible] = useState(true);
 
   useEffect(() => {
-    getAllHanbok()
+    
     getGalleryItem()
-    // setEventDate(new Date(cookie.eventdate))
+
     if (cookie.eventdate !== undefined){
       setWarningVisible(false)
       getRentalList(new Date(cookie.eventdate))
@@ -55,13 +55,13 @@ function App() {
     })
   }
 
-  function getAllHanbok() {
-    axios.get(SERVER_PATH + '/hanboks/all')
-    .then((result) => {
-      dispatch(setHanboks(result.data))
-      console.log('all hanbok data', result.data)
-    })
-  }
+  // function getAllHanbok() {
+  //   axios.get(SERVER_PATH + '/hanboks/all')
+  //   .then((result) => {
+  //     dispatch(setHanboks(result.data))
+  //     console.log('all hanbok data', result.data)
+  //   })
+  // }
   // nav change event
   function changeEventDate(e: any) {
     const date = e.target.value

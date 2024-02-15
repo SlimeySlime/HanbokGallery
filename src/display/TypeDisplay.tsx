@@ -38,7 +38,7 @@ const TypeDisplay = () => {
             <div className="container grid mobile:grid-cols-2 grid-cols-6 mobile:gap-1 gap-6 ">
                 {/* {filterdgalleryItem?.map((item) => */}
                 {galleryItem?.map((item) =>
-                <div className="cursor-pointer" id='image link container'>
+                <div className="cursor-pointer" id='image link container' key={item.display_code}>
                 {/* blur여부 + div hidden 여부 */}
                 <Link to={`/display/${item.display_code}`}>
                     <div className="mb-4 p-2 shadow-md hover:shadow-lg"> 
