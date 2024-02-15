@@ -33,6 +33,7 @@ const TypeDisplay = () => {
         const available_gallery_items = CHECK_ITEM_AVAILABILITY(unavailable_map, CustomerfilteredHanbok)
         // Gallery_Item 리스트에 unavailable 항목이 추가되어 리턴 
         setGalleryItem(available_gallery_items)
+        console.log('available_gallery_items', available_gallery_items)
     }
 
     // 이미지경로 - IMAGE_PATH + Store/[A001]/1.jpg

@@ -48,7 +48,8 @@ function App() {
   }, [])
 
   function getStoreData() {
-    axios.get(SERVER_PATH + '/gallery/all')
+    // axios.get(SERVER_PATH + '/gallery/all')
+    axios.get('http://localhost:8000/bdanbonga' + '/gallery/')
     .then((result) => {
         setGalleryData(result.data)
         dispatch(setGalleryInfos(result.data))

@@ -1,7 +1,11 @@
 
-// const SERVER_PATH = process.env.NODE_ENV === 'production' ? 'slimeyslime.net/api' : 'http://localhost:3000/bdanbonga'
-// const SERVER_PATH = 'https://slimeyslime.net/api/bdanbonga'
-const SERVER_PATH = 'https://slimeyslime.net/api/spring'
+// const SERVER_PATH = process.env.NODE_ENV === 'production' ? 'slimeyslime.net/api/spring' : 'http://localhost:8080/api/spring'
+const SERVER_PATH = process.env.NODE_ENV === 'production' ? 'slimeyslime.net/api/spring' : 'http://localhost:8000/bdanbonga/'
+
+const GALLERY_PATH = SERVER_PATH + 'gallery/'
+const GALLERY_FILTER_PATH = SERVER_PATH + 'gallery/filter'
+// const SERVER_PATH = 'https://slimeyslime.net/api/spring'
+
 const IMAGE_PATH = 'https://storage.googleapis.com/hanbok.bdanbonga.com/'
 // const IMAGE_PATH = 'https://s3.ap-northeast-2.amazonaws.com/bdanbonga.hanbok.com/'
 const DEV_SERVER_PATH = 'http://localhost:3000/bdanbonga'
@@ -60,4 +64,6 @@ function HANBOK_MAP(hanbokList){
     return hanbokMap
 }
 
-export {IMAGE_PATH, SERVER_PATH, DEV_SERVER_PATH, ERROR_HIDE, TYPE_TO_KOREAN, DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP}
+export {IMAGE_PATH, SERVER_PATH, DEV_SERVER_PATH, 
+        GALLERY_PATH, GALLERY_FILTER_PATH,
+        ERROR_HIDE, TYPE_TO_KOREAN, DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP}
