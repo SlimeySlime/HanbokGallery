@@ -82,10 +82,23 @@ function App() {
           }
       }).then((result) => {
           console.log(`rentalItems -5 ${startStr} to 8 ${endStr} `, result.data)
-          let hanboks: Rental_Item[] = result.data;
+          // let hanboks: Rental_Item[] = result.data;
+          let gallery_items: Gallery_Item[] = result.data;
           // dispatch(setRentalItems(result.data))
-          dispatch(setGalleryFiltered(result.data))
+          dispatch(setGalleryFiltered(gallery_items))
+
+          unavailDebug(gallery_items)
       })
+  }
+
+  function unavailDebug(gallery_items: Gallery_Item[]) {
+    gallery_items.forEach(item => {
+      // console.log(item.unavailable)
+      if (item.unavailable === true) {
+        console.log(item.display_code + ' is unavailable == true')
+        console.log(item)
+      }
+    });
   }
 
   function setWarning(bool: boolean){

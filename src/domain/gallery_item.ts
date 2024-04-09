@@ -34,4 +34,10 @@ export class Gallery_Item {
   hanbok_type3!: string;
   hanbok_type4!: string;
   hanbok_type5!: string;
+
+  _contract_date!: string;
+  _event_date!: string;
+  _return_date!: string;
+  _rental_date!: string;
+
 }

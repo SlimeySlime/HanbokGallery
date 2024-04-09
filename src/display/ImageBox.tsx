@@ -4,6 +4,7 @@ import React from "react";
 
 
 type Gallery_Item_Prop = {
+    // item : Gallery_Item
     item : Gallery_Item
 }
 // const ImageBox = ({display_code:String, available_size, unavailable}: {String, String, boolean}) => {
