@@ -24,7 +24,7 @@ const HanbokDisplayTS = () => {
 
     const imageListRef = useRef<HTMLDivElement>(null)
     const [imageData, setImageData] = useState<Gallery_Item>(new Gallery_Item())
-    const [previewIndex, setPreviewIndex] = useState(1)
+    const [previewIndex, setPreviewIndex] = useState(0)
 
     const prevNavigation = useRef(null)
     const nextNavigation = useRef(null)
@@ -41,24 +41,6 @@ const HanbokDisplayTS = () => {
         window.scrollTo(0, 0)
     }, [])
 
-    const previewImageDiv = () => {
-        return(
-        <div className='mobile:hidden flex flex-col justify-center items-center'>
-            <img src={IMAGE_PATH + `Store/[${imageData.display_code}]/${previewIndex}.jpg`} alt={imageData.display_code!} 
-            // width={400}
-            className='p-2 pb-0 w-full max-w-lg' />
-            <div className='mt-4 flex mobile:grid mobile:grid-cols-4 justify-center '>
-            {imageLength.map((num) => 
-                <img src={IMAGE_PATH + `Store/[${imageData.display_code}]/${num}.jpg`} alt={imageData.display_code!} id={num.toString()}
-                    className='p-2 hover:bg-slate-200 rounded-lg w-20' 
-                    onMouseEnter={(e) => {setPreviewIndex(+e.currentTarget.id)}}
-                    onClick={(e) => {setPreviewIndex(+e.currentTarget.id)}} 
-                    onError={(e) => {ERROR_HIDE(e)}} />    
-            )}
-            </div>
-        </div>
-        )
-    }
 
 
     // const imageList = (css, onHover, onClick, w) => {
@@ -95,7 +77,7 @@ const HanbokDisplayTS = () => {
             // }}
             modules={[Navigation, Pagination]}
             >
-            {mobileSlideLength.map((num) => 
+            {loadedList.map((num) => 
                 <SwiperSlide>
                     <img src={IMAGE_PATH + `Store/[${id}]/${num}.jpg`} alt={imageData.display_code!} id={num.toString()}  />
                 </SwiperSlide>
@@ -111,31 +93,34 @@ const HanbokDisplayTS = () => {
         )
     }
 
-    function checkImageListContainer() {
-        console.log(loadedList)
-    }
-
     function addLoadedImage(num: number) {
         let loaded = loadedList
         loaded.push(num)
-        setLoadedList(loaded)
+        setLoadedList(loaded.sort((a, b) => a - b))
     }
 
-    useEffect(() => {
-        let sorted = loadedList
-        setLoadedList(sorted.sort())
-    }, [loadedList])
+    function hoverImageIndex(num: number) {
+        if (loadedList.includes(num)) {
+            const idx =  loadedList.indexOf(num)
+            setPreviewIndex(idx)
+        }
+    }
 
     function increaseIndex() {
-        if (previewIndex < loadedList.length) {
+        if (previewIndex < loadedList.length - 1) {
             setPreviewIndex(previewIndex + 1)
         }
     }
     function decreaseIndex() {
-        if (previewIndex > 1) {
+        if (previewIndex > 0) {
             setPreviewIndex(previewIndex - 1)
         }
     }
+
+    useEffect(() => {
+        console.log(previewIndex)
+        console.log(loadedList)
+    }, [previewIndex])
 
     return(
         <div className='container mx-auto flex flex-1 mobile:flex-col '
@@ -150,26 +135,27 @@ const HanbokDisplayTS = () => {
                     {/* 데스크톱 크게보기 이미지 */}
                     <div className='mobile:hidden flex flex-col justify-center items-center'>
                         <div className='flex flex-1 items-center'>
-                            <div>
+                            <button className='p-1 rounded-full bg-blue-100'>
                                 <GrFormPrevious size={32}
                                     onClick={() => {decreaseIndex()}}>
                                 </GrFormPrevious>
-                            </div>
-                            <img src={IMAGE_PATH + `Store/[${id}]/${previewIndex}.jpg`} alt={imageData.display_code!} 
-                            // width={400}
-                                className='p-2 pb-0 w-full max-w-lg' />
-                            <div className='bg-slate m-2'>
-                                <GrFormNext size={32} 
-                                    onClick={() => {increaseIndex()}}>    
+                            </button>
+                            <img className='p-2 pb-0 w-full max-w-lg'
+                                src={IMAGE_PATH + `Store/[${id}]/${loadedList[previewIndex]}.jpg`} 
+                                alt={imageData.display_code!} />
+                            <button className='p-1 rounded-full bg-blue-100'>
+                                <GrFormNext size={32}
+                                    onClick={() => {increaseIndex()}}>
                                 </GrFormNext>
-                            </div>
-
+                            </button>
                         </div>
                         <div className='mt-4 flex mobile:grid mobile:grid-cols-4 justify-center '>
                         {imageLength.map((num) => 
-                            <img src={IMAGE_PATH + `Store/[${id}]/${num}.jpg`} alt={imageData.display_code!} id={num.toString()}
+                            <img src={IMAGE_PATH + `Store/[${id}]/${num}.jpg`} 
+                                alt={imageData.display_code!} id={num.toString()}
                                 className='p-2 hover:bg-slate-200 rounded-lg w-20' 
-                                onMouseEnter={(e) => { setPreviewIndex(+e.currentTarget.id) }}     // parseInt by +
+                                // onMouseEnter={(e) => { setPreviewIndex(+e.currentTarget.id) }}     // parseInt by +
+                                onMouseEnter={(e) => { hoverImageIndex(+e.currentTarget.id) }}     // parseInt by +
                                 onLoad={(e) =>  { addLoadedImage(num) }}
                                 onError={(e) => { ERROR_HIDE(e); }}
                                 onClick={(e) => { setPreviewIndex(+e.currentTarget.id) }} />

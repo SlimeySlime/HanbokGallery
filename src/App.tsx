@@ -16,7 +16,6 @@ import { HiArrowUp } from 'react-icons/hi';
 import WanringTooltip from './general/WarningTooltip';
 // import { Hanbok_Min_Rental} from './domain/rental_minimum_info';
 // import HanbokDisplay from './display/HanbokDisplay';
-import HanbokDisplay from 'display/HanbokDisplay';
 import { Gallery_Item } from 'domain/gallery_item';
 import { Rental_Item } from 'domain/rental_item';
 import TypeDisplay from 'display/TypeDisplay';
