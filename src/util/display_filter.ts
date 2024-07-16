@@ -3,8 +3,26 @@ import { Gallery_Item } from "domain/gallery_item"
 import { Rental_Item } from "domain/rental_item"
 
 const CustomerFilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) => {
+    // console.log('debug filter to' + keyword)
+    console.log(keyword)
     if (keyword === 'all') {
         return hanbokList
+    }else if(keyword == 'plus') {
+        let filtered:Gallery_Item[] = []
+        hanbokList?.map((item: Gallery_Item) => {
+            let item_sizes: string[] = item.available_size?.split(',').map(item => item.trim())
+            let big_size = ['88', '99', '100', 'Free']
+            big_size.filter(s => {
+                if (item_sizes.includes(s)) {
+                    filtered.push(item)
+                }
+            })
+            // if (item_sizes?.includes('88')) {
+            //     filtered.push(item)
+            //     console.log('item is ', item.unavailable)
+            // }
+        })
+        return filtered
     }else if (keyword) {
         let filtered:Gallery_Item[] = []
         hanbokList?.map((item: Gallery_Item) => {
@@ -12,9 +30,9 @@ const CustomerFilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) => 
                 filtered.push(item)
                 console.log('item is ', item.unavailable)
             }
-            if (item.unavailable) {
-                console.log('item is unavailable', item)
-            }
+            // if (item.unavailable) {
+            //     console.log('item is unavailable', item)
+            // }
         })
         return filtered
     }else {

@@ -14,6 +14,7 @@ module.exports = {
         'alice' : ['EliceDigitalBaeum_Bold'],
         'preten' : ['Pretendard'],
         'jua' : ['BMJUA'],
+        'nanum_myeongjo' : ['NanumMyeongjo'],
         
       },
       screens: {

@@ -94,3 +94,10 @@ body {
   font-weight: 200;
   font-style: normal;
 }
+
+/* @font-face {
+  font-family: 'NanumMyeongjo';
+  src: url('/fonts/NanumMyeongjo.otf') format('off');
+  font-weight: 200;
+  font-style: normal;
+} */

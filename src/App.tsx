@@ -20,6 +20,8 @@ import { Gallery_Item } from 'domain/gallery_item';
 import { Rental_Item } from 'domain/rental_item';
 import TypeDisplay from 'display/TypeDisplay';
 import HanbokDisplayTS from 'display/HanbokDisplayTS';
+import MainDesigned from 'display/MainDesigned';
+import TopNav from 'general/TopNav';
 
 
 // import Nav2 from './general/Nav2';
@@ -54,13 +56,6 @@ function App() {
     })
   }
 
-  // function getAllHanbok() {
-  //   axios.get(SERVER_PATH + '/hanboks/all')
-  //   .then((result) => {
-  //     dispatch(setHanboks(result.data))
-  //     console.log('all hanbok data', result.data)
-  //   })
-  // }
   // nav change event
   function changeEventDate(e: any) {
     const date = e.target.value
@@ -111,9 +106,11 @@ function App() {
   return (
     <div className='flex flex-col min-h-screen justify-between'>
 
-      <NavWind setEventDate={changeEventDate} eventDate={eventDate}/>
+      {/* <NavWind setEventDate={changeEventDate} eventDate={eventDate}/> */}
+      <TopNav setEventDate={changeEventDate} eventDate={eventDate}/>
       <Routes>
         <Route path='/' element={<Main />}/>
+        <Route path='/main' element={<MainDesigned />}/>
         <Route path='/main/:type' element={<TypeDisplay />} />
         {/* <Route path='/display/:id' element={<HanbokDisplay />} /> */}
         <Route path='/display/:id' element={<HanbokDisplayTS />} />

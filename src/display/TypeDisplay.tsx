@@ -13,8 +13,7 @@ import ImageBox from "./ImageBox";
 const TypeDisplay = () => {
     const { type } = useParams();
     const typeString = TYPE_TO_KOREAN(type)
-    const rentalItems:Rental_Item[] = useSelector( (state:RootState) => state.gallery.rentalItems)
-    // const galleryData = useSelector( (state:RootState) => state.gallery.galleryInfos)
+    // const rentalItems:Rental_Item[] = useSelector( (state:RootState) => state.gallery.rentalItems)
     const galleryFiltered = useSelector( (state:RootState) => state.gallery.galleryFiltered)
 
     const [galleryItem, setGalleryItem] = useState<Gallery_Item[]>([]);

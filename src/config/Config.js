@@ -10,9 +10,7 @@ const SERVER_PATH = 'https://slimeyslime.net/api/'
  * gallery path
 */
 const GALLERY_PATH = SERVER_PATH + 'gallery/'
-
 const GALLERY_FILTER_PATH = SERVER_PATH + 'gallery/filter/'
-// const SERVER_PATH = 'https://slimeyslime.net/api/spring'
 
 const IMAGE_PATH = 'https://storage.googleapis.com/hanbok.bdanbonga.com/'
 // const IMAGE_PATH = 'https://s3.ap-northeast-2.amazonaws.com/bdanbonga.hanbok.com/'
@@ -39,6 +37,8 @@ const TYPE_TO_KOREAN = (type) => {
             return '하객'
         case 'best' :
             return '인기'
+        case 'plus' :
+            return '플러스 사이즈'
         case 'all':
             return '전체'
         default:
