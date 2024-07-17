@@ -64,7 +64,7 @@ const TopNav = ({eventDate, setEventDate}) => {
     }
 
     const scrollToCategory = (index) => {
-        categoryItemRef.current[index].scrollIntoView({
+        categoryItemRef.current[index]?.scrollIntoView({
             behavior: 'smooth', block: 'nearest', inline: 'center'
         })
     }
