@@ -63,7 +63,7 @@ const TopNav = ({eventDate, setEventDate}) => {
         }
     }
 
-    const scrollToCategory = (index = 4) => {
+    const scrollToCategory = (index) => {
         categoryItemRef.current[index].scrollIntoView({
             behavior: 'smooth', block: 'nearest', inline: 'center'
         })
@@ -72,7 +72,7 @@ const TopNav = ({eventDate, setEventDate}) => {
 
     const Category_Tab = ({index, text, navlink}) => {
         return(
-        <button className='p-2 inline-block grow-0 shrink-0 basis-auto text-teal-200 text-lg font-preten'
+        <button className='p-2 inline-block grow-0 shrink-0 basis-auto text-lg font-preten'
             // onClick={() => scrollToCategory(index)}
             onClick={() => setCategoryIndex(index)}
             ref={ el => categoryItemRef.current[index] = el}
@@ -119,7 +119,7 @@ const TopNav = ({eventDate, setEventDate}) => {
                 <Category_Tab index={2} text='신랑 한복' navlink='/main/groom'></Category_Tab>
                 <Category_Tab index={3} text='혼주 한복' navlink='/main/parent'></Category_Tab>
                 <Category_Tab index={4} text='하객 한복' navlink='/main/guest'></Category_Tab>
-                <div className='border-l-2'></div>
+                <div className='my-2 border-l-2 border-teal-500'></div>
                 <Category_Tab index={5} text='플러스 사이즈' navlink='/main/plus'></Category_Tab>
             </div>
             {/* 사이드 카테고리 */}
