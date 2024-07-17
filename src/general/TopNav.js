@@ -194,13 +194,10 @@ const TopNav = ({eventDate, setEventDate}) => {
     const Wide_Nav = () => {
         return(
             
-        <nav className="flex flex-wrap flex-col p-2 items-center justify-between bg-teal-800 top-0 z-50">
-            
+        <nav className="flex flex-col sticky p-2 bg-teal-800 top-0 z-50">
             {/* 데스크톱 와이드 메뉴 */}
-            <div className="w-auto block flex-grow items-center justify-center mobile:hidden">
-                
-            {/* <div className="block flex-grow w-full mobile:hidden"> */}
-                <div class="inline-flex h-full text-lg lg:flex-grow">
+            <div className="w-auto flex-1">
+                <div class="inline-flex h-full text-lg lg:flex-grow float-left">
                     <div className="flex items-center justify-center text-white mr-6">
                         <Link className="hover:text-green-500" to={'/'}>
                             <img className='fill-white w-8 mr-2 inline-block' src={logo} fill='#f4f4f4' alt=""/>
@@ -242,7 +239,7 @@ const TopNav = ({eventDate, setEventDate}) => {
                     </p>
                 </div>
                 {/* 행사날짜 및 검색 */}
-                <div className='inline-flex h-full p-2 float-right items-center mobile:block mobile:float-left'> 
+                <div className='inline-flex h-full p-2 float-right items-center mobile:block'> 
                     <label className='mr-2 text-xl text-slate-100 font-preten font-bold has-tooltip'>행사날짜</label>
                     <input className='pl-4 py-0.5 mr-2 rounded-md font-katuri mobile:inline-block' type="date" title='행사날짜를 지정해주세요' id='eventDate' name="" 
                         onChange={(e) => {setEventDate(e)}} 
@@ -262,7 +259,6 @@ const TopNav = ({eventDate, setEventDate}) => {
                     </div>
                 </div>
             </div>
-            
         </nav>
         )
     }
