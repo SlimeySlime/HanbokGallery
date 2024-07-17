@@ -22,6 +22,7 @@ import TypeDisplay from 'display/TypeDisplay';
 import HanbokDisplayTS from 'display/HanbokDisplayTS';
 import MainDesigned from 'display/MainDesigned';
 import TopNav from 'general/TopNav';
+import TestingPage from 'general/TestingPage';
 
 
 // import Nav2 from './general/Nav2';
@@ -115,6 +116,7 @@ function App() {
         {/* <Route path='/display/:id' element={<HanbokDisplay />} /> */}
         <Route path='/display/:id' element={<HanbokDisplayTS />} />
         <Route path='/searchResult/:keywords' element={<SearchResult />} />
+        <Route path='/test' element={<TestingPage />} />
       </Routes>
       
       {warningVisible ? <WanringTooltip warningClose={setWarning}/> : '' }

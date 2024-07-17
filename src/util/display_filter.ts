@@ -12,15 +12,12 @@ const CustomerFilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) => 
         hanbokList?.map((item: Gallery_Item) => {
             let item_sizes: string[] = item.available_size?.split(',').map(item => item.trim())
             let big_size = ['88', '99', '100', 'Free']
-            big_size.filter(s => {
-                if (item_sizes.includes(s)) {
-                    filtered.push(item)
-                }
+            
+            let isBig = item_sizes.some( (el) => {
+                return big_size.includes(el)
             })
-            // if (item_sizes?.includes('88')) {
-            //     filtered.push(item)
-            //     console.log('item is ', item.unavailable)
-            // }
+            if (isBig) filtered.push(item)
+
         })
         return filtered
     }else if (keyword) {
@@ -30,9 +27,6 @@ const CustomerFilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) => 
                 filtered.push(item)
                 console.log('item is ', item.unavailable)
             }
-            // if (item.unavailable) {
-            //     console.log('item is unavailable', item)
-            // }
         })
         return filtered
     }else {

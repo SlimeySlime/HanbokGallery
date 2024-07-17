@@ -15,6 +15,8 @@ const TopNav = ({eventDate, setEventDate}) => {
     
     const [navVisible, setNavVisible] = useState(false)
     const [searchKeyword, setSearchKeyword] = useState('')
+
+    const [categoryIndex, setCategoryIndex] = useState(0)
     const categoryContainerRef = useRef(null)
     const categoryItemRef = useRef([])
 
@@ -22,6 +24,14 @@ const TopNav = ({eventDate, setEventDate}) => {
     const [isMobile, setIsMobile] = useState(false)
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+        console.log('top nav rendered')
+    }, [])
+    useEffect(() => {
+        console.log('top nav rendered')
+        scrollToCategory(categoryIndex)
+    }, [categoryIndex])
 
     useEffect(() => {
         if (screenSize.hegiht > screenSize.width) {
@@ -53,11 +63,27 @@ const TopNav = ({eventDate, setEventDate}) => {
         }
     }
 
-    const scrollToCategory = (index = 1) => {
-        // categoryItemRef.current[4].scroll
-        // categoryContainerRef.current.scrolltoView([
+    const scrollToCategory = (index = 4) => {
+        categoryItemRef.current[index].scrollIntoView({
+            behavior: 'smooth', block: 'nearest', inline: 'center'
+        })
+    }
 
-        // ])
+
+    const Category_Tab = ({index, text, navlink}) => {
+        return(
+        <button className='p-2 inline-block grow-0 shrink-0 basis-auto text-teal-200 text-lg font-preten'
+            // onClick={() => scrollToCategory(index)}
+            onClick={() => setCategoryIndex(index)}
+            ref={ el => categoryItemRef.current[index] = el}
+            key={index}>
+            <NavLink to={navlink}
+                className={(state) => (state.isActive ? "text-white" : "text-teal-200") } 
+                onClick={()=>{setNavVisible(false)}}>
+                    {text}
+            </NavLink>
+        </button>
+        )
     }
 
     const Mobile_Nav = () => {
@@ -88,54 +114,13 @@ const TopNav = ({eventDate, setEventDate}) => {
             </div>
             {/* 사이드 스크롤링 메뉴 */}
             <div className='flex overflow-x-auto overflow-y-hidden' ref={categoryContainerRef}>
-                <button className='p-2 inline-block grow-0 shrink-0 basis-auto text-teal-200 text-lg font-preten'
-                    onClick={() => scrollToCategory(0)}
-                    ref={categoryItemRef.current[0]}
-                    key={0}>
-                    <NavLink to={'/main/all'}
-                        className={(state) => (state.isActive ? "text-white" : "text-teal-200") } 
-                        onClick={()=>{setNavVisible(false)}}>
-                            전체보기
-                    </NavLink>
-                </button>
-                <button className='p-2 inline-block grow-0 shrink-0 basis-auto text-teal-200 text-lg font-preten'
-                    onClick={() => scrollToCategory(1)}
-                    ref={categoryItemRef.current[1]}
-                    key={0}>
-                    <NavLink to={'/main/bride'}
-                        className={(state) => (state.isActive ? "text-white" : "text-teal-200") } 
-                        onClick={()=>{setNavVisible(false)}}>
-                            신부 한복
-                    </NavLink>
-                </button>
-                <button className='p-2 inline-block grow-0 shrink-0 basis-auto text-teal-200 text-lg font-preten'>
-                    <NavLink to={'/main/groom'}
-                        className={(state) => (state.isActive ? "text-white" : "text-teal-200") } 
-                        onClick={()=>{setNavVisible(false)}}>
-                            신랑 한복
-                    </NavLink>
-                </button>
-                <button className='p-2 inline-block grow-0 shrink-0 basis-auto text-teal-200 text-lg font-preten'>
-                    <NavLink to={'/main/parent'}
-                        className={(state) => (state.isActive ? "text-white" : "text-teal-200") } 
-                        onClick={()=>{setNavVisible(false)}}>
-                            혼주 한복
-                    </NavLink>
-                </button>
-                <button className='p-2 inline-block grow-0 shrink-0 basis-auto text-teal-200 text-lg font-preten'>
-                    <NavLink to={'/main/guest'}
-                        className={(state) => (state.isActive ? "text-white" : "text-teal-200") } 
-                        onClick={()=>{setNavVisible(false)}}>
-                            하객 한복
-                    </NavLink>
-                </button>
-                <button className='p-2 inline-block grow-0 shrink-0 basis-auto text-teal-200 text-lg font-preten'>
-                    <NavLink to={'/main/plus'}
-                        className={(state) => (state.isActive ? "text-white font-bold" : "text-teal-200") } 
-                        onClick={()=>{setNavVisible(false)}}>
-                            플러스 사이즈+
-                    </NavLink>
-                </button>
+                <Category_Tab index={0} text='전체 보기' navlink='/main/all'></Category_Tab>
+                <Category_Tab index={1} text='신부 한복' navlink='/main/bride'></Category_Tab>
+                <Category_Tab index={2} text='신랑 한복' navlink='/main/groom'></Category_Tab>
+                <Category_Tab index={3} text='혼주 한복' navlink='/main/parent'></Category_Tab>
+                <Category_Tab index={4} text='하객 한복' navlink='/main/guest'></Category_Tab>
+                <div className='border-l-2'></div>
+                <Category_Tab index={5} text='플러스 사이즈' navlink='/main/plus'></Category_Tab>
             </div>
             {/* 사이드 카테고리 */}
             <div className={(navVisible ? 'left-0 ' : '-left-full' ) + ` fixed bottom-0 top-24 w-3/5 bg-teal-700 opacity-90 transition-left duration-500 sm:hidden`}>
