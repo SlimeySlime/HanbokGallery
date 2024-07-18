@@ -113,10 +113,9 @@ function App() {
         <Route path='/' element={<Main />}/>
         <Route path='/main' element={<MainDesigned />}/>
         <Route path='/main/:type' element={<TypeDisplay />} />
-        {/* <Route path='/display/:id' element={<HanbokDisplay />} /> */}
         <Route path='/display/:id' element={<HanbokDisplayTS />} />
         <Route path='/searchResult/:keywords' element={<SearchResult />} />
-        <Route path='/test' element={<TestingPage />} />
+        {/* <Route path='/test' element={<TestingPage />} /> */}
       </Routes>
       
       {warningVisible ? <WanringTooltip warningClose={setWarning}/> : '' }

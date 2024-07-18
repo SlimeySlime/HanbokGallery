@@ -2,6 +2,7 @@ import { TYPE_TO_KOREAN } from "config/Config"
 import { Gallery_Item } from "domain/gallery_item"
 import { Rental_Item } from "domain/rental_item"
 
+
 const CustomerFilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) => {
     // console.log('debug filter to' + keyword)
     console.log(keyword)
@@ -16,7 +17,9 @@ const CustomerFilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) => 
             let isBig = item_sizes.some( (el) => {
                 return big_size.includes(el)
             })
-            if (isBig) filtered.push(item)
+            if (isBig && !item.customer_type.includes('신랑')) {
+                filtered.push(item)
+            }
 
         })
         return filtered
