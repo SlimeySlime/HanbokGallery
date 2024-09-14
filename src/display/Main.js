@@ -34,7 +34,8 @@ const Main = () => {
             };
             const map = new kakao.maps.Map(container, options)
             // 마커
-            const markerPosition = new kakao.maps.LatLng(36.614393, 127.445494)
+            // const markerPosition = new kakao.maps.LatLng(36.614393, 127.445494)
+            const markerPosition = new kakao.maps.LatLng(36.615264, 127.445659 )
             let marker = new kakao.maps.Marker({
                 position: markerPosition
             })
@@ -163,7 +164,7 @@ const Main = () => {
                 <div className="border-b-2 flex flex-1 items-center p-4">
                     <GrMapLocation className="w-8 h-8 mobile:w-4 mobile:h-4"/>
                     <p className="m-4 w-24 text-xl font-semibold font-preten">위치</p>
-                    <p className="m-4 text-xl font-preten mobile:text-base mobile:m-0">청주시 서원구 성화로 101 비단본가 (죽림동 328)</p>
+                    <p className="m-4 text-xl font-preten mobile:text-base mobile:m-0">청주시 서원구 성화로 112 비단본가 (성화동 962) (9월 10일에 가게를 이곳으로 이전했어요)</p>
                 </div>
                 <div className="border-b-2 flex flex-1 items-center p-4">
                     <GrPhone className="w-8 h-8 mobile:w-4 mobile:h-4"/>
