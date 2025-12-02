@@ -71,15 +71,14 @@ const Main = () => {
                     <img className='object-cover' src="/img/text_main.png" alt="blog" />
 
                 </div>
-                <div className="flex flex-col justify-center items-center m-12 mobile:m-2">
-                    {Gradient('전품목 7만 7천원 균일가 대여', "text-4xl font-preten font-semibold mobile:text-2xl")}
-                    {/* <p className="text-3xl font-preten font-semibold">전품목 7만원 균일가 대여 </p> */}
-                    <p className="font-preten font-semibold pb-12 from-blue-500 to-white">
+                <div className="flex flex-col justify-center items-start text-left m-12 mobile:m-2">
+                    {Gradient('전품목 8만 8천원 균일가 대여', "text-4xl font-preten font-semibold mobile:text-2xl")}
+                    <p className="font-preten font-semibold pt-4 pb-12 from-blue-500 to-white">
                         ( 핸드백, 신발, 액세서리 등 모두포함 )  <br />
-                        ( 부가세 포함 )  <br />
+                        {/* ( 부가세 포함 )  <br /> */}
                         ( 택배 배송비 별도)
                     </p>
-                    <p className="text-2xl font-preten font-semibold text-center pb-8
+                    <p className="text-2xl font-preten font-semibold text-center pb-4
                                 mobile:text-lg mobile:p-2">
                         한분 한분께 최선을 다하고자 <br />
                         <b className="text-red-500">예약제</b>로 운영중입니다.
