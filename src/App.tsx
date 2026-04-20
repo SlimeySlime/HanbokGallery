@@ -66,9 +66,9 @@ function App() {
   }
   // rentalList 조회 후 filter
   function getRentalList(date: Date){
-      const start = DATE_ADD(date, -5)
+      const start = DATE_ADD(date, -11)
       const startStr = DATE_TO_SQLSTRING(start)
-      const end = DATE_ADD(date, 8)
+      const end = DATE_ADD(date, 11)
       const endStr = DATE_TO_SQLSTRING(end)
       axios.get(GALLERY_FILTER_PATH, {
           params: {
