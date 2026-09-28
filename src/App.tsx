@@ -24,6 +24,11 @@ import MainDesigned from 'display/MainDesigned';
 import TopNav from 'general/TopNav';
 import TestingPage from 'general/TestingPage';
 
+// Keep the diagnostic page and its API calls out of production bundles.
+const RentalDebugPage = process.env.NODE_ENV === 'development'
+  ? React.lazy(() => import('display/RentalDebugPage'))
+  : null;
+
 
 // import Nav2 from './general/Nav2';
 function App() {
@@ -113,6 +118,13 @@ function App() {
         <Route path='/' element={<Main />}/>
         <Route path='/main' element={<MainDesigned />}/>
         <Route path='/main/:type' element={<TypeDisplay />} />
+        {RentalDebugPage && (
+          <Route path='/debug/rentals' element={
+            <React.Suspense fallback={<p role="status">디버깅 페이지를 불러오는 중입니다.</p>}>
+              <RentalDebugPage />
+            </React.Suspense>
+          } />
+        )}
         <Route path='/display/:id' element={<HanbokDisplayTS />} />
         <Route path='/searchResult/:keywords' element={<SearchResult />} />
         {/* <Route path='/test' element={<TestingPage />} /> */}
