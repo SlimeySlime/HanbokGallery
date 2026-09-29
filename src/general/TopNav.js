@@ -6,7 +6,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { HiMenuAlt2 } from "react-icons/hi";
 import useScreenSize from 'util/useScreenSize';
 
-const rentalControlClassName = 'rounded-md bg-white font-katuri text-base py-1';
+const rentalControlClassName = 'rounded-md bg-white font-preten text-base py-1 ';
 
 const SearchBox = ({ keyword, setKeyword, onSearch, className = '' }) => (
     <form className={`inline-flex border-blue-400 hover:shadow-md mobile:mt-4 ${className}`}
