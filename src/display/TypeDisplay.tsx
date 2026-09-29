@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useMemo } from "react"
 import { Link, useParams } from "react-router-dom"
 import { IMAGE_PATH, TYPE_TO_KOREAN } from '../config/Config';
 import { useSelector } from "react-redux";
@@ -16,19 +16,9 @@ const TypeDisplay = () => {
     // const rentalItems:Rental_Item[] = useSelector( (state:RootState) => state.gallery.rentalItems)
     const galleryFiltered = useSelector( (state:RootState) => state.gallery.galleryFiltered)
 
-    const [galleryItem, setGalleryItem] = useState<Gallery_Item[]>([]);
-
-    useEffect(() => {
-        // eventRentalMap()
-        // setAvailableList()
-        setTypeFilter()
-    }, [type, galleryFiltered]) 
-
-    function setTypeFilter() {
-        console.log('set type filter to ', type)
-        const typeFiltered: Gallery_Item[] = CustomerFilteredHanbok(galleryFiltered, type!)
-        setGalleryItem(typeFiltered)
-    }
+    const galleryItem = useMemo<Gallery_Item[]>(
+        () => CustomerFilteredHanbok(galleryFiltered, type!), [type, galleryFiltered]
+    );
 
     // 이미지경로 - IMAGE_PATH + Store/[A001]/1.jpg
     return(

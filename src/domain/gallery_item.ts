@@ -8,6 +8,7 @@ export class Gallery_Item {
   customer_type!: string;
 
   unavailable: boolean = false;
+  rental_mode?: string;
 
   hanbok_name1!: string;
   hanbok_name2!: string;

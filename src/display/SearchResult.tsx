@@ -1,40 +1,21 @@
 import { Gallery_Item } from "domain/gallery_item";
-import { Rental_Item } from "domain/rental_item";
-import React, { createRef, useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { RootState } from "reducing/store";
-import { CHECK_ITEM_AVAILABILITY, SET_ITEM_AVAILABLE, HanboknameFilteredHanbok } from "util/display_filter";
+import { HanboknameFilteredHanbok } from "util/display_filter";
 import { IMAGE_PATH } from "../config/Config";
 import ImageBox from "./ImageBox";
 
 const SearchResult = () => {
-    const routeName = 'searchResult'
-    // const rentalItem: Rental_Item[] = useSelector( (state:RootState) => state.gallery.rentalItems)
-    const rentalItems:Rental_Item[] = useSelector( (state:RootState) => state.gallery.rentalItems)
-    const galleryData:Gallery_Item[] = useSelector( (state:RootState) => state.gallery.galleryInfos)
+    const galleryData:Gallery_Item[] = useSelector( (state:RootState) => state.gallery.galleryFiltered)
 
-    const [galleryItems, setGalleryItems] = useState<Gallery_Item[]>([]);
-    const [filterdBlogData, setFilteredBlogData] = useState([]);
     
     const {keywords} = useParams()
 
-    useEffect(() => {
-        console.log('current param(keyword) ', keywords)
-    }, [])
-    // ★★ 1. unavailRentalMap -> 2. hanbokFilter -> 3. hanbokFiltered.unavail = ture / false 
-    // 초기 불러오기
-    useEffect(() => {
-        setAvailableList()
-        // console.log('search keyword ', keywords.split(' '))
-    }, [rentalItems, keywords])
-
-    const setAvailableList = () => {
-        const filteredHanbok: Gallery_Item[] = HanboknameFilteredHanbok(galleryData, keywords!)
-        const unavailable_map: Map<string, Rental_Item> = SET_ITEM_AVAILABLE(rentalItems)
-        const available_gallery_items = CHECK_ITEM_AVAILABILITY(unavailable_map, filteredHanbok)
-        setGalleryItems(available_gallery_items)
-    }
+    const galleryItems = useMemo(
+        () => HanboknameFilteredHanbok(galleryData, keywords!), [galleryData, keywords]
+    );
     
     const itemSizes = (size: string) => {
         let sizes = size?.split(/[.,]+/)
@@ -72,7 +53,7 @@ const SearchResult = () => {
             <div className="container grid mobile:grid-cols-3 grid-cols-6 mobile:gap-1 gap-6 ">
                 {/* {filterdBlogData?.map((item) => */}
                 {galleryItems?.map((item) =>
-                <div className="cursor-pointer" id='image link container'>
+                <div className="cursor-pointer" id='image link container' key={item.display_code}>
                 {/* blur여부 + div hidden 여부 */}
                 <Link to={`/display/${item.display_code}`}>
                     <div className="mb-4 p-2 hover:shadow-lg"> 

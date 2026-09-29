@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
-import { DATE_ADD, DATE_TO_SQLSTRING, GALLERY_FILTER_PATH, GALLERY_PATH, IMAGE_PATH, SERVER_PATH } from 'config/Config';
+import { GALLERY_FILTER_PATH, GALLERY_PATH, IMAGE_PATH, SERVER_PATH } from 'config/Config';
+import { getRentalDateRange } from 'util/rentalDate';
 import { Gallery_Item } from 'domain/gallery_item';
 import { buildRentalDebugItems, HanbokStock, RentalDebugItem, RentalRecord } from 'util/rentalDebug';
 
@@ -10,26 +10,19 @@ type DisplayFilter = 'all' | 'unavailable' | 'review';
 
 const formatSqlDate = (value: string) => value.replace(/^(\d{4})(\d{2})(\d{2})$/, '$1-$2-$3');
 
-const RentalDebugPage = () => {
-  const [cookie] = useCookies(['eventdate']);
-  const selectedDate = typeof cookie.eventdate === 'string'
-    ? cookie.eventdate
-    : new Date().toISOString().split('T')[0];
+type RentalDebugPageProps = {
+  eventDate: string;
+  rentalMode: 'delivery' | 'store';
+};
+
+const RentalDebugPage = ({ eventDate: selectedDate, rentalMode }: RentalDebugPageProps) => {
   const [items, setItems] = useState<RentalDebugItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [filter, setFilter] = useState<DisplayFilter>('all');
   const [keyword, setKeyword] = useState('');
 
-  const range = useMemo(() => {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(selectedDate)) return null;
-    const date = new Date(selectedDate);
-    if (Number.isNaN(date.getTime()) || date.toISOString().split('T')[0] !== selectedDate) return null;
-    return {
-      start: DATE_TO_SQLSTRING(DATE_ADD(date, -11)),
-      end: DATE_TO_SQLSTRING(DATE_ADD(date, 11)),
-    };
-  }, [selectedDate]);
+  const range = useMemo(() => getRentalDateRange(selectedDate), [selectedDate]);
 
   useEffect(() => {
     if (!range) {
@@ -47,7 +40,8 @@ const RentalDebugPage = () => {
     Promise.all([
       axios.get<Gallery_Item[]>(GALLERY_PATH),
       axios.get<Gallery_Item[]>(GALLERY_FILTER_PATH, {
-        params: { rentalStart: range.start, rentalEnd: range.end },
+        params: { rentalStart: range.start, rentalEnd: range.end,
+          eventDate: range.selected, rentalMode },
       }),
       axios.get<HanbokStock[]>(`${SERVER_PATH}hanboks/`),
       axios.get<RentalRecord[]>(`${SERVER_PATH}rentalItems/`, {
@@ -58,17 +52,22 @@ const RentalDebugPage = () => {
       if (![gallery.data, filtered.data, stock.data, rentals.data].every(Array.isArray)) {
         throw new Error('예상하지 못한 API 응답');
       }
-      setItems(buildRentalDebugItems(gallery.data, filtered.data, stock.data, rentals.data));
+      if (rentalMode === 'store' && filtered.data.some(item => item.rental_mode !== 'store')) {
+        throw new Error('매장 판정을 지원하는 API 응답이 아닙니다.');
+      }
+      setItems(buildRentalDebugItems(gallery.data, filtered.data, stock.data, rentals.data,
+        range.selected, rentalMode));
       setLoading(false);
-    }).catch(() => {
+    }).catch((reason) => {
       if (!active) return;
       setItems([]);
-      setError('대여 현황을 불러오지 못했습니다. API 연결을 확인한 뒤 다시 시도하세요.');
+      setError(reason.message === '매장 판정을 지원하는 API 응답이 아닙니다.'
+        ? reason.message : '대여 현황을 불러오지 못했습니다. API 연결을 확인한 뒤 다시 시도하세요.');
       setLoading(false);
     });
 
     return () => { active = false; };
-  }, [range?.start, range?.end]);
+  }, [range?.start, range?.end, range?.selected, rentalMode]);
 
   const visibleItems = items.filter(item => {
     if (filter === 'unavailable' && item.serverUnavailable !== true) return false;
@@ -84,10 +83,12 @@ const RentalDebugPage = () => {
       <div className="mb-6">
         <h1 className="text-2xl font-semibold">한복 대여 현황 디버깅</h1>
         <p className="mt-2 text-sm text-slate-600">
-          행사일 {selectedDate || '미선택'} · 조회 기간 {range ? `${formatSqlDate(range.start)} ~ ${formatSqlDate(range.end)}` : '확인 불가'}
+          행사일 {selectedDate || '미선택'} · 수령 {rentalMode === 'store' ? '매장' : '택배'} · 조회 기간 {range ? `${formatSqlDate(range.start)} ~ ${formatSqlDate(range.end)}` : '확인 불가'}
         </p>
         <p className="mt-1 text-sm text-slate-600">
-          상단 행사날짜를 바꾸면 갱신됩니다. 현재 판정은 이 기간의 대여일 기록을 모두 합산해 재고와 비교합니다.
+          상단 행사날짜나 수령 방식을 바꾸면 갱신됩니다. {rentalMode === 'store'
+            ? '매장 수령은 이전 대여의 반납일+3일이 행사일 전에 끝나면 재고 계산에서 제외합니다.'
+            : '택배 수령은 조회 기간의 대여일 기록을 모두 합산합니다.'}
         </p>
       </div>
 
@@ -138,7 +139,7 @@ const RentalDebugPage = () => {
                     <li key={`${component.position}-${component.barcode}`} className="rounded bg-slate-50 p-3 text-sm">
                       <p className="font-semibold">{component.position}번 {component.name}</p>
                       <p className="break-all text-slate-600">바코드 {component.barcode}</p>
-                      <p>조회 기간 대여 {component.rentals.length}건 / 재고 {component.stock ?? '미확인'}</p>
+                      <p>조회 기간 대여 {component.rentals.length}건 · 판정에 포함 {component.countedRentalCount}건 / 재고 {component.stock ?? '미확인'}</p>
                       <p className={component.exhausted ? 'text-red-700' : 'text-slate-600'}>
                         {component.exhausted === null ? '재고 판정 불가' : component.exhausted ? '재고 소진' : '재고 여유'}
                         {' · '}{component.checkedByServer ? '현재 서버 판정 대상' : '현재 서버 판정 제외'}
@@ -147,7 +148,12 @@ const RentalDebugPage = () => {
                       {component.rentals.length > 0 && (
                         <ul className="mt-2 list-inside list-disc text-slate-600">
                           {component.rentals.map((rental, index) => (
-                            <li key={index}>대여일 {rental.rental_date || '미기록'} · 행사일 {rental.event_date || '미기록'} · 반납일 {rental.return_date || '미기록'}</li>
+                            <li key={index}>
+                              <span className={rental.counted ? 'text-slate-700' : 'text-amber-800'}>
+                                [{rental.counted ? '집계' : '제외'}] {rental.reason}
+                              </span>
+                              <br />대여일 {rental.rental_date || '미기록'} · 행사일 {rental.event_date || '미기록'} · 반납일 {rental.return_date || '미기록'}
+                            </li>
                           ))}
                         </ul>
                       )}

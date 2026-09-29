@@ -3,15 +3,30 @@ import logo from '../logo_1.svg';
 // import { DATE_ADD, DATE_TO_SQLSTRING, HANBOK_MAP, SERVER_PATH } from './Config';
 import React, { useState, useRef, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useCookies } from 'react-cookie';
 import { HiMenuAlt2 } from "react-icons/hi";
-import SearchResult from 'display/SearchResult';
 import useScreenSize from 'util/useScreenSize';
 
-const TopNav = ({eventDate, setEventDate}) => {
-    // eventdate 쿠키
-    // const [eventDate, setEventDate] = useState(null);
-    const [cookie, , ] = useCookies(['eventdate'])
+const rentalControlClassName = 'rounded-md bg-white font-katuri text-base py-1';
+
+const SearchBox = ({ keyword, setKeyword, onSearch, className = '' }) => (
+    <form className={`inline-flex border-blue-400 hover:shadow-md mobile:mt-4 ${className}`}
+        role="search" onSubmit={(event) => { event.preventDefault(); onSearch(); }}>
+        <button type="submit" aria-label="검색">
+            <svg className="rounded-l-md w-8 h-8 bg-white text-gray-500 fill-slate-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+            </svg>
+        </button>
+        <input className="rounded-r-md focus:outline-none" type="text" aria-label="검색어" placeholder="검색"
+            value={keyword} onChange={(event) => setKeyword(event.target.value)}
+            onKeyDown={(event) => {
+                if (event.key === 'Enter' && (event.nativeEvent.isComposing || event.keyCode === 229)) {
+                    event.preventDefault();
+                }
+            }} />
+    </form>
+);
+
+const TopNav = ({eventDate, setEventDate, rentalMode, setRentalMode}) => {
     
     const [navVisible, setNavVisible] = useState(false)
     const [searchKeyword, setSearchKeyword] = useState('')
@@ -46,21 +61,11 @@ const TopNav = ({eventDate, setEventDate}) => {
         setNavVisible(!navVisible)
     }
 
-    const initialEventDate = () => {
-        // return new Date()
-        if (cookie.eventdate !== undefined) {
-            return cookie.eventdate
-        }else{
-            const now = new Date()
-            const nowStr = now.toISOString().split('T')[0]
-            return nowStr
-        }
-    }
-
-    const searchKeyEvent = (e) => {
-        if(e.key === 'Enter') {
-            navigate(`searchResult/${searchKeyword}`)
-        }
+    const submitSearch = () => {
+        const keyword = searchKeyword.trim();
+        if (!keyword) return;
+        navigate(`/searchResult/${encodeURIComponent(keyword)}`);
+        setNavVisible(false);
     }
 
     const scrollToCategory = (index) => {
@@ -86,7 +91,7 @@ const TopNav = ({eventDate, setEventDate}) => {
         )
     }
 
-    const Mobile_Nav = () => {
+    const renderMobileNav = () => {
         return(
         <nav className="w-full sticky p-2 flex-wrap flex-col items-center justify-between 
             bg-teal-800 top-0 z-50">
@@ -104,10 +109,16 @@ const TopNav = ({eventDate, setEventDate}) => {
                     <div className='flex items-center mr-1 text-preten text-xs text-white font-sans font-semibold'>
                         행사날짜
                     </div>
-                    <input className='pl-2 my-1 mr-2 w-36 rounded-md font-katuri inline-block'
+                    <input className={`${rentalControlClassName} pl-2 my-1 mr-2 w-36 inline-block`}
                         type="date" title='행사날짜를 지정해주세요' id='eventDate' name="eventDate" 
                         onChange={(e) => {setEventDate(e)}} 
-                        value={initialEventDate()}/>
+                        value={eventDate}/>
+                    <select aria-label="수령 방식" title="수령 방식을 선택해주세요"
+                        className={`${rentalControlClassName} my-1 mr-1 px-1`}
+                        value={rentalMode} onChange={setRentalMode}>
+                        <option value="delivery">택배</option>
+                        <option value="store">매장</option>
+                    </select>
                     <HiMenuAlt2 className='w-10 h-10 p-1' color='white' onClick={() => {onOffNav()}}/>
                     {/* <p className='inline text-white py-2 font-preten font-semibold' onClick={() => {onOffNav()}}>메뉴</p> */}
                 </div>
@@ -170,20 +181,19 @@ const TopNav = ({eventDate, setEventDate}) => {
                     행사날짜
                 </div>
                 <div className='inline-flex'>
-                    <input className='pl-2 py-0.5 mr-2 rounded-md font-katuri mobile:inline-block' type="date" title='행사날짜를 지정해주세요' id='eventDate' name="" 
+                    <input className={`${rentalControlClassName} pl-2 mr-2 mobile:inline-block`} type="date" title='행사날짜를 지정해주세요' id='eventDate' name=""
                         onChange={(e) => {setEventDate(e)}} 
                         // value={cookie.eventdate}/>
-                        value={initialEventDate()}/>
+                        value={eventDate}/>
+                    <label className="mr-1 text-base text-white font-sans font-semibold" htmlFor="rentalModeMobileMenu">수령</label>
+                    <select id="rentalModeMobileMenu" className={`${rentalControlClassName} px-2`}
+                        value={rentalMode} onChange={setRentalMode}>
+                        <option value="delivery">택배</option>
+                        <option value="store">매장</option>
+                    </select>
                 </div>
                 {/* 검색 -> 모바일에선 x */}
-                <div className='mobile:hidden inline-flex border-blue-400 hover:shadow-md mobile:mt-4'  >
-                    <button>
-                        <Link to={`searchResult/${searchKeyword}`}>
-                            <svg class="rounded-l-md w-8 h-8 bg-white text-gray-500 fill-slate-400" fill="currentColor2" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-                        </Link>
-                    </button>
-                    <input className=' rounded-r-md focus:outline-none' onKeyDown={() => {}} id='search' type="text" onChange={(e) => {setSearchKeyword(e.target.value)}} placeholder='검색'/>
-                </div>
+                <SearchBox className="mobile:hidden" keyword={searchKeyword} setKeyword={setSearchKeyword} onSearch={submitSearch} />
             </ul>
             </div>
         </div>
@@ -191,13 +201,13 @@ const TopNav = ({eventDate, setEventDate}) => {
         )
     }
 
-    const Wide_Nav = () => {
+    const renderWideNav = () => {
         return(
             
         <nav className="flex flex-col sticky p-2 bg-teal-800 top-0 z-50">
             {/* 데스크톱 와이드 메뉴 */}
             <div className="w-auto flex-1">
-                <div class="inline-flex h-full text-lg lg:flex-grow float-left">
+                <div className="inline-flex h-full text-lg lg:flex-grow float-left">
                     <div className="flex items-center justify-center text-white mr-6">
                         <Link className="hover:text-green-500" to={'/'}>
                             <img className='fill-white w-8 mr-2 inline-block' src={logo} fill='#f4f4f4' alt=""/>
@@ -240,35 +250,27 @@ const TopNav = ({eventDate, setEventDate}) => {
                 </div>
                 {/* 행사날짜 및 검색 */}
                 <div className='inline-flex h-full p-2 float-right items-center mobile:block'> 
-                    <label className='mr-2 text-xl text-slate-100 font-preten font-bold has-tooltip'>행사날짜</label>
-                    <input className='pl-4 py-0.5 mr-2 rounded-md font-katuri mobile:inline-block' type="date" title='행사날짜를 지정해주세요' id='eventDate' name="" 
+                    <label className='mr-4 text-xl text-slate-100 font-preten font-bold has-tooltip'>행사날짜</label>
+                    <input className={`${rentalControlClassName} pl-4 mr-2 mobile:inline-block`} type="date" title='행사날짜를 지정해주세요' id='eventDate' name=""
                         onChange={(e) => {setEventDate(e)}} 
                         // value={cookie.eventdate}/>
-                        value={initialEventDate()}/>
+                        value={eventDate}/>
+
+                    <label className="mx-2 text-xl text-slate-100 font-preten font-bold" htmlFor="rentalModeDesktop">수령</label>
+                    <select id="rentalModeDesktop" className={`${rentalControlClassName} mr-2 px-2`}
+                        value={rentalMode} onChange={setRentalMode}>
+                        <option value="delivery">택배</option>
+                        <option value="store">매장</option>
+                    </select>
                     {/* 검색 */}
-                    <div className='inline-flex border-blue-400 hover:shadow-md mobile:mt-4' 
-                        onKeyDown={(e) => searchKeyEvent(e)}>
-                        <button>
-                            <Link to={`searchResult/${searchKeyword}`}>
-                                <svg class="rounded-l-md w-8 h-8 bg-white text-gray-500 fill-slate-400" fill="currentColor2" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-                            </Link>
-                        </button>
-                        <input className=' rounded-r-md focus:outline-none' 
-                            onKeyDown={(e) => searchKeyEvent(e)} id='search' type="text" 
-                            onChange={(e) => {setSearchKeyword(e.target.value)}} placeholder='검색'/>
-                    </div>
+                    <SearchBox keyword={searchKeyword} setKeyword={setSearchKeyword} onSearch={submitSearch} />
                 </div>
             </div>
         </nav>
         )
     }
-    // return <Wide_Nav></Wide_Nav>
-    if (isMobile) {
-        return <Mobile_Nav></Mobile_Nav>
-
-    }else{
-        return <Wide_Nav></Wide_Nav>
-    }
+    // Render JSX helpers directly so typing does not create a new component type.
+    return isMobile ? renderMobileNav() : renderWideNav();
 
 }
 
