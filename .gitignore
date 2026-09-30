@@ -7,11 +7,13 @@
 
 # testing
 /coverageg
+/coverage/
 /src/trash
 /src/testing
 
 # production
-# /build/
+/build-vite/
+/build/
 
 # misc
 .DS_Store

@@ -1,6 +1,44 @@
 비단본가 한복갤러리
 =========
-(https://github.com/facebook/create-react-app)으로 시작
+Create React App으로 시작한 프로젝트이며, 현재 개발·빌드는 Vite를 사용합니다.
+
+## 실행과 검증
+
+Node.js 20.19+ 또는 22.12+가 필요합니다. 현재 작업은 Node.js 24에서 검증했습니다.
+PowerShell에서 npm 실행 정책 오류가 나면 `npm` 대신 `npm.cmd`를 사용합니다.
+
+```sh
+npm ci
+npm start
+```
+
+개발 주소는 `http://localhost:5173`입니다. 터미널의 `Ctrl+C`로 종료합니다.
+
+| 명령 | 역할 |
+| --- | --- |
+| `npm run typecheck` | TypeScript 타입 검사 |
+| `npm run lint` | 코드 규칙 검사 (기존 정리 항목은 경고로 표시) |
+| `npm test` | Jest 테스트 한 번 실행 |
+| `npm run test:watch` | 파일 변경에 맞춰 테스트 재실행 |
+| `npm run check` | 타입 검사 → 코드 검사 → 테스트 |
+| `npm run build` | 전체 검사 성공 후 `build/`에 배포 파일 생성 |
+| `npm run preview` | 생성된 `build/`를 `http://localhost:5174`에서 확인 |
+
+`dev:vite`, `build:vite`, `preview:vite`는 이전 단계에서 사용하던 명령의 별칭입니다.
+Jest는 Vite 플러그인을 사용하지 않고 `jest.config.cjs`의 별도 변환 설정으로 실행합니다.
+실제 브라우저 동작은 빌드 후 미리보기에서도 확인합니다.
+
+## 배포
+
+Cloudflare Workers의 빌드 명령은 `npm run build`, 배포 명령은 `npx wrangler deploy`입니다.
+`wrangler.jsonc`가 `build/`를 배포하고 SPA 주소의 직접 접속을 처리합니다.
+운영 브랜치는 Cloudflare 대시보드에서 관리합니다.
+
+루트 `index.html`이 앱의 시작점이고, `public/`에는 이미지·폰트 등 원본 정적 파일을 둡니다.
+`build/`는 매번 생성하므로 Git에서 제외합니다. 원본 `public/` 파일은 Git으로 관리합니다.
+과거 `build-vite/` 결과물은 더 이상 사용하지 않습니다.
+
+아래는 기존 화면 구성에 관한 초기 메모입니다. 대여 판정 등 현재 동작은 실제 코드를 기준으로 확인합니다.
 
 ## 메인
 bootstrap -> tailwindcss로 교체
