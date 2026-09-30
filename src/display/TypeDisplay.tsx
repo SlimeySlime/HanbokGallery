@@ -1,11 +1,10 @@
 import React, { useMemo } from "react"
 import { Link, useParams } from "react-router-dom"
-import { IMAGE_PATH, TYPE_TO_KOREAN } from '../config/Config';
+import { TYPE_TO_KOREAN } from '../config/Config';
 import { useSelector } from "react-redux";
 import { Gallery_Item } from '../domain/gallery_item';
 import { RootState } from "reducing/store";
-import { Rental_Item } from "domain/rental_item";
-import { CHECK_ITEM_AVAILABILITY, SET_ITEM_AVAILABLE, CustomerFilteredHanbok } from "util/display_filter";
+import { CustomerFilteredHanbok } from "util/display_filter";
 import ImageBox from "./ImageBox";
 
 // 타입별 파라미터에 따라 조회 

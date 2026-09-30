@@ -1,16 +1,15 @@
 import React from 'react';
 import './App.css';
-import { GALLERY_FILTER_PATH, GALLERY_PATH, HANBOK_MAP, SERVER_PATH } from './config/Config';
+import { GALLERY_FILTER_PATH, GALLERY_PATH } from './config/Config';
 import { getKoreanToday, getRentalDateRange } from 'util/rentalDate';
 import axios from 'axios';
-import NavWind from './general/NavWind';
 import Footer from './general/Footer';
 import { Route, Routes, useMatch } from 'react-router-dom';
 import Main from './display/Main';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { setHanbok, setRental, setStore } from './reducing/rentalDispatch';
-import { setRentals, setHanboks, setGalleryInfos, setRentalItems, setGalleryFiltered } from './reducing/galleryRedux';
+import { setGalleryInfos, setGalleryFiltered } from './reducing/galleryRedux';
 import SearchResult from './display/SearchResult';
 import { useCookies } from 'react-cookie';
 import { HiArrowUp } from 'react-icons/hi';
@@ -18,12 +17,10 @@ import WanringTooltip from './general/WarningTooltip';
 // import { Hanbok_Min_Rental} from './domain/rental_minimum_info';
 // import HanbokDisplay from './display/HanbokDisplay';
 import { Gallery_Item } from 'domain/gallery_item';
-import { Rental_Item } from 'domain/rental_item';
 import TypeDisplay from 'display/TypeDisplay';
 import HanbokDisplayTS from 'display/HanbokDisplayTS';
 import MainDesigned from 'display/MainDesigned';
 import TopNav from 'general/TopNav';
-import TestingPage from 'general/TestingPage';
 
 // Keep the diagnostic page and its API calls out of production bundles.
 const RentalDebugPage = process.env.NODE_ENV === 'development'
@@ -34,9 +31,6 @@ const RentalDebugPage = process.env.NODE_ENV === 'development'
 // import Nav2 from './general/Nav2';
 function App() {
   const dispatch = useDispatch()
-  const [allGalleryData, setGalleryData] = useState<Gallery_Item[]>([]);
-  const [allHanbokData, setAllHanbokData] = useState([])
-
   const [cookie, setCookie] = useCookies(['eventdate', 'rentalMode']);
   const [eventDate, setEventDate] = useState<string>(() =>
     typeof cookie.eventdate === 'string' ? cookie.eventdate : getKoreanToday()
@@ -53,10 +47,11 @@ function App() {
   const blockResults = Boolean(categoryRoute || searchRoute) && rentalStatus !== 'ready';
 
   useEffect(() => {
-    
-    getGalleryItem()
-
-  }, [])
+    axios.get(GALLERY_PATH).then((result) => {
+      dispatch(setGalleryInfos(result.data));
+      console.log('all Gallery / Store data', result.data);
+    });
+  }, [dispatch])
 
   useEffect(() => {
     const range = getRentalDateRange(eventDate);
@@ -94,16 +89,6 @@ function App() {
 
     return () => { active = false; };
   }, [eventDate, rentalMode, rentalRetry, dispatch]);
-
-  function getGalleryItem() {
-    axios.get(GALLERY_PATH)
-    .then((result) => {
-        setGalleryData(result.data)
-        dispatch(setGalleryInfos(result.data))
-        console.log('all Gallery / Store data', result.data)
-        return result.data[0]
-    })
-  }
 
   // nav change event
   function changeEventDate(e: any) {

@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState, useRef, useLayoutEffect } from "react"
 import { useParams } from "react-router-dom"
 import { MdArrowForwardIos, MdArrowBackIosNew }  from "react-icons/md";
-import { IMAGE_PATH, SERVER_PATH, ERROR_HIDE, GALLERY_PATH } from "../config/Config"
+import { IMAGE_PATH, ERROR_HIDE, GALLERY_PATH } from "../config/Config"
 import RentalTemplate from '../general/RentalTemplate'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -18,11 +18,8 @@ const HanbokDisplayTS = () => {
     // /:id -> useParams()
     const {id} = useParams()
     // 약간 무식한 방법
-    const [imageLength, setImageLength] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
+    const imageLength = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
     const [loadedList, setLoadedList] = useState<number[]>([])
-    const [mobileSlideLength, setMobileSlideLength] = useState([1,2,3,4,5,6,7,8,9])
-
-    const imageListRef = useRef<HTMLDivElement>(null)
     const [imageData, setImageData] = useState<Gallery_Item>(new Gallery_Item())
     const [previewIndex, setPreviewIndex] = useState(0)
 
@@ -30,7 +27,6 @@ const HanbokDisplayTS = () => {
     const nextNavigation = useRef(null)
 
     useEffect(() => {
-        const server_gallery_item = `${SERVER_PATH}/gallery/${id}`
         axios.get(GALLERY_PATH + id)
         .then((result) => {
             setImageData(result.data)
@@ -119,7 +115,6 @@ const HanbokDisplayTS = () => {
 
     useEffect(() => {
         console.log(previewIndex)
-        console.log(loadedList)
     }, [previewIndex])
 
     return(

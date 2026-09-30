@@ -8,9 +8,9 @@ const CustomerFilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) => 
     console.log(keyword)
     if (keyword === 'all') {
         return hanbokList
-    }else if(keyword == 'plus') {
+    }else if(keyword === 'plus') {
         let filtered:Gallery_Item[] = []
-        hanbokList?.map((item: Gallery_Item) => {
+        hanbokList?.forEach((item: Gallery_Item) => {
             let item_sizes: string[] = item.available_size?.split(',').map(item => item.trim())
             let big_size = ['88', '99', '100', 'Free']
             
@@ -25,7 +25,7 @@ const CustomerFilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) => 
         return filtered
     }else if (keyword) {
         let filtered:Gallery_Item[] = []
-        hanbokList?.map((item: Gallery_Item) => {
+        hanbokList?.forEach((item: Gallery_Item) => {
             if (item.customer_type?.includes(TYPE_TO_KOREAN(keyword))) {
                 filtered.push(item)
                 console.log('item is ', item.unavailable)
@@ -39,7 +39,7 @@ const CustomerFilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) => 
 const HanboknameFilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) => {
     if (keyword) {
         let filtered:Gallery_Item[] = []
-        hanbokList?.map((item: Gallery_Item) => {
+        hanbokList?.forEach((item: Gallery_Item) => {
             if (item.hanbok_name1?.includes(TYPE_TO_KOREAN(keyword)) || 
                 item.hanbok_name2?.includes(TYPE_TO_KOREAN(keyword)) ||
                 item.hanbok_name3?.includes(TYPE_TO_KOREAN(keyword)) ) {
@@ -55,12 +55,12 @@ const HanboknameFilteredHanbok = (hanbokList: Gallery_Item[], keyword: string) =
 const SET_ITEM_AVAILABLE = (rentalItems: Rental_Item[]) => {
     // hanbokMap<barcode, item>
     const hanbokMap = new Map<string, Rental_Item>()    
-    rentalItems?.map((item) => {
+    rentalItems?.forEach((item) => {
         hanbokMap.set(item.hanbok_barcode!, item)
     })
 
     let unavailMap = new Map<string, Rental_Item>()
-    rentalItems?.map((item) => {
+    rentalItems?.forEach((item) => {
         if (item.hanbok_barcode) {
             if (!unavailMap.has(item.hanbok_barcode) && item.hanbok_barcode) {
                 unavailMap.set(item.hanbok_barcode, {

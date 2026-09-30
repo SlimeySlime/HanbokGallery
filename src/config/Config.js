@@ -66,7 +66,7 @@ const DATE_TO_SQLSTRING = (date) => {
 
 function HANBOK_MAP(hanbokList){
     let hanbokMap = new Map()
-    hanbokList.map((item) => {
+    hanbokList.forEach((item) => {
       hanbokMap[item.gs_name] = item
     })
     return hanbokMap

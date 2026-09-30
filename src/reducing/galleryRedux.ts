@@ -1,4 +1,4 @@
-import { configureStore, createSlice, PayloadAction} from '@reduxjs/toolkit'
+import { createSlice, PayloadAction} from '@reduxjs/toolkit'
 import { Hanbok_Item } from 'domain/hanbok_item'
 import { Hanbok_Min_Rental } from 'domain/rental_minimum_info'
 import { Gallery_Item } from 'domain/gallery_item'

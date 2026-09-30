@@ -75,7 +75,7 @@ const TopNav = ({eventDate, setEventDate, rentalMode, setRentalMode}) => {
     }
 
 
-    const Category_Tab = ({index, text, navlink}) => {
+    const CategoryTab = ({index, text, navlink}) => {
         return(
         <button className='p-2 inline-block grow-0 shrink-0 basis-auto text-lg font-preten'
             // onClick={() => scrollToCategory(index)}
@@ -125,13 +125,13 @@ const TopNav = ({eventDate, setEventDate, rentalMode, setRentalMode}) => {
             </div>
             {/* 사이드 스크롤링 메뉴 */}
             <div className='flex overflow-x-auto overflow-y-hidden' ref={categoryContainerRef}>
-                <Category_Tab index={0} text='전체 보기' navlink='/main/all'></Category_Tab>
-                <Category_Tab index={1} text='신부 한복' navlink='/main/bride'></Category_Tab>
-                <Category_Tab index={2} text='신랑 한복' navlink='/main/groom'></Category_Tab>
-                <Category_Tab index={3} text='혼주 한복' navlink='/main/parent'></Category_Tab>
-                <Category_Tab index={4} text='하객 한복' navlink='/main/guest'></Category_Tab>
+                <CategoryTab index={0} text='전체 보기' navlink='/main/all'></CategoryTab>
+                <CategoryTab index={1} text='신부 한복' navlink='/main/bride'></CategoryTab>
+                <CategoryTab index={2} text='신랑 한복' navlink='/main/groom'></CategoryTab>
+                <CategoryTab index={3} text='혼주 한복' navlink='/main/parent'></CategoryTab>
+                <CategoryTab index={4} text='하객 한복' navlink='/main/guest'></CategoryTab>
                 <div className='my-2 border-l-2 border-teal-500'></div>
-                <Category_Tab index={5} text='플러스 사이즈' navlink='/main/plus'></Category_Tab>
+                <CategoryTab index={5} text='플러스 사이즈' navlink='/main/plus'></CategoryTab>
             </div>
             {/* 사이드 카테고리 */}
             <div className={(navVisible ? 'left-0 ' : '-left-full' ) + ` fixed bottom-0 top-24 w-3/5 bg-teal-700 opacity-90 transition-left duration-500 sm:hidden`}>

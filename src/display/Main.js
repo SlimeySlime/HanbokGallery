@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useMediaQuery } from 'react-responsive'
 import { GrCamera, GrHome, GrMapLocation, GrPhone } from "react-icons/gr";
-import { HiClock, HiHome } from "react-icons/hi";
+import { HiClock } from "react-icons/hi";
 import { MdArrowForwardIos, MdArrowBackIosNew }  from "react-icons/md";
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Navigation } from 'swiper'
